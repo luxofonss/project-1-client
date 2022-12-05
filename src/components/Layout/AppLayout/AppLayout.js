@@ -1,40 +1,86 @@
-import {
-    AppstoreOutlined,
-    SettingOutlined, UserOutlined
-} from '@ant-design/icons';
-import { Image, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
-import hustLogo from '~/assets/images/header/hust-logo.jpeg';
-import hustLogoNgang from '~/assets/images/header/logo-hust-ngang.jpg';
+import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { SIDER_COLLAPSE } from '~/app-configs';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { SIDER_COLLAPSE } from '~/app-configs';
+import {
+    Paper,
+    PaperNote,
+    PaperTime,
+    UserIcon,
+    IconDashboard,
+    IconShopBasket,
+    IconOrder,
+    IconUser,
+    IconTransaction,
+    LogoAdmin,
+} from '~/assets/svgs';
 import AppHeader from '~/components/Layout/components/Header';
-import './AppLayout.sass';
+import styles from './AppLayout.sass';
+
+const cx = classNames.bind(styles);
 
 const { Sider, Content } = Layout;
 
-export function getNavItem(label, key, icon, children, type) {
+export function getNavItem(className, label, key, icon, children, type) {
     return {
+        className,
+        label,
         key,
         icon,
         children,
-        label,
         type,
     };
 }
+
+export function getMenu(label, path, key, icon) {
+    return {
+        label,
+        path,
+        key,
+        icon,
+    };
+}
+
+const menuItems = [
+    getMenu('Dashboard', '/contract-manager', 'dashboard', <IconDashboard />),
+    getMenu('Product', '/product', 'product', <IconShopBasket />),
+    getMenu('User', '/payment', 'user', <IconUser />),
+    getMenu('Order', '/request-history', 'order', <IconOrder />),
+    getMenu('Transaction', '/support-request', 'transaction', <IconTransaction />),
+];
+
+const UserInfo = () => <Link to="/me/info">Chỉnh sửa thông tin cá nhân</Link>;
+const ContractManager = () => (
+    <Link className={cx('nav-text')} to="/contract-manager">
+        Quản lý hợp đồng
+    </Link>
+);
+const RequestHistory = () => (
+    <Link className={cx('nav-text')} to="/request-history">
+        Lịch sử yêu cầu
+    </Link>
+);
+
 const sliderItems = [
-    getNavItem('Tài khoản', 'account', <UserOutlined />, [
-        getNavItem('Danh sách tài khoản', '/accounts/list'),
-        getNavItem('Thêm tài khoản', '/accounts/add'),
+    getNavItem('nav-list', 'Thông tin cá nhân', 'account', <UserIcon />, [
+        getNavItem('nav-list-item-sub', <UserInfo />, '/accounts/info'),
+        getNavItem('nav-list-item-sub', 'Đổi mật khẩu', '/accounts/password-change'),
     ]),
-    getNavItem('Cấu hình chứng chỉ', '/config/select-ceft', <AppstoreOutlined />, null),
-    getNavItem('Cấu hình hợp đồng', '/config/blockchain', <SettingOutlined />, null),
+    getNavItem('nav-list', <ContractManager />, '/contract-manager', <Paper />, null),
+    getNavItem('nav-list', 'Lịch sử giao dịch', '/transaction-history', <PaperTime />, null),
+    getNavItem('nav-list', 'Quản lý yêu cầu', '/request', <PaperNote />, [
+        getNavItem('nav-list-item-sub', <RequestHistory />, '/request-history'),
+        getNavItem('nav-list-item-sub', 'Thêm mẫu chứng chỉ', '/request/add-certify'),
+        getNavItem('nav-list-item-sub', 'Mua thêm lượt cấp chứng chỉ', '/buy-more'),
+        getNavItem('nav-list-item-sub', 'Yêu cầu hỗ trợ', '/support-request'),
+    ]),
 ];
 
 function AppLayout({ children, match }) {
+    const [isActiveMenu, setIsActiveMenu] = useState(false);
     const [collapsed, setCollapsed] = useState(localStorage.getItem(SIDER_COLLAPSE) ?? false);
     const history = useHistory();
     const currentRouter = useSelector((state) => state.router.location);
@@ -60,61 +106,50 @@ function AppLayout({ children, match }) {
         console.log('selectedSider: ', selectedSider);
     }, [selectedSider]);
 
+    const handleMenuClick = (e) => {
+        localStorage.setItem('menuId', e.target.id);
+        history.push(e.target.key);
+    };
+
+    const targetMenuId = localStorage.getItem('menuId') || 'dashboard';
+
+    useEffect(() => {
+        const targetMenu = document.getElementById(targetMenuId);
+        targetMenu.classList.add('active');
+    }, [targetMenuId]);
+
     return (
-        <Layout>
-            <Sider
-                style={{
-                    border: 'none',
-                    minHeight: '100vh',
-                }}
-                trigger={null}
-                collapsible
-                collapsed={collapsed}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        height: '100%',
-                    }}
-                >
-                    <Link
-                        to={'/'}
-                        style={{ display: 'block', padding: '8px', marginBottom: '6px' }}
-                    >
-                        <Image
-                            className="icon-home-page"
-                            width="100%"
-                            style={{
-                                objectFit: 'contain',
-                                maxHeight: '70px',
-                            }}
-                            src={collapsed ? hustLogo : hustLogoNgang}
-                            preview={false}
-                        />
-                    </Link>
-                    <div style={{ marginTop: '10px', flex: '1' }}>
-                        <Menu
-                            mode="inline"
-                            theme="dark"
-                            defaultOpenKeys={['account']}
-                            selectedKeys={[selectedSider]}
-                            items={sliderItems}
-                            onClick={onClickSliderMenu}
-                        />
-                    </div>
-                    <div
-                        style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                            marginBottom: '15px',
-                        }}
-                    >
-                        © BKLab {new Date().getFullYear()}
-                    </div>
+        <div className={cx('app-layout')}>
+            {/* <Sider width={300} className={cx('slider')} trigger={null} collapsible collapsed={collapsed}> */}
+            <div className={cx('slider')}>
+                <div className={cx('logo')}>
+                    <LogoAdmin />
                 </div>
-            </Sider>
+                <menu className={cx('menu')}>
+                    {menuItems.map((item) => (
+                        // <div className={cx('menu-item')}>
+                        <Link
+                            onClick={(e) => {
+                                handleMenuClick(e);
+                            }}
+                            id={item.key}
+                            key={item.key}
+                            to={item.path}
+                            className={cx('menu-item')}
+                        >
+                            <div className={cx('text normal-link')}> {item.label}</div>
+                            <div className={cx('icon')}>{item.icon}</div>
+                        </Link>
+                        // </div>
+                    ))}
+                </menu>
+                <div className={cx('slider-footer')}>
+                    <div className={cx('more')}>
+                        <a href="#">I need help!</a>
+                    </div>
+                    <div className={cx('copy-right')}>Copyright of Luxofons</div>
+                </div>
+            </div>
             <Layout>
                 <AppHeader />
                 <Content
@@ -128,7 +163,7 @@ function AppLayout({ children, match }) {
                     {children}
                 </Content>
             </Layout>
-        </Layout>
+        </div>
     );
 }
 

@@ -10,13 +10,14 @@ import { CHECK_VALID_TOKEN } from '~/redux/actions/user';
 
 function PrivateRoute({ component: Component, location, ...rest }) {
     const dispatch = useDispatch();
-    const isAuthencate = useSelector((state) => state.user?.verifyAuthState);
-
+    const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
+    const userRole = useSelector((state) => state.user?.role);
+    console.log('isAuthenticated', isAuthenticated);
     useEffect(() => {
         (async () => {
             const accessToken = localStorage.getItem(TOKEN_KEY);
             if (accessToken) {
-                if (isAuthencate !== REQUEST_STATE.SUCCESS) {
+                if (isAuthenticated !== REQUEST_STATE.SUCCESS) {
                     dispatch(CHECK_VALID_TOKEN());
                 }
             } else {
@@ -24,11 +25,11 @@ function PrivateRoute({ component: Component, location, ...rest }) {
             }
         })();
     }, [dispatch]);
-    switch (isAuthencate) {
+    switch (isAuthenticated) {
         case REQUEST_STATE?.SUCCESS:
             return <Route {...rest} render={(props) => <Component {...props} />} />;
         case REQUEST_STATE?.ERROR:
-            return <Redirect to={{ pathname: '/auth/login', state: { from: location } }} />;
+            return <Redirect to={{ pathname: '/auth', state: { from: location } }} />;
         default:
             return <FullPageLoading />;
     }

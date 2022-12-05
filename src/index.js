@@ -8,8 +8,14 @@ import { I18nextProvider } from 'react-i18next';
 import * as serviceWorker from './serviceWorker';
 import * as ReactDOM from 'react-dom';
 import GlobalStyles from '~/components/GlobalStyles';
+import { createRoot } from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 
-ReactDOM.render(
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+root.render(
     <Provider store={store}>
         <I18nextProvider i18n={i18n}>
             <GlobalStyles>
@@ -17,7 +23,6 @@ ReactDOM.render(
             </GlobalStyles>
         </I18nextProvider>
     </Provider>,
-    document.getElementById('root'),
 );
 
 if (process.env.NODE_ENV !== 'development') {

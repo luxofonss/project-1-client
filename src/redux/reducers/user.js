@@ -1,15 +1,20 @@
 import { REQUEST_STATE } from '~/app-configs';
-import { UPDATE_DOCUMENT_STORE_ADDRESS_SUCCESS } from '~/redux/actions/user';
-import { RESET_UPDATE_DOCUMENT_STORE_ADDRESS } from '~/redux/actions/user';
-import { CHECK_VALID_TOKEN_SUCCESS } from '~/redux/actions/user';
-import { RESET_CHECK_VALID_TOKEN } from '~/redux/actions/user';
-import { CHECK_VALID_TOKEN } from '~/redux/actions/user';
-import { CHECK_VALID_TOKEN_FAIL } from '~/redux/actions/user';
-import { UPDATE_DOCUMENT_STORE_ADDRESS_FAIL } from '~/redux/actions/user';
-import { UPDATE_DOCUMENT_STORE_ADDRESS } from '~/redux/actions/user';
-import { LOGIN_FAIL } from '~/redux/actions/user';
-import { LOGIN } from '~/redux/actions/user';
-import { LOGIN_SUCCESS } from '~/redux/actions/user';
+import {
+    UPDATE_DOCUMENT_STORE_ADDRESS_SUCCESS,
+    RESET_UPDATE_DOCUMENT_STORE_ADDRESS,
+    CHECK_VALID_TOKEN_SUCCESS,
+    RESET_CHECK_VALID_TOKEN,
+    CHECK_VALID_TOKEN,
+    CHECK_VALID_TOKEN_FAIL,
+    UPDATE_DOCUMENT_STORE_ADDRESS_FAIL,
+    UPDATE_DOCUMENT_STORE_ADDRESS,
+    LOGIN_FAIL,
+    LOGIN,
+    LOGIN_SUCCESS,
+    SIGNUP_FAIL,
+    SIGNUP,
+    SIGNUP_SUCCESS,
+} from '~/redux/actions/user';
 
 const defaultState = {
     profile: null,
@@ -46,6 +51,33 @@ export default function userReducer(state = defaultState, action) {
                 errorMessageKey: action.payload,
             };
         }
+
+        case SIGNUP().type: {
+            if (action.payload.remember && action.payload.email) {
+                localStorage.setItem('rememberUser', JSON.stringify(action.payload));
+            } else if (localStorage.getItem('rememberUser') !== null) {
+                localStorage.removeItem('rememberUser');
+            }
+            return {
+                ...state,
+                authState: REQUEST_STATE.REQUEST,
+            };
+        }
+        case SIGNUP_SUCCESS().type: {
+            return {
+                ...state,
+                authState: REQUEST_STATE.SUCCESS,
+                profile: action.payload,
+            };
+        }
+        case SIGNUP_FAIL().type: {
+            return {
+                ...state,
+                authState: REQUEST_STATE.ERROR,
+                errorMessageKey: action.payload,
+            };
+        }
+
         case UPDATE_DOCUMENT_STORE_ADDRESS().type: {
             return {
                 ...state,

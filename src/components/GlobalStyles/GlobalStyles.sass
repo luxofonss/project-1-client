@@ -1,13 +1,43 @@
 @import-normalize
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap')
+@import "~bootstrap/scss/bootstrap"
+
 body
     margin: 0
-    font-family: 'DM Sans', sans-serif
+    font-family: 'Manrope', sans-serif
+    font-weight: 500
+
+:root
+    --white: #fff
+    --active-color: #1B709B
+    --text-grey: #6F767E
+    --button-color: #1B709B
+    --button-text-color: #FCFCFC
+    --text-dark: #2E2C34
+    --main-green: #20C9AC
+    --hover-color: #EFEFEF
+    --background-color-grey: #F5F7FA
+    --dark-grey: #1B1E25
+    --dark-text-2: #504F54
+    --divider-color: #F4F4F4
 
 a
     text-decoration: none
 
 iframe
     display: none
+
+.normal-link
+    color: var(--text-dark)
+
+    &:hover
+        color: var(--text-dark)
+
+.normal-link-white
+    color: #fff
+
+    &:hover
+        color: #fff
 
 .flex-col-between
     display: flex
@@ -59,7 +89,13 @@ iframe
 
 .hover-pointer
     &:hover
-      cursor: pointer  
+        cursor: pointer
+
+.b4e-logo
+    display: flex
+    align-items: center
+    justify-content: center
+
 .b4E__text
     display: inline
     user-select: none

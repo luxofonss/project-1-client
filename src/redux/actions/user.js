@@ -26,6 +26,27 @@ export function LOGOUT(payload) {
     };
 }
 
+export function SIGNUP(payload) {
+    return {
+        type: 'SIGNUP',
+        payload,
+    };
+}
+
+export function SIGNUP_SUCCESS(payload) {
+    return {
+        type: 'SIGNUP_SUCCESS',
+        payload,
+    };
+}
+
+export function SIGNUP_FAIL(payload) {
+    return {
+        type: 'SIGNUP_FAIL',
+        payload,
+    };
+}
+
 export function UPDATE_DOCUMENT_STORE_ADDRESS(payload) {
     return {
         type: 'UPDATE_DOCUMENT_STORE_ADDRESS',
