@@ -21,54 +21,6 @@ export default {
 
 export const childRoutes = [
     {
-        path: '/request-history',
-        exact: true,
-        isPrivate: true,
-        role: 'admin',
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([featureModule], 'app');
-            return import('./pages/RequestHistory');
-        }),
-    },
-
-    {
-        path: '/contract-manager',
-        exact: true,
-        isPrivate: true,
-        role: 'user',
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([featureModule], 'app');
-            return import('./pages/ContractManager');
-        }),
-    },
-
-    {
-        path: '/payment',
-        exact: true,
-        isPrivate: true,
-        role: 'user',
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([featureModule], 'app');
-            return import('./pages/Payment');
-        }),
-    },
-
-    {
-        path: '/support-request',
-        exact: true,
-        isPrivate: true,
-        role: 'user',
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([featureModule], 'app');
-            return import('./pages/SupportRequest');
-        }),
-    },
-
-    {
         path: '/product',
         exact: true,
         isPrivate: true,
@@ -101,6 +53,28 @@ export const childRoutes = [
         component: lazy(async () => {
             await initModules([featureModule], 'app');
             return import('./pages/ProductEdit');
+        }),
+    },
+    {
+        path: '/category',
+        exact: true,
+        isPrivate: true,
+        role: 'user',
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([featureModule], 'app');
+            return import('./pages/Category');
+        }),
+    },
+    {
+        path: '/category/edit',
+        exact: true,
+        isPrivate: true,
+        role: 'user',
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([featureModule], 'app');
+            return import('./pages/CategoryEdit');
         }),
     },
 ];

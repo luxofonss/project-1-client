@@ -81,3 +81,45 @@ export function PRODUCT_EDIT_FAIL(payload) {
         payload: payload,
     };
 }
+
+export function PRODUCT_DISABLE(payload) {
+    return {
+        type: 'PRODUCT_DISABLE',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_DISABLE_SUCCESS(payload) {
+    return {
+        type: 'PRODUCT_DISABLE_SUCCESS',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_DISABLE_FAIL(payload) {
+    return {
+        type: 'PRODUCT_DISABLE_FAIL',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_ENABLE(payload) {
+    return {
+        type: 'PRODUCT_ENABLE',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_ENABLE_SUCCESS(payload) {
+    return {
+        type: 'PRODUCT_ENABLE_SUCCESS',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_ENABLE_FAIL(payload) {
+    return {
+        type: 'PRODUCT_ENABLE_FAIL',
+        payload: payload,
+    };
+}

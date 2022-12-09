@@ -1,25 +1,23 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import styles from './ProductEdit.module.sass';
 import classNames from 'classnames/bind';
-import { useForm } from 'react-hook-form';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
-import Row from 'react-bootstrap/Row';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { Fragment, useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
-import { BackIcon, IconUpload } from '~/assets/svgs';
-import { storage } from '~/firebase';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { v4 } from 'uuid';
-import { PRODUCT_ADD, PRODUCT_GET_BY_ID, PRODUCT_EDIT } from '~/redux/actions/product';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { v4 } from 'uuid';
+import { BackIcon, IconUpload } from '~/assets/svgs';
+import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
+import { storage } from '~/firebase';
+import { PRODUCT_EDIT, PRODUCT_GET_BY_ID, PRODUCT_DISABLE, PRODUCT_ENABLE } from '~/redux/actions/product';
+import styles from './ProductEdit.module.sass';
 
 const cx = classNames.bind(styles);
 
 function ProductEdit() {
     const productEdit = useSelector((state) => state.productGetById);
-    const productData = productEdit.products;
-    const [selectedImage, setSelectedImage] = useState(productData?.image);
-    const [selectedImageURL, setSelectedImageURL] = useState('');
+    const [selectedImage, setSelectedImage] = useState(null);
     const dispatch = useDispatch();
     const selectedId = localStorage.getItem('selectedId');
 
@@ -30,44 +28,54 @@ function ProductEdit() {
     } = useForm();
 
     useEffect(() => {
+        console.log('get data');
         dispatch(PRODUCT_GET_BY_ID(selectedId));
-    }, [selectedId]);
+    }, []);
 
-    console.log(productData);
-    console.log('selectedImage', selectedImage);
-    useEffect(() => {
-        console.log('image change', selectedImage);
-        const storageRef = ref(storage, `/images/${selectedImage + v4()}`);
-        const uploadTask = uploadBytesResumable(storageRef, selectedImage);
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => {},
-            (err) => {
-                console.log(err);
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
-                    setSelectedImageURL(URL);
-                    console.log('set image url');
-                });
-            },
-        );
-    }, [selectedImage]);
     const onSubmit = (data) => {
-        console.log(selectedImageURL);
-        console.log('productData.image', productData.image);
-        const editedData = {
-            ...data,
-            image: selectedImage ? selectedImageURL : productData.data.image,
-            id: selectedId,
-        };
-        dispatch(PRODUCT_EDIT(editedData));
+        if (selectedImage !== null) {
+            const storageRef = ref(storage, `/images/${selectedImage + v4()}`);
+            const uploadTask = uploadBytesResumable(storageRef, selectedImage);
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {},
+                (err) => {
+                    console.log(err);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
+                        const editedData = {
+                            ...data,
+                            image: URL,
+                            id: selectedId,
+                        };
+                        console.log('dispatch has image');
+                        dispatch(PRODUCT_EDIT(editedData));
+                    });
+                },
+            );
+        } else {
+            const editedData2 = {
+                ...data,
+                image: productEdit?.products.data.image,
+                id: selectedId,
+            };
+            console.log(editedData2);
+            console.log('dispatch without image');
+            dispatch(PRODUCT_EDIT(editedData2));
+        }
     };
 
-    const handleChange = (event) => {
-        if (event.target.files[0]) {
-            setSelectedImage(event.target.files[0]);
-        }
+    const handleDisableProduct = (id) => {
+        console.log('disable');
+        dispatch(PRODUCT_DISABLE({ id: id }));
+        dispatch(PRODUCT_GET_BY_ID(selectedId));
+    };
+
+    const handleEnableProduct = (id) => {
+        console.log('enable');
+        dispatch(PRODUCT_ENABLE({ id: id }));
+        dispatch(PRODUCT_GET_BY_ID(selectedId));
     };
 
     return (
@@ -77,7 +85,7 @@ function ProductEdit() {
             </Link>
             <div className={cx('wrapper')}>
                 <form onSubmit={handleSubmit(onSubmit)} className={cx('add-product-form')}>
-                    {productData && (
+                    {productEdit?.products && (
                         <Row>
                             <Col xs={4}>
                                 <div className={cx('form-item')}>
@@ -89,7 +97,7 @@ function ProductEdit() {
                                         id="name"
                                         {...register('name', { required: true })}
                                         type="text"
-                                        defaultValue={productData.data.name}
+                                        defaultValue={productEdit?.products?.data?.name}
                                     ></input>
                                 </div>
 
@@ -101,7 +109,7 @@ function ProductEdit() {
                                         {...register('cate_code', { required: true })}
                                         className={cx('select-wrapper')}
                                         id="category"
-                                        defaultValue={productData.data.category_id}
+                                        defaultValue={productEdit?.products?.data?.category_id}
                                     >
                                         <option value="TD04">Áo thun</option>
                                         <option value="TD04">Sơ mi</option>
@@ -119,7 +127,7 @@ function ProductEdit() {
                                         id="description"
                                         {...register('description', { required: true })}
                                         type="text"
-                                        defaultValue={productData.data.description}
+                                        defaultValue={productEdit?.products?.data?.description}
                                     ></textarea>
                                 </div>
                             </Col>
@@ -134,7 +142,7 @@ function ProductEdit() {
                                         id="color"
                                         type="text"
                                         // value={headerValue}
-                                        defaultValue={productData.data.color}
+                                        defaultValue={productEdit?.products?.data?.color}
                                     ></input>
                                 </div>
                                 <Row>
@@ -148,7 +156,7 @@ function ProductEdit() {
                                                 id="price"
                                                 {...register('price', { required: true })}
                                                 type="text"
-                                                defaultValue={productData.data.price}
+                                                defaultValue={productEdit?.products?.data?.price}
                                             ></input>
                                         </div>
                                     </Col>
@@ -162,7 +170,7 @@ function ProductEdit() {
                                                 id="prod-code"
                                                 {...register('prod_code', { required: true })}
                                                 type="text"
-                                                defaultValue={productData.data.prod_code}
+                                                defaultValue={productEdit?.products?.data?.prod_code}
                                             ></input>
                                         </div>
                                     </Col>
@@ -178,7 +186,7 @@ function ProductEdit() {
                                                 id="total"
                                                 {...register('total', { required: true })}
                                                 type="number"
-                                                defaultValue={productData.data.total}
+                                                defaultValue={productEdit?.products?.data?.total}
                                             ></input>
                                         </div>
                                     </Col>
@@ -191,7 +199,7 @@ function ProductEdit() {
                                                 {...register('size', { required: true })}
                                                 className={cx('select-wrapper')}
                                                 id="size"
-                                                defaultValue={productData.data.size}
+                                                defaultValue={productEdit?.products?.data?.size}
                                             >
                                                 <option value={0}>S</option>
                                                 <option value={1}>M</option>
@@ -213,15 +221,20 @@ function ProductEdit() {
                                         id="image"
                                         type="file"
                                         onChange={(event) => {
-                                            handleChange(event);
+                                            // handleChange(event);
+                                            if (event.target.files[0]) {
+                                                console.log('image upload');
+                                                setSelectedImage(event.target.files[0]);
+                                            }
                                         }}
                                     ></input>
                                 </div>
-
                                 <div
                                     style={{
                                         backgroundImage: `url(${
-                                            selectedImage ? URL.createObjectURL(selectedImage) : productData.data.image
+                                            selectedImage
+                                                ? URL.createObjectURL(selectedImage)
+                                                : productEdit?.products.data.image
                                         })`,
                                         width: '250px',
                                         height: '250px',
@@ -233,7 +246,31 @@ function ProductEdit() {
                             </Col>
                         </Row>
                     )}
-                    <PrimaryButton type="submit">Publish</PrimaryButton>
+                    <div className={cx('btn-wrapper')}>
+                        <PrimaryButton type="submit">Publish</PrimaryButton>
+                        {productEdit?.products?.data?.deleted_at && (
+                            <PrimaryButton
+                                type="button"
+                                onClick={() => {
+                                    handleEnableProduct(productEdit?.products?.data?.id);
+                                }}
+                                color="#59ea54"
+                            >
+                                Enable
+                            </PrimaryButton>
+                        )}
+                        {!productEdit?.products?.data?.deleted_at && (
+                            <PrimaryButton
+                                type="button"
+                                onClick={() => {
+                                    handleDisableProduct(productEdit?.products?.data?.id);
+                                }}
+                                color="#ea5454"
+                            >
+                                Disable
+                            </PrimaryButton>
+                        )}
+                    </div>
                 </form>
             </div>
         </Fragment>

@@ -6,16 +6,13 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { SIDER_COLLAPSE } from '~/app-configs';
 import {
-    Paper,
-    PaperNote,
-    PaperTime,
-    UserIcon,
     IconDashboard,
     IconShopBasket,
     IconOrder,
     IconUser,
     IconTransaction,
     LogoAdmin,
+    IconCategory,
 } from '~/assets/svgs';
 import AppHeader from '~/components/Layout/components/Header';
 import styles from './AppLayout.sass';
@@ -47,6 +44,7 @@ export function getMenu(label, path, key, icon) {
 const menuItems = [
     getMenu('Dashboard', '/contract-manager', 'dashboard', <IconDashboard />),
     getMenu('Product', '/product', 'product', <IconShopBasket />),
+    getMenu('Category', '/category', 'category', <IconCategory />),
     getMenu('User', '/payment', 'user', <IconUser />),
     getMenu('Order', '/request-history', 'order', <IconOrder />),
     getMenu('Transaction', '/support-request', 'transaction', <IconTransaction />),
@@ -63,21 +61,6 @@ const RequestHistory = () => (
         Lịch sử yêu cầu
     </Link>
 );
-
-const sliderItems = [
-    getNavItem('nav-list', 'Thông tin cá nhân', 'account', <UserIcon />, [
-        getNavItem('nav-list-item-sub', <UserInfo />, '/accounts/info'),
-        getNavItem('nav-list-item-sub', 'Đổi mật khẩu', '/accounts/password-change'),
-    ]),
-    getNavItem('nav-list', <ContractManager />, '/contract-manager', <Paper />, null),
-    getNavItem('nav-list', 'Lịch sử giao dịch', '/transaction-history', <PaperTime />, null),
-    getNavItem('nav-list', 'Quản lý yêu cầu', '/request', <PaperNote />, [
-        getNavItem('nav-list-item-sub', <RequestHistory />, '/request-history'),
-        getNavItem('nav-list-item-sub', 'Thêm mẫu chứng chỉ', '/request/add-certify'),
-        getNavItem('nav-list-item-sub', 'Mua thêm lượt cấp chứng chỉ', '/buy-more'),
-        getNavItem('nav-list-item-sub', 'Yêu cầu hỗ trợ', '/support-request'),
-    ]),
-];
 
 function AppLayout({ children, match }) {
     const [isActiveMenu, setIsActiveMenu] = useState(false);

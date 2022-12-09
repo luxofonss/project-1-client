@@ -20,7 +20,6 @@ function Product(props) {
         dispatch(PRODUCT_LIST_REQUEST());
         console.log('dispatch');
     }, []);
-    console.log('prd', product.products.data);
 
     const handleEdit = (id) => {
         localStorage.setItem('selectedId', id);
@@ -65,16 +64,29 @@ function Product(props) {
                                             <span className={cx('item-price')}>{product.price} VND</span>
                                             <span className={cx('item-price')}>Total: {product.total}</span>
                                         </div>
-                                        <div className={cx('edit-icon')}>
-                                            <Link
-                                                onClick={(e) => {
-                                                    const id = product.id;
-                                                    handleEdit(id);
-                                                }}
-                                                to={`/product/edit?id=${product.id}`}
+                                        <div className={cx('bottom-sec')}>
+                                            <div
+                                                className={cx(
+                                                    product.total <= 0 || product.deleted_at !== null
+                                                        ? 'product-inactive'
+                                                        : 'product-active',
+                                                )}
                                             >
-                                                <IconEdit />
-                                            </Link>
+                                                {product.total <= 0 || product.deleted_at !== null
+                                                    ? 'inactive'
+                                                    : 'active'}
+                                            </div>
+                                            <div className={cx('edit-icon')}>
+                                                <Link
+                                                    onClick={(e) => {
+                                                        const id = product.id;
+                                                        handleEdit(id);
+                                                    }}
+                                                    to={`/product/edit?id=${product.id}`}
+                                                >
+                                                    <IconEdit />
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </Col>

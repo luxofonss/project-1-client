@@ -1,12 +1,11 @@
 import React from 'react';
-import "./Demo.sass"
+import styles from './Demo.module.sass';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 function Demo(props) {
-    return (
-        <div>
-            
-        </div>
-    );
+    return <div className={cx('container')}></div>;
 }
 
 export default Demo;

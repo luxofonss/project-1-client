@@ -1,8 +1,7 @@
+@use '../../../../../../components/GlobalStyles/mixin' as *
+
 .wrapper
-    width: 100%
-    background-color: var(--white)
-    border-radius: 12px
-    padding: 40px
+    @include content-wrapper()
 
     .header
         display: flex
@@ -50,9 +49,29 @@
         display: flex
         justify-content: space-between
 
-    .edit-icon
-        cursor: pointer
-        text-align: right !important
+    .bottom-sec
+        display: flex
+        justify-content: space-between
+        margin-top: 6px
+
+        .product-inactive, .product-active
+            border-radius: 5px
+            text-align: center
+            width: 70px
+            line-height: 30px
+            height: 30x
+            cursor: pointer
+        .product-active
+            background: #c0f4be
+            border: 2px solid #59ea54
+
+        .product-inactive
+            background: #f4c3be
+            border: 2px solid #ea5454
+
+        .edit-icon
+            cursor: pointer
+            text-align: right !important
 
     &:hover
         transform: scale(1.02)

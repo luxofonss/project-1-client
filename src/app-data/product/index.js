@@ -68,3 +68,37 @@ export const apiEditProduct = async (body) => {
         };
     }
 };
+
+export const apiEnableProduct = async (body) => {
+    try {
+        const response = await POST('/api/product/edit/active', body, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiDisableProduct = async (body) => {
+    try {
+        const response = await POST('/api/product/edit/inactive', body, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
