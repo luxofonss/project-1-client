@@ -35,9 +35,9 @@ export const apiAddProducts = async (body) => {
         };
     }
 };
-export const apiGetProductById = async (id) => {
+export const apiGetProduct = async (params) => {
     try {
-        const response = await GET(`/api/product/get-product?id=${id}`);
+        const response = await GET(`/api/product/get-product`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

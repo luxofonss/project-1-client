@@ -4,12 +4,13 @@ import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'connected-react-router';
 import history from '~/helpers/history';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createLogger } from 'redux-logger';
+import logger from 'redux-logger';
 import createReducer from './reducers';
 import rootSaga from './saga';
+import { configureStore } from '@reduxjs/toolkit';
 
 const sagaMiddleware = createSagaMiddleware();
-// const _routerMiddleware = routerMiddleware(history);
+const _routerMiddleware = routerMiddleware(history);
 function createSagaInjector(runSaga, rootSaga) {
     const injectedSagas = new Map();
 
@@ -36,9 +37,7 @@ const store =
               createReducer(),
               {},
               // replace composeWithDevTools by composeEnhancers
-              composeEnhancers(
-                  applyMiddleware(routerMiddleware(history), promiseMiddleware, sagaMiddleware, createLogger()),
-              ),
+              composeEnhancers(applyMiddleware(routerMiddleware(history), promiseMiddleware, sagaMiddleware, logger)),
           )
         : createStore(
               createReducer(),

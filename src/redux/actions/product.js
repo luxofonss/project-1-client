@@ -1,24 +1,3 @@
-export function PRODUCT_LIST_REQUEST(payload) {
-    return {
-        type: 'PRODUCT_LIST_REQUEST',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_LIST_SUCCESS(payload) {
-    return {
-        type: 'PRODUCT_LIST_SUCCESS',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_LIST_FAIL(payload) {
-    return {
-        type: 'PRODUCT_LIST_FAIL',
-        payload: payload,
-    };
-}
-
 export function PRODUCT_ADD(payload) {
     return {
         type: 'PRODUCT_ADD',
@@ -40,23 +19,23 @@ export function PRODUCT_ADD_FAIL(payload) {
     };
 }
 
-export function PRODUCT_GET_BY_ID(payload) {
+export function PRODUCT_GET(payload) {
     return {
-        type: 'PRODUCT_GET_BY_ID',
+        type: 'PRODUCT_GET',
         payload: payload,
     };
 }
 
-export function PRODUCT_GET_BY_ID_SUCCESS(payload) {
+export function PRODUCT_GET_SUCCESS(payload) {
     return {
-        type: 'PRODUCT_GET_BY_ID_SUCCESS',
+        type: 'PRODUCT_GET_SUCCESS',
         payload: payload,
     };
 }
 
-export function PRODUCT_GET_BY_ID_FAIL(payload) {
+export function PRODUCT_GET_FAIL(payload) {
     return {
-        type: 'PRODUCT_GET_BY_ID_FAIL',
+        type: 'PRODUCT_GET_FAIL',
         payload: payload,
     };
 }

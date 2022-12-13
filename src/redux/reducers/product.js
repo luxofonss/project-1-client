@@ -1,14 +1,11 @@
 import { REQUEST_STATE } from '~/app-configs';
 import {
-    PRODUCT_LIST_REQUEST,
-    PRODUCT_LIST_SUCCESS,
-    PRODUCT_LIST_FAIL,
     PRODUCT_ADD,
     PRODUCT_ADD_FAIL,
     PRODUCT_ADD_SUCCESS,
-    PRODUCT_GET_BY_ID,
-    PRODUCT_GET_BY_ID_SUCCESS,
-    PRODUCT_GET_BY_ID_FAIL,
+    PRODUCT_GET,
+    PRODUCT_GET_SUCCESS,
+    PRODUCT_GET_FAIL,
     PRODUCT_DISABLE,
     PRODUCT_DISABLE_SUCCESS,
     PRODUCT_DISABLE_FAIL,
@@ -25,37 +22,10 @@ const defaultProductAddState = {
     product: {},
 };
 
-const defaultProductGetByIdState = {
-    product: {},
+const defaultProductGet = {
+    data: [],
+    requestState: '',
 };
-
-export function productGetALLReducer(state = defaultProductGetAllState, action) {
-    switch (action.type) {
-        case PRODUCT_LIST_REQUEST().type: {
-            return {
-                ...state,
-                requestState: REQUEST_STATE.REQUEST,
-            };
-        }
-        case PRODUCT_LIST_SUCCESS().type: {
-            return {
-                ...state,
-                requestState: REQUEST_STATE.SUCCESS,
-                products: action.payload,
-            };
-        }
-        case PRODUCT_LIST_FAIL().type: {
-            return {
-                ...state,
-                requestState: REQUEST_STATE.ERROR,
-                errorMessageKey: action.payload,
-            };
-        }
-
-        default:
-            return state;
-    }
-}
 
 export function productAddReducer(state = defaultProductAddState, action) {
     switch (action.type) {
@@ -84,22 +54,22 @@ export function productAddReducer(state = defaultProductAddState, action) {
     }
 }
 
-export function productGetByIdReducer(state = defaultProductGetByIdState, action) {
+export function productGetReducer(state = defaultProductGet, action) {
     switch (action.type) {
-        case PRODUCT_GET_BY_ID().type: {
+        case PRODUCT_GET().type: {
             return {
                 ...state,
                 requestState: REQUEST_STATE.REQUEST,
             };
         }
-        case PRODUCT_GET_BY_ID_SUCCESS().type: {
+        case PRODUCT_GET_SUCCESS().type: {
             return {
                 ...state,
                 requestState: REQUEST_STATE.SUCCESS,
-                products: action.payload,
+                data: action.payload,
             };
         }
-        case PRODUCT_GET_BY_ID_FAIL().type: {
+        case PRODUCT_GET_FAIL().type: {
             return {
                 ...state,
                 requestState: REQUEST_STATE.ERROR,

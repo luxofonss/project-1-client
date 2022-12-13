@@ -1,7 +1,7 @@
 @use '../../../../../../components/GlobalStyles/mixin' as *
 
 .wrapper
-    @include content-wrapper(0px)
+    @include content-wrapper(0px 20px 20px)
 
 .table
     padding: 15px 25px
@@ -21,3 +21,21 @@
 
     &:focus
         box-shadow: 0 0 0 2px black
+
+.form-wrapper
+    width: 100%
+    background-color: #fff
+    border-radius: 12px
+    padding: 40px
+
+    .form-item
+        @include form-item
+
+        .label
+            @include label
+
+        .description
+            @include description
+
+        .input
+            @include input

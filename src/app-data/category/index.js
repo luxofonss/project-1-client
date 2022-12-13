@@ -4,7 +4,8 @@ import { GET } from '~/app-data/fetch';
 
 export const apiLoadCategories = async (params) => {
     try {
-        const response = await GET('/api/category', params, { isFullPath: false });
+        console.log('params', params);
+        const response = await GET(`/api/category`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

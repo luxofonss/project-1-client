@@ -8,29 +8,30 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { IconEdit } from '~/assets/svgs';
-import { PRODUCT_GET_BY_ID, PRODUCT_LIST_REQUEST } from '~/redux/actions/product';
+import { PRODUCT_GET } from '~/redux/actions/product';
 import { useDispatch, useSelector } from 'react-redux';
+import ProductForm from '~/components/ProductForm/ProductForm';
 const cx = classNames.bind(styles);
 
 function Product(props) {
-    const product = useSelector((state) => state.product);
+    const product = useSelector((state) => state.productGet);
     const dispatch = useDispatch();
-    const productList = product.products.data;
+    const productList = product?.data?.data;
+
     useEffect(() => {
-        dispatch(PRODUCT_LIST_REQUEST());
+        dispatch(PRODUCT_GET());
         console.log('dispatch');
     }, []);
 
-    const handleEdit = (id) => {
-        localStorage.setItem('selectedId', id);
-    };
+    console.log(productList);
+
     return (
         <Fragment>
             <div className={cx('wrapper')}>
                 <div className={cx('header')}>
                     <Form className={styles.search}>
                         <Form.Control type="search" placeholder="Search" className="search me-2" aria-label="Search" />
-                        <PrimaryButton variant="outline-success">Search</PrimaryButton>
+                        <PrimaryButton variant="outline-success">Filter</PrimaryButton>
                     </Form>
                     <Form.Select className={styles.select} aria-label="Default select example">
                         <option value="1">All category</option>
@@ -52,43 +53,7 @@ function Product(props) {
                         {productList &&
                             productList.map((product) => (
                                 <Col className={cx('item-wrapper')} xs={3}>
-                                    <div className={cx('item-container')}>
-                                        <div
-                                            className={cx('item-image')}
-                                            style={{
-                                                backgroundImage: `url("${product.image}")`,
-                                            }}
-                                        ></div>
-                                        <h3 className={cx('item-name')}>{product.name}</h3>
-                                        <div className={cx('item-info')}>
-                                            <span className={cx('item-price')}>{product.price} VND</span>
-                                            <span className={cx('item-price')}>Total: {product.total}</span>
-                                        </div>
-                                        <div className={cx('bottom-sec')}>
-                                            <div
-                                                className={cx(
-                                                    product.total <= 0 || product.deleted_at !== null
-                                                        ? 'product-inactive'
-                                                        : 'product-active',
-                                                )}
-                                            >
-                                                {product.total <= 0 || product.deleted_at !== null
-                                                    ? 'inactive'
-                                                    : 'active'}
-                                            </div>
-                                            <div className={cx('edit-icon')}>
-                                                <Link
-                                                    onClick={(e) => {
-                                                        const id = product.id;
-                                                        handleEdit(id);
-                                                    }}
-                                                    to={`/product/edit?id=${product.id}`}
-                                                >
-                                                    <IconEdit />
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ProductForm product={product}></ProductForm>
                                 </Col>
                             ))}
                     </Row>

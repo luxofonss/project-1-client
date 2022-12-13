@@ -45,7 +45,7 @@ export const childRoutes = [
     },
 
     {
-        path: '/product/edit',
+        path: '/product/edit/:id',
         exact: true,
         isPrivate: true,
         role: 'user',
@@ -67,7 +67,7 @@ export const childRoutes = [
         }),
     },
     {
-        path: '/category/edit',
+        path: '/category/edit/:id',
         exact: true,
         isPrivate: true,
         role: 'user',

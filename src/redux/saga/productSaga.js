@@ -1,15 +1,12 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
 import {
-    PRODUCT_LIST_REQUEST,
-    PRODUCT_LIST_SUCCESS,
-    PRODUCT_LIST_FAIL,
     PRODUCT_ADD,
     PRODUCT_ADD_SUCCESS,
     PRODUCT_ADD_FAIL,
-    PRODUCT_GET_BY_ID_SUCCESS,
-    PRODUCT_GET_BY_ID_FAIL,
-    PRODUCT_GET_BY_ID,
+    PRODUCT_GET_SUCCESS,
+    PRODUCT_GET_FAIL,
+    PRODUCT_GET,
     PRODUCT_EDIT,
     PRODUCT_EDIT_SUCCESS,
     PRODUCT_EDIT_FAIL,
@@ -20,27 +17,7 @@ import {
     PRODUCT_DISABLE_FAIL,
     PRODUCT_DISABLE,
 } from '~/redux/actions/product';
-import {
-    apiLoadProducts,
-    apiAddProducts,
-    apiGetProductById,
-    apiEditProduct,
-    apiDisableProduct,
-    apiEnableProduct,
-} from '~/app-data/product';
-
-function* handleLoadProducts({ type, payload }) {
-    try {
-        const response = yield call(apiLoadProducts, payload);
-        if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_LIST_SUCCESS(response));
-        } else {
-            yield put(PRODUCT_LIST_FAIL());
-        }
-    } catch (error) {
-        console.log('error: ', error);
-    }
-}
+import { apiAddProducts, apiGetProduct, apiEditProduct, apiDisableProduct, apiEnableProduct } from '~/app-data/product';
 
 function* handleAddProducts({ type, payload }) {
     try {
@@ -55,13 +32,13 @@ function* handleAddProducts({ type, payload }) {
     }
 }
 
-function* handleGetProductById({ type, payload }) {
+function* handleGetProduct({ type, payload }) {
     try {
-        const response = yield call(apiGetProductById, payload);
+        const response = yield call(apiGetProduct, payload);
         if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_GET_BY_ID_SUCCESS(response));
+            yield put(PRODUCT_GET_SUCCESS(response));
         } else {
-            yield put(PRODUCT_GET_BY_ID_FAIL());
+            yield put(PRODUCT_GET_FAIL());
         }
     } catch (error) {
         console.log('error: ', error);
@@ -108,9 +85,8 @@ function* handleDisableProduct({ type, payload }) {
 }
 
 export default function* productSaga() {
-    yield takeLatest(PRODUCT_LIST_REQUEST().type, handleLoadProducts);
     yield takeLatest(PRODUCT_ADD().type, handleAddProducts);
-    yield takeLatest(PRODUCT_GET_BY_ID().type, handleGetProductById);
+    yield takeLatest(PRODUCT_GET().type, handleGetProduct);
     yield takeLatest(PRODUCT_EDIT().type, handleEditProduct);
     yield takeLatest(PRODUCT_ENABLE().type, handleEnableProduct);
     yield takeLatest(PRODUCT_DISABLE().type, handleDisableProduct);

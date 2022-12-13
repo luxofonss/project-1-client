@@ -5,3 +5,25 @@
 
 .container
      @include content-wrapper()
+
+     .form-wrapper
+          width: 100%
+          background-color: #fff
+          border-radius: 12px
+          padding: 40px
+
+          .form-item
+               @include form-item
+
+               .label
+                    @include label
+
+               .description
+                    @include description
+
+               .input
+                    @include input
+
+.products-title
+     font-weight: 600
+     margin-bottom: 40px
