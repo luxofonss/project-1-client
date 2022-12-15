@@ -35,6 +35,7 @@ export const listAuthenticationRoutes = authenticationRoutes.map((item) => {
         path: item.path,
         exactContainer: item?.exactContainer ?? true,
         layout: item.layout,
+        role: item.role,
     };
 });
 

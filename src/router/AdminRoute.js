@@ -8,7 +8,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { CHECK_VALID_TOKEN_FAIL } from '~/redux/actions/user';
 import { CHECK_VALID_TOKEN } from '~/redux/actions/user';
 
-function PrivateRoute({ component: Component, location, ...rest }) {
+function AdminRoute({ component: Component, location, ...rest }) {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
     const userRole = useSelector((state) => state.user?.profile?.role);
@@ -26,14 +26,19 @@ function PrivateRoute({ component: Component, location, ...rest }) {
             }
         })();
     }, [dispatch]);
-    switch (isAuthenticated) {
-        case REQUEST_STATE?.SUCCESS:
-            return <Route {...rest} render={(props) => <Component {...props} />} />;
-        case REQUEST_STATE?.ERROR:
-            return <Redirect to={{ pathname: '/auth', state: { from: location } }} />;
-        default:
-            return <FullPageLoading />;
+    if (userRole === 'admin') {
+        console.log('switch case running');
+        switch (isAuthenticated) {
+            case REQUEST_STATE?.SUCCESS:
+                return <Route {...rest} render={(props) => <Component {...props} />} />;
+            case REQUEST_STATE?.ERROR:
+                return <Redirect to={{ pathname: '/', state: { from: location } }} />;
+            default:
+                return <FullPageLoading />;
+        }
+    } else {
+        return <Redirect from="*" to="/not-found-page" />;
     }
 }
 
-export default PrivateRoute;
+export default AdminRoute;
