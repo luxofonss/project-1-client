@@ -9,7 +9,7 @@ function AppRoute() {
     return (
         <Suspense fallback={<Spin />}>
             <Switch>
-                {authenticationRoutes.map(({ component: Component, exact = true, path, isPrivate, ...rest }) => {
+                {authenticationRoutes.map(({ component: Component, exact = true, path, role, isPrivate, ...rest }) => {
                     if (isPrivate) {
                         return <PrivateRoute key={path} component={Component} exact={exact} path={path} {...rest} />;
                     } else
@@ -19,6 +19,7 @@ function AppRoute() {
                                 key={path}
                                 exact={exact}
                                 path={path}
+                                role={role}
                                 component={Component}
                                 {...rest}
                             />

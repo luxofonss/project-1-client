@@ -45,27 +45,29 @@ function App() {
         <ConnectedRouter history={history}>
             <Suspense fallback={<Spin />}>
                 <Switch>
-                    {listAppRoutes.map(({ layout, path, role, exactContainer = true }) => (
-                        <Route
-                            path={path}
-                            render={() => {
-                                let RouteLayout = AppLayout;
-                                if (layout) {
-                                    RouteLayout = layout;
-                                }
+                    {listAppRoutes.map(({ layout, path, role, exactContainer = true }) => {
+                        return (
+                            <Route
+                                path={path}
+                                render={() => {
+                                    let RouteLayout = AppLayout;
+                                    if (layout) {
+                                        RouteLayout = layout;
+                                    }
 
-                                return (
-                                    <RouteLayout>
-                                        <AppRoute />
-                                    </RouteLayout>
-                                );
-                            }}
-                            role={role}
-                            key={path}
-                            exact={exactContainer}
-                        />
-                    ))}
-                    {listAuthenticationRoutes.map(({ layout, path, role, exactContainer = true }) => (
+                                    return (
+                                        <RouteLayout>
+                                            <AppRoute />
+                                        </RouteLayout>
+                                    );
+                                }}
+                                role={role}
+                                key={path}
+                                exact={exactContainer}
+                            />
+                        );
+                    })}
+                    {listAuthenticationRoutes.map(({ layout, path, exactContainer = true }) => (
                         <Route
                             path={path}
                             render={() => {
@@ -81,7 +83,6 @@ function App() {
                                     </RouteLayout>
                                 );
                             }}
-                            role={role}
                             key={path}
                             exact={exactContainer}
                         />

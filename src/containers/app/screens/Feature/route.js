@@ -11,7 +11,7 @@ export default {
     path: '/',
     exact: true,
     isPrivate: true,
-    role: 'admin',
+    role: '',
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([featureModule], 'app');

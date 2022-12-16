@@ -42,7 +42,7 @@ export function getMenu(label, path, key, icon) {
 }
 
 const menuItems = [
-    getMenu('Dashboard', '/contract-manager', 'dashboard', <IconDashboard />),
+    getMenu('Dashboard', '/', 'dashboard', <IconDashboard />),
     getMenu('Product', '/product', 'product', <IconShopBasket />),
     getMenu('Category', '/category', 'category', <IconCategory />),
     getMenu('User', '/payment', 'user', <IconUser />),
@@ -52,7 +52,7 @@ const menuItems = [
 
 const UserInfo = () => <Link to="/me/info">Chỉnh sửa thông tin cá nhân</Link>;
 const ContractManager = () => (
-    <Link className={cx('nav-text')} to="/contract-manager">
+    <Link className={cx('nav-text')} to="/">
         Quản lý hợp đồng
     </Link>
 );
