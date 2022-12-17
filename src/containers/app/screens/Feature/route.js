@@ -11,7 +11,7 @@ export default {
     path: '/',
     exact: true,
     isPrivate: true,
-    role: '',
+    role: ['admin', 'user'],
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([featureModule], 'app');
@@ -24,7 +24,7 @@ export const childRoutes = [
         path: '/product',
         exact: true,
         isPrivate: true,
-        role: 'admin',
+        role: ['admin'],
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([featureModule], 'app');
@@ -36,7 +36,7 @@ export const childRoutes = [
         path: '/product/add',
         exact: true,
         isPrivate: true,
-        role: 'admin',
+        role: ['admin'],
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([featureModule], 'app');
@@ -48,7 +48,7 @@ export const childRoutes = [
         path: '/product/edit/:id',
         exact: true,
         isPrivate: true,
-        role: 'admin',
+        role: ['admin'],
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([featureModule], 'app');
@@ -59,7 +59,7 @@ export const childRoutes = [
         path: '/category',
         exact: true,
         isPrivate: true,
-        role: 'user',
+        role: ['user'],
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([featureModule], 'app');
@@ -70,7 +70,7 @@ export const childRoutes = [
         path: '/category/edit/:id',
         exact: true,
         isPrivate: true,
-        role: 'user',
+        role: ['user'],
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([featureModule], 'app');
