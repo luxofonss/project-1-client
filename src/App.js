@@ -13,7 +13,7 @@ import { RESET_NOTIFY_STATE } from '~/redux/actions/notify';
 import { REQUEST_STATE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout/AppLayout';
 import AuthLayout from '~/components/Layout/AuthLayout/AuthLayout';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { storage } from '~/firebase';
 
 console.debug('listAppRoutes =>', listAppRoutes);

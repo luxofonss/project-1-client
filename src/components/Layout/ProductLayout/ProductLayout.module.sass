@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900")
+
+.app-layout
+    min-height: 80vh
+    position: relative
+    margin-top: 5px
+    display: flex
+
+    .sider
+        background-color: #F9F9FB
+        width: 100%
+        padding: 40px
+        height: 100%
+
+        .filter-wrapper
+            h4
+                font-size: 20px
+                font-weight: 600
+
+.slider
+    width: 300px
+    height: 100vh
+    border: none
+    background-color: var(--white)
+    position: sticky
+    position: -webkit-sticky
+    top: 0
+    display: flex
+    flex-direction: column
+
+    .logo
+        height: 90px
+        margin: 0 auto
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .menu
+        flex: 1
+        list-style: none !important
+        .menu-item
+            width: 90%
+            height: 40px
+            margin-bottom: 8px
+            border-radius: 8px
+            display: flex
+            align-items: center
+            padding-left: 50px
+            position: relative
+            transition: all 0.1s ease-in-out
+            cursor: pointer
+
+            .text
+                pointer-events: none
+
+            .icon
+                pointer-events: none
+                width: 33px
+                height: 33px
+                display: flex
+                justify-content: center
+                align-items: center
+                position: absolute
+                left: 5px
+
+            &:hover
+
+                background-color: #ededed
+                transform: scale(1.02)
+        .active
+            transform: scale(1.02)
+            background-color: #d5d8ff
+            .icon
+                background: #c0ebff
+                border-radius: 8px
+                box-shadow: 0 0 10px rgb(0 0 0 / 12%)
+
+    .slider-footer
+        margin: 0 0 20px 0
+        display: flex
+        flex-direction: column
+        align-items: center

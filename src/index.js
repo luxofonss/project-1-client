@@ -11,6 +11,7 @@ import GlobalStyles from '~/components/GlobalStyles';
 import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import 'antd/dist/reset.css';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);

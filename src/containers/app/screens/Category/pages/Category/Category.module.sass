@@ -1,0 +1,41 @@
+@use '../../../../../../components/GlobalStyles/mixins' as *
+
+.wrapper
+    @include content-wrapper(0px 20px 20px)
+
+.table
+    padding: 15px 25px
+
+.edit-wrapper
+    border-radius: 100%
+    height: 22px
+    width: 22px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    color: var(--white)
+    background-color: white
+    box-shadow: 0 2px 10px #ccc
+    &:hover
+        background-color: #e9eff3
+
+    &:focus
+        box-shadow: 0 0 0 2px black
+
+.form-wrapper
+    width: 100%
+    background-color: #fff
+    border-radius: 12px
+    padding: 40px
+
+    .form-item
+        @include form-item
+
+        .label
+            @include label
+
+        .description
+            @include description
+
+        .input
+            @include input

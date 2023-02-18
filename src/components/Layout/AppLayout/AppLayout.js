@@ -1,5 +1,5 @@
 import { Layout, Menu } from 'antd';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -42,12 +42,12 @@ export function getMenu(label, path, key, icon) {
 }
 
 const menuItems = [
-    getMenu('Dashboard', '/', 'dashboard', <IconDashboard />),
-    getMenu('Product', '/product', 'product', <IconShopBasket />),
-    getMenu('Category', '/category', 'category', <IconCategory />),
-    getMenu('User', '/payment', 'user', <IconUser />),
-    getMenu('Order', '/request-history', 'order', <IconOrder />),
-    getMenu('Transaction', '/support-request', 'transaction', <IconTransaction />),
+    getMenu('Dashboard', '/admin', 'dashboard', <IconDashboard />),
+    getMenu('Product', '/admin/product', 'product', <IconShopBasket />),
+    getMenu('Category', '/admin/category', 'category', <IconCategory />),
+    getMenu('User', '/admin/payment', 'user', <IconUser />),
+    getMenu('Order', '/admin/request-history', 'order', <IconOrder />),
+    getMenu('Transaction', '/admin/support-request', 'transaction', <IconTransaction />),
 ];
 
 const UserInfo = () => <Link to="/me/info">Chỉnh sửa thông tin cá nhân</Link>;

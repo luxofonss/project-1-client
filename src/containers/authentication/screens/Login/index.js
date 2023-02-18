@@ -165,39 +165,87 @@ function Login({ authAction = 'login' }) {
                     {action !== 'login' && (
                         <Form onSubmit={handleSubmit(onSignUp)} className={cx('sign-form mt-5')}>
                             <Row>
-                                <Col xs={12}>
-                                    <Form.Group className="mb-1" controlId="full_name">
-                                        <Form.Label className={cx('input-label')}>Full name*</Form.Label>
+                                <Col xs={6}>
+                                    <Form.Group className="mb-1" controlId="firstName">
+                                        <Form.Label className={cx('input-label')}>First name*</Form.Label>
                                         <Form.Control
-                                            {...register('full_name', {
+                                            {...register('firstName', {
                                                 required: true,
                                             })}
-                                            name="full_name"
+                                            name="firstName"
                                             type="text"
-                                            placeholder="Full name"
+                                            placeholder="First name"
                                         />
-                                        {errors.full_name?.type === 'required' && (
+                                        {errors.firstName?.type === 'required' && (
+                                            <div className={cx('auth__error')}>This field is required!</div>
+                                        )}
+                                    </Form.Group>
+                                </Col>
+                                <Col xs={6}>
+                                    <Form.Group className="mb-1" controlId="lastName">
+                                        <Form.Label className={cx('input-label')}>Last name*</Form.Label>
+                                        <Form.Control
+                                            {...register('lastName', {
+                                                required: true,
+                                            })}
+                                            name="lastName"
+                                            type="text"
+                                            placeholder="First name"
+                                        />
+                                        {errors.lastName?.type === 'required' && (
+                                            <div className={cx('auth__error')}>This field is required!</div>
+                                        )}
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs={12}>
+                                    <Form.Group className="mb-1" controlId="gender">
+                                        <Form.Label className={cx('input-label')}>Gender*</Form.Label>
+                                        <Form.Select
+                                            {...register('gender', {
+                                                required: true,
+                                            })}
+                                            aria-label="Default select example"
+                                            default="1"
+                                        >
+                                            {/* <option>Open this select menu</option> */}
+                                            <option value="0" default>
+                                                Male
+                                            </option>
+                                            <option value="1">Female</option>
+                                        </Form.Select>
+                                        {/* 
+                                        <Form.Control
+                                            {...register('gender', {
+                                                required: true,
+                                            })}
+                                            name="gender"
+                                            type="select"
+                                            placeholder="First name"
+                                        /> */}
+                                        {errors.gender?.type === 'required' && (
                                             <div className={cx('auth__error')}>This field is required!</div>
                                         )}
                                     </Form.Group>
                                 </Col>
                             </Row>
 
-                            <Form.Group className="mb-1" controlId="phone_num">
+                            <Form.Group className="mb-1" controlId="phoneNumber">
                                 <Form.Label className={cx('input-label')}>Phone number*</Form.Label>
                                 <Form.Control
-                                    {...register('phone_num', {
+                                    {...register('phoneNumber', {
                                         required: true,
                                         pattern: getPhoneNumberValidationRegex(),
                                     })}
-                                    name="phone_num"
+                                    name="phoneNumber"
                                     type="text"
                                     placeholder="Enter your phone number"
                                 />
-                                {errors.phone_num?.type === 'required' && (
+                                {errors.phoneNumber?.type === 'required' && (
                                     <div className={cx('auth__error')}>This field is required!</div>
                                 )}
-                                {errors.phone_num?.type === 'pattern' && (
+                                {errors.phoneNumber?.type === 'pattern' && (
                                     <div className={cx('auth__error')}>Phone number is not valid!</div>
                                 )}
                             </Form.Group>
@@ -261,9 +309,9 @@ function Login({ authAction = 'login' }) {
                                 {errors.password?.type === 'required' && (
                                     <div className={cx('auth__error')}>This field is required!</div>
                                 )}
-                                {errors.password?.type === 'required' && (
+                                {/* {errors.password?.type === 'required' && (
                                     <div className={cx('auth__error')}>This field is required!</div>
-                                )}
+                                )} */}
                             </Form.Group>
                             <div className={cx('mx-auto', 'btn-wrapper')}>
                                 <PrimaryButton>
@@ -281,7 +329,7 @@ function Login({ authAction = 'login' }) {
                                 height: '100%',
                                 backgroundSize: 'cover',
                                 backgroundImage:
-                                    'url(https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.15752-9/254956017_619873522485777_2059317096078807504_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=ae9488&_nc_ohc=29oktWIUwU8AX8Qdb50&tn=zNlSR_CcugEbSCGq&_nc_ht=scontent.fsgn2-1.fna&oh=03_AdTF_r78UZNSddB3PJDGS4Hju3sm1glvBRBTBXWiR3bexA&oe=63A463C0)',
+                                    'url(https://img.freepik.com/premium-vector/happy-new-year-2023-chinese-new-year-year-cat-happy-lunar-new-year-2023-cat-illustration_692630-141.jpg?w=2000)',
                             }}
                         ></div>
                     )}

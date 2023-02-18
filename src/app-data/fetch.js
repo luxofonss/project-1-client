@@ -68,6 +68,12 @@ export const PUT = (path, params, options = {}) => {
     return axios.put(_url, params, _options).then((response) => response.data);
 };
 
+export const PATCH = (path, params, options = {}) => {
+    const _url = options.isFullPath ? path : Configs.BASE_API + path;
+    const _options = getOptions(options);
+    return axios.patch(_url, params, _options).then((response) => response.data);
+};
+
 export const DELETE = (path, params, options = {}) => {
     const _url = options.isFullPath ? path : Configs.BASE_API + path;
     const _options = getOptions(options);

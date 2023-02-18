@@ -1,0 +1,32 @@
+@use '../../../../../../components/GlobalStyles/mixins' as *
+
+.wrapper
+    @include content-wrapper()
+
+    .header
+        display: flex
+        justify-content: space-between
+
+        .filter-form
+            display: flex
+            gap: 16px
+            align-items: flex-end
+
+.search
+    width: 800px !important
+    display: flex
+
+.select
+    width: 150px!important
+
+.product-list
+    margin-top: 32px
+
+.item-wrapper
+    display: flex
+    justify-content: center
+    margin-bottom: 32px
+
+.edit-icon
+    cursor: pointer
+    text-align: right !important

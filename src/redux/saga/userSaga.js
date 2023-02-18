@@ -15,7 +15,7 @@ function* handleLogin({ type, payload }) {
     try {
         const response = yield call(apiLogin, payload);
         if (response.state === REQUEST_STATE.SUCCESS) {
-            localStorage.setItem(TOKEN_KEY, response.data.token);
+            localStorage.setItem(TOKEN_KEY, response.data.accessToken);
             const profile = yield call(apiProfile);
             yield put(LOGIN_SUCCESS(profile?.data));
         } else {
@@ -31,7 +31,7 @@ function* handleSignUp({ type, payload }) {
         const response = yield call(apiSignUp, payload);
         if (response.state === REQUEST_STATE.SUCCESS) {
             // console.log()
-            localStorage.setItem(TOKEN_KEY, response.data.token);
+            localStorage.setItem(TOKEN_KEY, response.data.accessToken);
             const profile = yield call(apiProfile);
             yield put(SIGNUP_SUCCESS(profile?.data));
         } else {

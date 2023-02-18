@@ -5,7 +5,7 @@ import { GET } from '~/app-data/fetch';
 
 export const apiLogin = async (params) => {
     try {
-        const response = await POST('/api/users/login', params, { isFullPath: false });
+        const response = await POST('/api/auth/login', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -22,7 +22,8 @@ export const apiLogin = async (params) => {
 
 export const apiSignUp = async (params) => {
     try {
-        const response = await POST('/api/users/signup', params, { isFullPath: false });
+        const response = await POST('/api/auth/signup', params, { isFullPath: false });
+
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -40,9 +41,9 @@ export const apiSignUp = async (params) => {
 export const apiProfile = async () => {
     try {
         const response = await GET(
-            '/api/users/profile',
+            '/api/auth/profile',
             {
-                token: localStorage.getItem(TOKEN_KEY),
+                // token: localStorage.getItem(TOKEN_KEY),
             },
             { isFullPath: false },
         );

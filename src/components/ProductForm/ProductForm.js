@@ -13,7 +13,7 @@ function ProductForm(props) {
                 <div
                     className={cx('item-image')}
                     style={{
-                        backgroundImage: `url("${props.product.image}")`,
+                        backgroundImage: `url("${props.product?.Images[0]?.src}")`,
                     }}
                 ></div>
                 <h3 className={cx('item-name')}>{props.product.name}</h3>
@@ -24,15 +24,19 @@ function ProductForm(props) {
                 <div className={cx('bottom-sec')}>
                     <div
                         className={cx(
-                            props.product.total <= 0 || props.product.deleted_at !== null
+                            props.product.total <= 0 ||
+                                props.product.deletedAt !== null ||
+                                props.product.isActive === true
                                 ? 'product-inactive'
                                 : 'product-active',
                         )}
                     >
-                        {props.product.total <= 0 || props.product.deleted_at !== null ? 'inactive' : 'active'}
+                        {props.product.total <= 0 || props.product.deletedAt !== null || props.product.isActive === true
+                            ? 'inactive'
+                            : 'active'}
                     </div>
 
-                    <Link to={`/product/edit/${props.product.id}`}>
+                    <Link to={`/admin/product/edit/${props.product.id}`}>
                         <div className={cx('edit-icon')}></div>
                         <IconEdit />
                     </Link>

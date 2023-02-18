@@ -1,0 +1,64 @@
+@use '../../../../../../components/GlobalStyles/mixins' as *
+
+.back
+    @include back-btn
+
+.wrapper
+    @include content-wrapper()
+    margin-top: 28px
+
+    .add-product-form
+        width: 100%
+        background-color: #fff
+        border-radius: 12px
+
+        padding: 40px
+
+        .form-item
+            @include form-item
+
+            .label
+                @include label
+
+            .description
+                @include description
+
+            .input
+                @include input
+
+        .form-select
+            display: flex
+            flex-direction: column
+
+            .label
+                @include label
+
+            .select-wrapper
+                @include select-wrapper
+
+.upload-wrapper
+    background-color: #ededed
+    border-radius: 5px
+    margin: 30px 0
+    padding: 13px 0
+
+    .upload
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: 0px
+        width: 70%
+        height: 42px
+        border: 2px dashed #add2f7
+        border-radius: 24px
+        align-self: stretch
+        margin: 22px auto 0
+
+        .label
+            display: flex
+            gap: 10px
+
+.circle-button
+    @include circle-button
+    margin-top: 30px
+    margin-left: 16px

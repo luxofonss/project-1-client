@@ -6,7 +6,6 @@ import PrivateRoute from '~/router/PrivateRoute';
 import PublicRoute from '~/router/PublicRoute';
 
 function AppRoute() {
-    console.log('app route running');
     return (
         <Suspense fallback={<FullPageLoading />}>
             <Switch>

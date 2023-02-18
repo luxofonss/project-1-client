@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@adobe/redux-saga-promise": "^1.1.1",
+        "@ant-design/colors": "^7.0.0",
         "@ant-design/icons": "^4.7.0",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
@@ -28,7 +29,7 @@
         "@radix-ui/react-popover": "1.0.2",
         "@radix-ui/react-select": "^1.1.2",
         "@reduxjs/toolkit": "^1.9.1",
-        "antd": "4.20.0-alpha.1",
+        "antd": "^5.1.6",
         "axios": "^0.23.0",
         "bootstrap": "^5.2.3",
         "classnames": "^2.3.2",

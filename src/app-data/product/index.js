@@ -1,6 +1,7 @@
 import { REQUEST_STATE } from '~/app-configs';
 import { POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
+import { PATCH } from '~/app-data/fetch';
 
 export const apiLoadProducts = async (params) => {
     try {
@@ -21,7 +22,7 @@ export const apiLoadProducts = async (params) => {
 
 export const apiAddProducts = async (body) => {
     try {
-        const response = await POST('/api/product/create-product', body, { isFullPath: false });
+        const response = await POST('/api/product/create', body, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -37,7 +38,7 @@ export const apiAddProducts = async (body) => {
 };
 export const apiGetProduct = async (params) => {
     try {
-        const response = await GET(`/api/product/get-product`, params, { isFullPath: false });
+        const response = await GET(`/api/product`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -54,7 +55,7 @@ export const apiGetProduct = async (params) => {
 
 export const apiEditProduct = async (body) => {
     try {
-        const response = await POST('/api/product/edit', body, { isFullPath: false });
+        const response = await PATCH('/api/product/update', body, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

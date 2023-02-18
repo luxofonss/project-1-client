@@ -1,11 +1,16 @@
 @import-normalize
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap')
-@import "~bootstrap/scss/bootstrap"
-// @import './mixin'
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;700;800;900&display=swap')
+// @import "~bootstrap/scss/bootstrap"
+@import "./variables.sass"
+@import "./animations.sass"
+@import "./mixins.sass"
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display')
 
 body
     margin: 0
-    font-family: 'Manrope', sans-serif
+    paddinng: 0
+    font-family: 'SF Pro Display','Inter','Manrope', sans-serif
     font-weight: 500
 
 :root
@@ -21,6 +26,26 @@ body
     --dark-grey: #1B1E25
     --dark-text-2: #504F54
     --divider-color: #F4F4F4
+
+::-webkit-scrollbar
+    width: 8px
+    height: 3px
+/* Track */
+::-webkit-scrollbar-track
+    background: #f1f1f1
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background: #BBBBBB
+::-webkit-scrollbar-thumb:hover
+    background: #555
+    background: var(--place-holder)
+    border-radius: 10px
+    &:hover
+        background: #8EA6D2
+
+a
+    text-decoration: none
 
 a
     text-decoration: none
@@ -44,6 +69,10 @@ iframe
     display: flex
     justify-content: space-between
     flex-direction: column
+
+.flex-between
+    display: flex
+    justify-content: space-between
 
 .flex-height-center
     display: flex
@@ -93,6 +122,9 @@ iframe
 
 .cl-white
     color: #fff
+
+.hide
+    display: none
 
 .hover-pointer
     &:hover

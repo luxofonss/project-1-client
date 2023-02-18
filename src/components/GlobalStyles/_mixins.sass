@@ -1,0 +1,145 @@
+@mixin form-item
+     display: flex
+     flex-direction: column
+     margin-bottom: 12px
+
+@mixin label
+     font-weight: 500
+     font-size: 14px
+     line-height: 18px
+     letter-spacing: 0.175px
+     color: #000000
+     margin-bottom: 4px
+
+@mixin description
+     min-height: 100px!important
+
+@mixin input
+     padding: 12px
+     gap: 10px
+     width: 100%
+     height: 42px
+     border-radius: 12px
+     box-sizing: border-box
+     outline: none
+     border: 2px solid #E3E1E5
+
+     &:focus
+          border: 2px solid rgba(0, 165, 255, 0.2)
+
+@mixin content-wrapper($padding: 40px)
+     width: 100%
+     background-color: var(--white)
+     border-radius: 12px
+     border: 1px solid rgba(102, 111, 232, 0.08)
+     box-shadow: 0px 5px 10px rgba(46, 91, 255, 0.2)
+     padding: $padding
+
+@mixin back-btn
+     position: absolute
+     top: -15px
+     left: 25px
+     color: var(--text-dark)
+     font-weight: 700
+     font-size: 18px
+     width: 110px
+     display: flex
+     justify-content: space-between
+     align-items: center
+
+@mixin select-wrapper
+     padding: 8px 16px
+     gap: 8px
+     width: 100%
+     height: 42px
+     border: 2px solid #E3E1E5
+     border-radius: 12px
+     outline: none
+     margin-bottom: 12px
+
+@mixin center
+     display: flex
+     justify-content: center
+     align-items: center
+
+@mixin center-y
+     display: flex
+     align-items: center
+
+@mixin big-heading
+     font-weight: 700
+     font-size: 24px
+     line-height: 26px
+     display: flex
+     align-items: center
+     margin-bottom: 40px
+     letter-spacing: -0.18px
+     color: var(--header-color)
+
+@mixin small-heading
+     display: flex
+     justify-content: space-between
+     font-weight: 600
+     font-size: 14px
+     line-height: 26px
+     color: var(--header-color)
+     margin-bottom: 12px
+
+@mixin input-style($color: var(--text-dark), $background: var(--light-80))
+     height: 100%
+     width: 100%
+     border-radius: 8px
+     padding: 8px 16px 8px 16px
+     display: flex
+     align-items: center
+     background: $background
+     color: $color
+     font-weight: 500
+     font-size: 14px
+     line-height: 26px
+     border: none
+     outline: none
+     transition: all 0.2s ease
+
+     // &:focus
+     //      border-color: #4096ff
+     //      box-shadow: 0 0 0 2px rgb(5 145 255 / 10%)
+     //      border-inline-end-width: 1px
+     //      outline: 0
+
+@mixin button-style
+     position: relative
+     background: var(--button-color)
+     border-radius: 8px
+     padding: 8px 16px
+     gap: 8px
+     min-width: 80px
+     height: 42px
+     border: none
+     font-weight: 700
+     font-size: 15px
+     color: var(--button-text-color)
+     cursor: pointer
+     overflow: hidden!important
+     outline: none
+     transition: all .2s linear
+     &:hover
+          opacity: 0.8
+
+     &:focus
+          outline: none
+          border: none
+
+@mixin circle-button ($width: 32px, $height: 32px, $background: var(--client-button-primary), $background-color: var(--client-button-primary), $border:rgba(102, 111, 232, 0.08), $box-shadow:rgba(46, 91, 255, 0.2) )
+     width: $width
+     height: $height
+     display: flex
+     justify-content: center
+     align-items: center
+     border-radius: 50%
+     background-color: $background-color
+     background: $background
+     border: 1px solid $border
+     box-shadow: 0px 5px 10px $box-shadow
+     &:hover
+          cursor: pointer

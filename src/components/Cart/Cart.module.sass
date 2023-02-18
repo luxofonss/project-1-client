@@ -1,0 +1,40 @@
+@import '../GlobalStyles/_mixins'
+
+.cart-tab
+    width: 420px
+    background-color: var(--light-50)!important
+    border: 1px solid black
+
+    .header
+        padding: 16px
+        // background-color: #ccc!important
+
+        .text
+            font-size: 20px
+
+    .list
+        padding: 0 16px
+        max-height: 455px
+        overflow-y: scroll
+
+    .footer
+        background-color: #fff
+        padding-bottom: 24px
+
+        .total
+            height: 56px
+            display: flex
+            justify-content: space-between
+            align-items: center
+            padding: 0 16px
+            font-size: 20px
+            text-transform: uppercase
+            font-weight: 400
+
+        .button
+            @include button-style
+            box-sizing: border-box
+            width: calc( 100% - 32px )
+            margin: 0 16px
+            background-color: #ccc
+            border-radius: 5px

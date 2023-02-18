@@ -1,0 +1,73 @@
+.item
+     display: flex
+     justify-content: space-between
+     flex-direction: column
+     padding: 8px
+     height: 250px!important
+     width: 100%
+     border-radius: 4px
+     background: #FFFFFF
+     box-shadow: 0px 2px 40px rgba(85, 85, 85, 0.07)
+     transition: all 0.3s ease
+     position: relative
+     cursor: pointer
+
+     &:hover
+          box-shadow: 0px 5.2226px 14.8771px 2px rgba(177, 174, 199, 0.5)
+          transform: scale(1.01)
+     .tag
+          position: absolute
+          top: 8px
+          right: 10px
+          height: 30px
+          max-width: 110px
+          padding: 0 4px
+          overflow: hidden
+          background-color: #fddf5a
+          color: #fff
+          display: flex
+          align-items: center
+          justify-content: flex-start
+
+     &:hover
+          // box-shadow: 1px 2px 20px 2px #c4deda
+
+     .image
+          // width: 100%!important
+          height: 140px!important
+
+     .top
+          display: flex
+          justify-content: space-between
+          align-items: center
+          margin-top: 8px
+
+          .star
+               margin-top: 4px
+               color: var(--dark-text-2)
+               display: flex
+               align-items: center
+
+          .name
+               // color: var(--dark-text-2)
+               // font-size: 18px
+               font-family: 'SF Pro Display','Inter','Manrope', sans-serif
+               font-style: normal
+               font-weight: 600
+               font-size: 14.9436px
+               line-height: 23px
+               color: #000000
+
+     .footer
+          display: flex
+          justify-content: space-between
+          align-items: center
+          margin-top: 8px
+          margin-bottom: 6px
+
+.view-more
+     font-size: 17px
+     font-weight: 500
+     width: 100%
+     display: flex
+     justify-content: flex-end

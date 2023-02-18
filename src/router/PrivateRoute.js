@@ -9,7 +9,6 @@ import { CHECK_VALID_TOKEN_FAIL, RESET_CHECK_VALID_TOKEN } from '~/redux/actions
 import { CHECK_VALID_TOKEN } from '~/redux/actions/user';
 
 function PrivateRoute({ component: Component, location, role, ...rest }) {
-    console.log('private route runningggg');
     const dispatch = useDispatch();
     const userRole = useSelector((state) => state.user?.profile?.role);
     const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
@@ -32,8 +31,6 @@ function PrivateRoute({ component: Component, location, role, ...rest }) {
             dispatch(RESET_CHECK_VALID_TOKEN());
         }
     }, [isAuthenticated]);
-
-    console.log('isAuthenticated', isAuthenticated);
 
     switch (isAuthenticated) {
         case REQUEST_STATE?.SUCCESS: {

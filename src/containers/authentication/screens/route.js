@@ -5,6 +5,7 @@ import { initModules } from '~/router/index';
 export const loginModule = { key: 'signup', path: 'Signup' };
 
 const container = 'authentication';
+
 export default {
     path: '/auth',
     exact: true,

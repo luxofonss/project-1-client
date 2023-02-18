@@ -1,0 +1,41 @@
+@use '../../../../../../components/GlobalStyles/mixins' as *
+
+.back
+     @include back-btn
+
+.container
+     @include content-wrapper()
+
+     .form-wrapper
+          width: 100%
+          background-color: #fff
+          border-radius: 12px
+          padding: 40px
+
+          .form-item
+               @include form-item
+
+               .label
+                    @include label
+
+               .description
+                    @include description
+
+               .input
+                    @include input
+
+.products-title
+     font-weight: 600
+     margin-bottom: 40px
+
+.header
+     display: flex
+     justify-content: space-between
+     margin-bottom: 24px
+
+     .select
+          width: 150px!important
+
+.search
+     width: 800px !important
+     display: flex
