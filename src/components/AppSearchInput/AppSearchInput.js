@@ -29,8 +29,9 @@ const AppSearchInput = ({
     const selections = useRef();
     const wrapperRef = useRef();
 
-    const handleSelect = (code, name, index) => {
-        setSelected({ name: name, code: code });
+    const handleSelect = (code, optionName, index) => {
+        setSelected({ name: optionName, code: code });
+        setValue(name, optionName);
         setActive(index);
         selections.current.classList.toggle('hide');
         setIconClick(!iconClick);

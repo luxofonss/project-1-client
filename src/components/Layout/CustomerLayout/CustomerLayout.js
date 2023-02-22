@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { SIDER_COLLAPSE } from '~/app-configs';
-import AppHeader from '~/components/Layout/components/ClientHeader';
+import AppHeader from '~/containers/app/screens/Customer/components/ClientHeader';
+import Footer from '../components/Footer';
 import styles from './CustomerLayout.sass';
 
 const cx = classNames.bind(styles);
@@ -86,6 +87,7 @@ function CustomerLayout({ children, match }) {
                 >
                     {children}
                 </Content>
+                <Footer />
             </Layout>
         </div>
     );

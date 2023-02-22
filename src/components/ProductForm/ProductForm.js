@@ -1,3 +1,4 @@
+import { accounting } from 'accounting';
 import classNames from 'classnames/bind';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ function ProductForm(props) {
                 ></div>
                 <h3 className={cx('item-name')}>{props.product.name}</h3>
                 <div className={cx('item-info')}>
-                    <span className={cx('item-price')}>{props.product.price} VND</span>
+                    <span className={cx('item-price')}>{accounting.formatNumber(props.product.price)} VND</span>
                     <span className={cx('item-price')}>Total: {props.product.total}</span>
                 </div>
                 <div className={cx('bottom-sec')}>

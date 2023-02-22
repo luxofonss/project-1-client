@@ -27,11 +27,6 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
         formState: { errors },
     } = useFormContext();
 
-    const onChange = (e) => {
-        setValue(name, value);
-        setChecked(true);
-    };
-
     const onClickItem = (e) => {
         const sizeIndex = e.target.getAttribute('sizeIndex');
         console.log(sizeIndex, e.target.innerHTML);
@@ -47,7 +42,7 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
 
     useLayoutEffect(() => {
         console.log('test');
-        setCheckedList(checked);
+        setCheckedList([...checked]);
         setValue(name, checked);
     }, [checked]);
 

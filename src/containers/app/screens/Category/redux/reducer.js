@@ -16,6 +16,7 @@ import {
     CATEGORY_RESTORE,
     CATEGORY_RESTORE_SUCCESS,
     CATEGORY_RESTORE_FAIL,
+    CATEGORY_CREATE_RESET,
 } from './action';
 
 const defaultState = {
@@ -71,6 +72,13 @@ export default combineReducers({
                     ...state,
                     state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case CATEGORY_CREATE_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

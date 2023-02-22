@@ -1,15 +1,14 @@
 import { combineReducers } from 'redux';
 import { REQUEST_STATE } from '~/app-configs';
 import {
-    PRODUCT_ADD,
-    PRODUCT_ADD_FAIL,
-    PRODUCT_ADD_SUCCESS,
-    PRODUCT_EDIT,
-    PRODUCT_EDIT_FAIL,
-    PRODUCT_EDIT_SUCCESS,
-    PRODUCT_GET,
-    PRODUCT_GET_FAIL,
-    PRODUCT_GET_SUCCESS,
+    CREATE_PROMO,
+    CREATE_PROMO_FAIL,
+    CREATE_PROMO_RESET,
+    CREATE_PROMO_SUCCESS,
+    GET_ALL_PROMO,
+    GET_ALL_PROMO_FAIL,
+    GET_ALL_PROMO_RESET,
+    GET_ALL_PROMO_SUCCESS,
 } from './action';
 
 const defaultState = {
@@ -18,78 +17,66 @@ const defaultState = {
 };
 
 export default combineReducers({
-    createProduct: (state = { ...defaultState }, action) => {
+    createPromo: (state = { ...defaultState }, action) => {
         switch (action.type) {
-            case PRODUCT_ADD().type: {
+            case CREATE_PROMO().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.REQUEST,
                 };
             }
-            case PRODUCT_ADD_SUCCESS().type: {
-                return {
-                    ...state,
-                    state: REQUEST_STATE.SUCCESS,
-                    // products: action.payload,
-                };
-            }
-            case PRODUCT_ADD_FAIL().type: {
-                return {
-                    ...state,
-                    state: REQUEST_STATE.ERROR,
-                    errorMessageKey: action.payload,
-                };
-            }
-            default:
-                return state;
-        }
-    },
-    listProduct: (state = { ...defaultState }, action) => {
-        switch (action.type) {
-            case PRODUCT_GET().type: {
-                return {
-                    ...state,
-                    state: REQUEST_STATE.REQUEST,
-                };
-            }
-            case PRODUCT_GET_SUCCESS().type: {
+            case CREATE_PROMO_SUCCESS().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.SUCCESS,
                     data: action.payload,
                 };
             }
-            case PRODUCT_GET_FAIL().type: {
+            case CREATE_PROMO_FAIL().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case CREATE_PROMO_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:
                 return state;
         }
     },
-    update: (state = { ...defaultState }, action) => {
+    promoList: (state = { ...defaultState }, action) => {
         switch (action.type) {
-            case PRODUCT_EDIT().type: {
+            case GET_ALL_PROMO().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.REQUEST,
                 };
             }
-            case PRODUCT_EDIT_SUCCESS().type: {
+            case GET_ALL_PROMO_SUCCESS().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.SUCCESS,
-                    // products: action.payload,
+                    data: action.payload,
                 };
             }
-            case PRODUCT_EDIT_FAIL().type: {
+            case GET_ALL_PROMO_FAIL().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case GET_ALL_PROMO_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

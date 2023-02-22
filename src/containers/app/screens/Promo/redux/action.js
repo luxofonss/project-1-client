@@ -1,104 +1,55 @@
-export function PRODUCT_ADD(payload) {
+export function CREATE_PROMO(payload) {
     return {
-        type: 'PRODUCT_ADD',
+        type: 'CREATE_PROMO',
         payload: payload,
     };
 }
 
-export function PRODUCT_ADD_SUCCESS(payload) {
+export function CREATE_PROMO_SUCCESS(payload) {
     return {
-        type: 'PRODUCT_ADD_SUCCESS',
+        type: 'CREATE_PROMO_SUCCESS',
         payload: payload,
     };
 }
 
-export function PRODUCT_ADD_FAIL(payload) {
+export function CREATE_PROMO_FAIL(payload) {
     return {
-        type: 'PRODUCT_ADD_FAIL',
+        type: 'CREATE_PROMO_FAIL',
         payload: payload,
     };
 }
 
-export function PRODUCT_GET(payload) {
+export function CREATE_PROMO_RESET(payload) {
     return {
-        type: 'PRODUCT_GET',
+        type: 'CREATE_PROMO_RESET',
         payload: payload,
     };
 }
 
-export function PRODUCT_GET_SUCCESS(payload) {
+export function GET_ALL_PROMO(payload) {
     return {
-        type: 'PRODUCT_GET_SUCCESS',
+        type: 'GET_ALL_PROMO',
         payload: payload,
     };
 }
 
-export function PRODUCT_GET_FAIL(payload) {
+export function GET_ALL_PROMO_SUCCESS(payload) {
     return {
-        type: 'PRODUCT_GET_FAIL',
+        type: 'GET_ALL_PROMO_SUCCESS',
         payload: payload,
     };
 }
 
-export function PRODUCT_EDIT(payload) {
+export function GET_ALL_PROMO_FAIL(payload) {
     return {
-        type: 'PRODUCT_EDIT',
+        type: 'GET_ALL_PROMO_FAIL',
         payload: payload,
     };
 }
 
-export function PRODUCT_EDIT_SUCCESS(payload) {
+export function GET_ALL_PROMO_RESET(payload) {
     return {
-        type: 'PRODUCT_EDIT_SUCCESS',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_EDIT_FAIL(payload) {
-    return {
-        type: 'PRODUCT_EDIT_FAIL',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_DISABLE(payload) {
-    return {
-        type: 'PRODUCT_DISABLE',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_DISABLE_SUCCESS(payload) {
-    return {
-        type: 'PRODUCT_DISABLE_SUCCESS',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_DISABLE_FAIL(payload) {
-    return {
-        type: 'PRODUCT_DISABLE_FAIL',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_ENABLE(payload) {
-    return {
-        type: 'PRODUCT_ENABLE',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_ENABLE_SUCCESS(payload) {
-    return {
-        type: 'PRODUCT_ENABLE_SUCCESS',
-        payload: payload,
-    };
-}
-
-export function PRODUCT_ENABLE_FAIL(payload) {
-    return {
-        type: 'PRODUCT_ENABLE_FAIL',
+        type: 'GET_ALL_PROMO_RESET',
         payload: payload,
     };
 }

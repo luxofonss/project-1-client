@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
 import { ADD_PRODUCT_TO_CART } from '~/containers/app/screens/Customer/redux/action';
 import { isEmptyValue } from '~/helpers/check';
@@ -17,16 +18,18 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
     const [sizeSelected, setSizeSelected] = useState(size);
     const [quantity, setQuantity] = useState();
     const [validate, setValidate] = useState(false);
+    const [error, setError] = useState(false);
     const [colorSelected, setColorSelected] = useState(color);
     const [checkedList, setCheckedList] = useState([]);
     const sizes = useSelector((state) => state.size);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const { register, setValue, handleSubmit } = useForm({ shouldUseNativeValidation: true });
+    const history = useHistory();
 
     const sizeList = useMemo(() => {
         let sizeListMemo = [];
         stocks.forEach((stock) => {
-            console.log('rerendering stock 2');
             sizeListMemo.push(stock.Size.id);
         });
         return sizeListMemo;
@@ -79,22 +82,34 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
     }, [colorSelected, sizeSelected]);
 
     const onSubmit = () => {
-        if (quantity > remainingStock) {
-            setValidate(true);
+        console.log('stock info', quantity, stockId);
+        if (!quantity && !stockId) {
+            setError(true);
+            console.log('set error');
         } else {
-            setValidate(false);
-            console.log('data: ', stockId, quantity);
-            dispatch(
-                ADD_PRODUCT_TO_CART({
-                    stockId: stockId,
-                    quantity: quantity,
-                }),
-            );
+            if (quantity > remainingStock) {
+                setValidate(true);
+            } else {
+                setError(false);
+                setValidate(false);
+                console.log('data: ', stockId, quantity);
+                dispatch(
+                    ADD_PRODUCT_TO_CART({
+                        stockId: stockId,
+                        quantity: quantity,
+                    }),
+                );
+                setIsModalOpen(false);
+            }
         }
     };
 
     const showModal = () => {
-        setIsModalOpen(true);
+        if (user.profile?.id) setIsModalOpen(true);
+        else {
+            console.log('auth');
+            history.push('/auth');
+        }
     };
     const handleOk = () => {
         setIsModalOpen(false);
@@ -156,7 +171,7 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                             })}
                     </div>
 
-                    <div className={cx('color')}>
+                    <div style={{ marginTop: '24px' }} className={cx('color')}>
                         {colorListRender?.map((color) => {
                             return (
                                 <Fragment>
@@ -187,8 +202,8 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                             );
                         })}
                     </div>
-                    <div>
-                        <label htmlFor="">Number of item:</label>
+                    <div className={cx('quantity')}>
+                        <label htmlFor="">Quantity:</label>
                         <input
                             id={`number${index}`}
                             type="number"
@@ -201,7 +216,10 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                         />
                         {quantity && validate && <div>Quantity must be smaller than {remainingStock}</div>}
                     </div>
-                    {remainingStock && <div>Total: {remainingStock}</div>}
+                    {remainingStock && <div className={cx('total')}>Total: {remainingStock}</div>}
+                    {error && (
+                        <div style={{ color: 'red', marginBottom: '12px' }}>Please choose size color and quantity</div>
+                    )}
                     <AppButton onClick={onSubmit} type="submit">
                         Submit
                     </AppButton>

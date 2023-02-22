@@ -91,6 +91,11 @@ function AddProduct() {
                                     <Col xs={12}>
                                         <AppInput name="name" label="Name" placeholder="Enter product name..." />
                                         <AppSelectApi apiURL="/api/category" name="categoryId" label="Category" />
+                                        <AppSelectInput
+                                            name={`gender`}
+                                            label="Gender"
+                                            options={['MEN', 'WOMEN', 'ALL']}
+                                        />
                                     </Col>
                                     <Col xs={12}>
                                         <AppInput name="id" label="Product code" placeholder="Enter product code..." />
@@ -99,6 +104,11 @@ function AddProduct() {
                                             name="price"
                                             label="Price"
                                             placeholder="Enter product price..."
+                                        />
+                                        <AppSelectInput
+                                            name={`form`}
+                                            label="Form"
+                                            options={['Low top', 'Hight top', 'Mid top', 'Mule']}
                                         />
                                     </Col>
                                     <Col xs={24}>

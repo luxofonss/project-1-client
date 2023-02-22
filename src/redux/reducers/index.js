@@ -4,6 +4,7 @@ import history from '~/helpers/history';
 import userReducer from './user';
 import notifyReducer from './notify';
 import sizeReducer from './size';
+import colorReducer from './color';
 
 export default (asyncReducers) => {
     return combineReducers({
@@ -11,6 +12,7 @@ export default (asyncReducers) => {
         user: userReducer,
         notify: notifyReducer,
         size: sizeReducer,
+        color: colorReducer,
         ...asyncReducers,
     });
 };

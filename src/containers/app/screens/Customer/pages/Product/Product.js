@@ -14,6 +14,8 @@ import AppSizeSelect from '~/components/AppSizeSelect';
 import AppButton from '~/components/AppButton/AppButton';
 import { REQUEST_STATE } from '~/app-configs';
 import { ADD_PRODUCT_TO_CART_RESET } from '../../redux/action';
+import accounting from 'accounting';
+import ColorSelection from '~/components/ColorSelection';
 
 const cx = classNames.bind(styles);
 
@@ -28,7 +30,6 @@ function Product(props) {
 
     useEffect(() => {
         if (addProductToCategory.state == REQUEST_STATE.SUCCESS) {
-            dispatch(ADD_PRODUCT_TO_CART_RESET());
             notification.success({
                 message: 'Success',
                 description: 'Add product to cart successfully!',
@@ -40,6 +41,7 @@ function Product(props) {
                 description: 'Something wrong, please try again!',
             });
         }
+        dispatch(ADD_PRODUCT_TO_CART_RESET());
     }, [addProductToCategory?.state]);
     useEffect(() => {
         dispatch(PRODUCT_GET());
@@ -48,16 +50,27 @@ function Product(props) {
 
     const onSubmit = (data) => {
         console.log('data', data);
-        let categoryId = [];
+        let dataFilter = {
+            formFilter: [],
+            categoryId: [],
+        };
         data.category?.forEach((category) => {
             if (category !== false) {
-                categoryId.push(category);
+                dataFilter.categoryId.push(category);
+            }
+        });
+        data.form?.forEach((form) => {
+            if (form !== false) {
+                dataFilter.formFilter.push(form);
             }
         });
         dispatch(
             PRODUCT_GET({
                 sizeId: data.size,
-                categoryId: categoryId,
+                categoryId: dataFilter.categoryId,
+                form: dataFilter.formFilter,
+                gender: data.gender,
+                color: data.color,
             }),
         );
     };
@@ -66,14 +79,17 @@ function Product(props) {
             <Row>
                 <Col xs={4}>
                     <AppForm onSubmit={onSubmit}>
-                        <AppButton type="submit">submit</AppButton>
                         <div className={cx('sider')}>
+                            <AppButton className={cx('submit-filter')} type="submit">
+                                Filter
+                            </AppButton>
                             <div className={cx('filter-wrapper')}>
-                                <h4>Categories</h4>
+                                <h4 className={cx('header')}>Categories</h4>
                                 {categories?.state === 'SUCCESS' && (
                                     <div>
-                                        {categories?.data?.rows.map((category, index) => (
+                                        {categories?.data?.rows?.map((category, index) => (
                                             <AppCheckbox
+                                                key={index}
                                                 value={category.id}
                                                 name={`category[${index}]`}
                                                 label={category.name}
@@ -83,29 +99,32 @@ function Product(props) {
                                 )}
                             </div>
                             <div className={cx('filter-wrapper')}>
-                                <h4>Gender</h4>
-
+                                <h4 className={cx('header')}>Gender</h4>
                                 <AppRadio value={0} name="gender" label="Men" />
                                 <AppRadio value={1} name="gender" label="Women" />
                                 <AppRadio value={2} name="gender" label="All" />
                             </div>
                             <div className={cx('filter-wrapper')}>
-                                <h4>Form</h4>
-                                <AppCheckbox value="Low" name="form[0]" label="Low top" />
-                                <AppCheckbox value="High" name="form[1]" label="High Top" />
-                                <AppCheckbox value="Mid" name="form[2]" label="Mid Top" />
+                                <h4 className={cx('header')}>Form</h4>
+                                <AppCheckbox value="Low top" name="form[0]" label="Low top" />
+                                <AppCheckbox value="Hight top" name="form[1]" label="High Top" />
+                                <AppCheckbox value="Mid top" name="form[2]" label="Mid Top" />
                                 <AppCheckbox value="Mule" name="form[3]" label="Mule" />
                             </div>
                             <div className={cx('filter-wrapper')}>
-                                <h4>Price</h4>
+                                <h4 className={cx('header')}>Price</h4>
                                 <AppRadio value={12} name="price" label="$20 - $50" />
                                 <AppRadio value={31} name="price" label="$50 - $100" />
                                 <AppRadio value={221} name="price" label="$100 - $300" />
                                 <AppRadio value={332} name="price" label="Greater than $300" />
                             </div>
                             <div className={cx('filter-wrapper')}>
-                                <h4>Size</h4>
+                                <h4 className={cx('header')}>Size</h4>
                                 <AppSizeSelect name="size" />
+                            </div>
+                            <div className={cx('filter-wrapper')}>
+                                <h4 className={cx('header')}>Color</h4>
+                                <ColorSelection name="color" />
                             </div>
                         </div>
                     </AppForm>
@@ -126,15 +145,16 @@ function Product(props) {
                         {products.state === 'SUCCESS' && (
                             // <div >
                             <Row className={cx('products-wrapper')} gutter={[24, 24]}>
-                                {products?.data?.rows.map((product, index) => {
+                                {products?.data?.rows?.map((product, index) => {
                                     return (
                                         <Col key={product.id} xs={6}>
                                             <ProductItem
                                                 image={product.Images[0]?.src}
                                                 name={product.name}
-                                                price={product.price}
+                                                price={accounting.formatNumber(product.price)}
                                                 stock={product.Stocks}
                                                 index={index}
+                                                sale={product.promo ? product.promo : null}
                                             />
                                         </Col>
                                     );
@@ -142,7 +162,7 @@ function Product(props) {
                             </Row>
                             // </div>
                         )}
-                        <div className={cx('view-more')}>View more</div>
+                        {/* <div className={cx('view-more')}>View more</div> */}
                     </div>
                 </Col>
             </Row>

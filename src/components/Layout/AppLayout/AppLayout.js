@@ -15,7 +15,7 @@ import {
     IconCategory,
 } from '~/assets/svgs';
 import AppHeader from '~/components/Layout/components/Header';
-import styles from './AppLayout.sass';
+import styles from './AppLayout.module.sass';
 
 const cx = classNames.bind(styles);
 

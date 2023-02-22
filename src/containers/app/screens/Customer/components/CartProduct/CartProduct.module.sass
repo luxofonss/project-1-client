@@ -1,0 +1,83 @@
+.cart-product
+     width: 100%
+     background-color: white
+     height: 120px
+     padding: 8px
+     margin-bottom: 8px
+     position: relative
+
+     .image
+          width: 100%
+          height: 106px
+
+     .top
+          margin-top: 8px
+          display: flex
+          justify-content: space-between
+          padding: 0 16px
+
+          .close
+               position: absolute
+               top: 0
+               right: 0
+               cursor: pointer
+               width: 24px
+               height: 24px
+               display: flex
+               justify-content: center
+               align-items: center
+               border-radius: 50%
+               background: var(--light-30)
+               border: 1px solid rgba(102, 111, 232, 0.08)
+               &:hover
+                    box-shadow: 0px 2px 2px rgba(46, 91, 255, 0.2)
+
+          .name
+               font-size: 18px
+               font-weight: 600
+               text-transform: uppercase
+
+     .price
+          font-size: 16px
+          padding: 0 16px
+          font-weight: 400
+
+     .quantity
+          display: flex
+          gap: 28px
+          padding: 0 16px
+
+          .text
+               font-family: 'IBM Plex Sans'
+               font-style: normal
+               font-weight: 500
+               font-size: 14px
+               color: #000000
+
+          .quantity-action
+               display: flex
+               gap: 8px
+
+               .action
+                    cursor: pointer
+
+     .color-price, ,.item-left
+          display: flex
+          justify-content: space-between
+          align-items: center
+          padding: 0 16px
+          font-family: 'IBM Plex Sans'
+          font-style: normal
+          font-weight: 500
+          font-size: 14px
+          color: #000000
+
+     .size
+          display: flex
+          gap: 8px
+          padding: 0 16px
+          font-family: 'IBM Plex Sans'
+          font-style: normal
+          font-weight: 500
+          font-size: 14px
+          color: #000000

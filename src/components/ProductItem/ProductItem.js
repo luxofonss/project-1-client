@@ -9,7 +9,7 @@ function ProductItem(props) {
     return (
         <div>
             <div className={cx('item')}>
-                <div className={cx('tag')}>30% Sale off</div>
+                {props.sale !== null && <div className={cx('tag')}>{props.sale}% Sale off</div>}
                 <div
                     style={{
                         backgroundImage: props.image
@@ -22,7 +22,7 @@ function ProductItem(props) {
                     className={cx('image')}
                 ></div>
                 <div className={cx('top')}>
-                    <div className={cx('name')}>{props.name}</div>
+                    <div className={(cx('name'), 'text_over_flow_1')}>{props.name}</div>
 
                     <div className={cx('star')}>
                         <IconStar width={20} height={18} /> (5)

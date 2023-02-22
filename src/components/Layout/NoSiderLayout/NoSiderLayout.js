@@ -1,7 +1,8 @@
 import { Layout } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
-import AppHeader from '~/components/Layout/components/ClientHeader';
+import AppHeader from '~/containers/app/screens/Customer/components/ClientHeader';
+import Footer from '../components/Footer';
 import styles from './NoSiderLayout.module.sass';
 
 const cx = classNames.bind(styles);
@@ -24,6 +25,7 @@ function NoSiderLayout({ children, match }) {
                     >
                         {children}
                     </Content>
+                    <Footer />
                 </Layout>
             </Layout>
         </div>

@@ -42,13 +42,6 @@ function Product(props) {
     const productList = product?.data?.data?.rows;
     console.log('productList', productList);
 
-    const options = [
-        { name: 'Phương án A', value: 'A' },
-        { name: 'Phương án B', value: 'B' },
-        { name: 'Phương án C', value: 'C' },
-        { name: 'Phương án E', value: 'E' },
-        { name: 'Phương án F', value: 'F' },
-    ];
     console.log('categoryList', categoryList);
     console.log('is empty', isEmptyValue(categoryList.data));
 

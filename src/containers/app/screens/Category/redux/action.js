@@ -39,6 +39,13 @@ export function CATEGORY_CREATE_FAIL(payload) {
     };
 }
 
+export function CATEGORY_CREATE_RESET(payload) {
+    return {
+        type: 'CATEGORY_CREATE_RESET',
+        payload: payload,
+    };
+}
+
 export function CATEGORY_UPDATE(payload) {
     return {
         type: 'CATEGORY_UPDATE',

@@ -29,6 +29,7 @@
         "@radix-ui/react-popover": "1.0.2",
         "@radix-ui/react-select": "^1.1.2",
         "@reduxjs/toolkit": "^1.9.1",
+        "accounting": "^0.4.1",
         "antd": "^5.1.6",
         "axios": "^0.23.0",
         "bootstrap": "^5.2.3",

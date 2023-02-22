@@ -3,7 +3,7 @@ import { useForm, useFormContext } from 'react-hook-form';
 import styles from './AppTextArea.module.sass';
 
 const cx = classNames.bind(styles);
-function AppTextArea({ name, wrapperStyle = {}, rows = 3, required = false, ...props }) {
+function AppTextArea({ name, defaultValue, wrapperStyle = {}, rows = 3, required = false, ...props }) {
     const {
         register,
         formState: { errors },
@@ -18,6 +18,7 @@ function AppTextArea({ name, wrapperStyle = {}, rows = 3, required = false, ...p
                 className={cx('textarea')}
                 placeholder={props?.placeholder}
                 autoComplete="off"
+                defaultValue={defaultValue ? defaultValue : ''}
                 rows={rows}
                 {...register(name, {
                     ...(required ? { required: 'Trường này không được để trống' } : {}),

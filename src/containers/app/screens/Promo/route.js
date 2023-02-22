@@ -1,58 +1,35 @@
 import { lazy } from 'react';
+import { ROLE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
-import { ROLE } from '~/app-configs';
-import { categoryModule } from '../Category/route';
 
-export const productModule = {
-    key: 'product',
-    path: 'Product',
+export const promoModule = {
+    key: 'promo',
+    path: 'Promo',
 };
 
 export default {
-    // path: '/',
-    // exact: true,
-    // isPrivate: true,
-    // role: [ROLE.ADMIN, ROLE.USER],
-    // layout: AppLayout,
-    // component: lazy(async () => {
-    //     await initModules([productModule, categoryModule], 'app');
-    //     return import('./pages/Demo');
-    // }),
-
-    path: '/admin/product',
+    path: '/admin/promo',
     exact: true,
     isPrivate: true,
     role: [ROLE.ADMIN],
     layout: AppLayout,
     component: lazy(async () => {
-        await initModules([productModule, categoryModule], 'app');
-        return import('./pages/Product');
+        await initModules([promoModule], 'app');
+        return import('./pages/PromoList');
     }),
 };
 
 export const childRoutes = [
-    {
-        path: '/admin/product/add',
-        exact: true,
-        isPrivate: true,
-        role: [ROLE.ADMIN],
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([productModule, categoryModule], 'app');
-            return import('./pages/AddProduct');
-        }),
-    },
-
-    {
-        path: '/admin/product/edit/:id',
-        exact: true,
-        isPrivate: true,
-        role: [ROLE.ADMIN],
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([productModule, categoryModule], 'app');
-            return import('./pages/ProductEdit');
-        }),
-    },
+    // {
+    //     path: '/admin/promo/add',
+    //     exact: true,
+    //     isPrivate: true,
+    //     role: [ROLE.ADMIN],
+    //     layout: AppLayout,
+    //     component: lazy(async () => {
+    //         await initModules([promoModule, categoryModule], 'app');
+    //         return import('./pages/Addpromo');
+    //     }),
+    // },
 ];

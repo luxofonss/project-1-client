@@ -20,6 +20,10 @@ import {
 import styles from './ProductEdit.module.sass';
 import { REQUEST_STATE } from '~/app-configs';
 import { Spin } from 'antd';
+import accounting from 'accounting';
+import AppForm from '~/components/AppForm';
+import AppInput from '~/components/AppInput';
+import AppTextArea from '~/components/AppTextArea';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +33,7 @@ function ProductEdit() {
         return state.product.listProduct;
     });
     const product = useSelector((state) => {
-        state.product.update;
+        return state.product.update;
     });
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
@@ -46,7 +50,6 @@ function ProductEdit() {
     }, []);
 
     const onSubmit = (data) => {
-        console.log(data.status);
         if (selectedImage !== null) {
             setUploadingImage(true);
             const storageRef = ref(storage, `/images/${selectedImage + v4()}`);
@@ -65,7 +68,7 @@ function ProductEdit() {
                             deletedAt: data.status == 0 ? '' : moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
                             id: id,
                         };
-                        console.log('dispatch has image');
+
                         dispatch(PRODUCT_EDIT(editedData));
                         setUploadingImage(false);
                     });
@@ -78,12 +81,12 @@ function ProductEdit() {
                 deletedAt: data.status == 0 ? '' : moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
                 id: id,
             };
-            console.log(editedData2);
-            console.log('dispatch without image');
+
             dispatch(PRODUCT_EDIT(editedData2));
         }
     };
 
+    console.log('productEdit?.data?.data.rows[0]', productEdit?.data?.data);
     return (
         <Fragment>
             <Link className={cx('back')} to="/admin/product">
@@ -92,157 +95,68 @@ function ProductEdit() {
             <div className={cx('wrapper')}>
                 <form onSubmit={handleSubmit(onSubmit)} className={cx('add-product-form')}>
                     {productEdit.state === 'SUCCESS' && (
-                        <Fragment>
+                        <AppForm
+                            onSubmit={(data) => {
+                                console.log('data: ', data);
+                            }}
+                        >
                             <Row>
                                 <Col xs={4}>
-                                    <div className={cx('form-item')}>
-                                        <label className={cx('label')} htmlFor="name">
-                                            Tên sản phẩm
-                                        </label>
-                                        <input
-                                            className={cx('input')}
-                                            id="name"
-                                            {...register('name', { required: true })}
-                                            type="text"
-                                            defaultValue={productEdit?.data?.data.rows[0]?.name}
-                                        ></input>
-                                    </div>
+                                    <AppInput
+                                        label="Name"
+                                        name="name"
+                                        defaultValue={productEdit?.data?.data.rows[0]?.name}
+                                    />
 
-                                    <div className={cx('form-select')}>
-                                        <label className={cx('label')} htmlFor="category">
-                                            Thể loại
-                                        </label>
-                                        <select
-                                            className={cx('select-wrapper')}
-                                            id="category"
-                                            defaultValue={productEdit?.data?.data.rows[0]?.category_id}
-                                            disabled
-                                        >
-                                            <option value="TD04">Áo thun</option>
-                                            <option value="TD04">Sơ mi</option>
-                                            <option value="TD04">Quần tây</option>
-                                            <option value="TD04">Quần đùi</option>
-                                        </select>
-                                    </div>
+                                    <AppInput
+                                        label="Category"
+                                        name="category"
+                                        defaultValue={productEdit?.data?.data.rows[0]?.category?.name}
+                                    />
 
-                                    <div className={cx('form-item')}>
-                                        <label className={cx('label')} htmlFor="description">
-                                            Mô tả
-                                        </label>
-                                        <textarea
-                                            className={cx('input', 'description')}
-                                            id="description"
-                                            {...register('description', { required: true })}
-                                            type="text"
-                                            defaultValue={productEdit?.data?.data.rows[0]?.description}
-                                        ></textarea>
-                                    </div>
+                                    <AppTextArea
+                                        label="Description"
+                                        name="description"
+                                        defaultValue={productEdit?.data?.data.rows[0]?.description}
+                                    />
                                 </Col>
                                 <Col xs={4}>
-                                    {/* <div className={cx('form-item')}>
-                                        <label className={cx('label')} htmlFor="color">
-                                            Màu sắc
-                                        </label>
-                                        <input
-                                            className={cx('input')}
-                                            {...register('color', { required: true })}
-                                            id="color"
-                                            type="text"
-                                            // value={headerValue}
-                                            defaultValue={productEdit?.data?.data.rows[0]?.color}
-                                        ></input>
-                                    </div> */}
                                     <Row>
                                         <Col xs={6}>
-                                            <div className={cx('form-item')}>
-                                                <label className={cx('label')} htmlFor="price">
-                                                    Giá (VND)
-                                                </label>
-                                                <input
-                                                    className={cx('input')}
-                                                    id="price"
-                                                    {...register('price', { required: true })}
-                                                    type="text"
-                                                    defaultValue={productEdit?.data?.data.rows[0]?.price}
-                                                ></input>
-                                            </div>
+                                            <AppInput
+                                                label="Price (VND)"
+                                                name="price"
+                                                defaultValue={productEdit?.data?.data.rows[0]?.price}
+                                            />
                                         </Col>
                                         <Col xs={6}>
-                                            <div className={cx('form-item')}>
-                                                <label className={cx('label')} htmlFor="prod-code">
-                                                    Mã sản phẩm
-                                                </label>
-                                                <input
-                                                    className={cx('input')}
-                                                    id="prod-code"
-                                                    {...register('prod_code', { required: true })}
-                                                    type="text"
-                                                    defaultValue={productEdit?.data?.data.rows[0]?.id}
-                                                    readOnly
-                                                ></input>
-                                            </div>
+                                            <AppInput
+                                                label="Code"
+                                                name="id"
+                                                defaultValue={productEdit?.data?.data.rows[0]?.id}
+                                            />
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs={12}>
-                                            <div className={cx('form-item')}>
-                                                <label className={cx('label')} htmlFor="total">
-                                                    Số lượng
-                                                </label>
-                                                <input
-                                                    className={cx('input')}
-                                                    id="total"
-                                                    {...register('total', { required: true })}
-                                                    type="number"
-                                                    disabled
-                                                    defaultValue={productEdit?.data?.data.rows[0]?.Stocks.reduce(
-                                                        (accumulator = 0, current, index) => {
-                                                            return accumulator + current.stock;
-                                                        },
-                                                        0,
-                                                    )}
-                                                ></input>
-                                            </div>
+                                        <Col xs={6}>
+                                            <AppInput
+                                                label="Total quantity"
+                                                name="quantity"
+                                                defaultValue={productEdit?.data?.data.rows[0]?.Stocks.reduce(
+                                                    (accumulator = 0, current, index) => {
+                                                        return accumulator + current.stock;
+                                                    },
+                                                    0,
+                                                )}
+                                            />
                                         </Col>
-                                        {/* <Col xs={6}>
-                                            <div className={cx('form-select')}>
-                                                <label className={cx('label')} htmlFor="size">
-                                                    Kích cỡ
-                                                </label>
-                                                <select
-                                                    {...register('size', { required: true })}
-                                                    className={cx('select-wrapper')}
-                                                    id="size"
-                                                    defaultValue={productEdit?.data?.data.rows[0]?.size}
-                                                >
-                                                    <option value={0}>S</option>
-                                                    <option value={1}>M</option>
-                                                    <option value={2}>L</option>
-                                                    <option value={3}>XL</option>
-                                                </select>
-                                            </div>
-                                        </Col> */}
-                                        {/* <Col xs={12}>
-                                            <div className={cx('form-select')}>
-                                                <label className={cx('label')} htmlFor="status">
-                                                    Trạng thái
-                                                </label>
-                                                <select
-                                                    {...register('status', { required: true })}
-                                                    className={cx('select-wrapper')}
-                                                    id="status"
-                                                    defaultValue={
-                                                        productEdit?.data?.data.rows[0]?.deletedAt === null ||
-                                                        productEdit?.data?.isActive === true
-                                                            ? 0
-                                                            : 1
-                                                    }
-                                                >
-                                                    <option value={0}>Enable</option>
-                                                    <option value={1}>Disable</option>
-                                                </select>
-                                            </div>
-                                        </Col> */}
+                                        <Col xs={6}>
+                                            <AppInput
+                                                label="Promo"
+                                                name="promo"
+                                                defaultValue={productEdit?.data?.data.rows[0]?.promo}
+                                            />
+                                        </Col>
                                     </Row>
                                 </Col>
                                 <Col xs={4}>
@@ -298,7 +212,7 @@ function ProductEdit() {
                                     </PrimaryButton>
                                 </div>
                             </Row>
-                        </Fragment>
+                        </AppForm>
                     )}
                 </form>
             </div>

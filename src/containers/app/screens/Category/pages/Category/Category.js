@@ -7,7 +7,11 @@ import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
 import { IconEdit, IconTrash } from '~/assets/svgs';
 import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
-import { CATEGORY_CREATE, CATEGORY_LIST_REQUEST } from '~/containers/app/screens/Category/redux/action';
+import {
+    CATEGORY_CREATE,
+    CATEGORY_CREATE_RESET,
+    CATEGORY_LIST_REQUEST,
+} from '~/containers/app/screens/Category/redux/action';
 import styles from './Category.module.sass';
 
 const cx = classNames.bind(styles);
@@ -41,6 +45,7 @@ function Category(props) {
                 message: 'Success',
                 description: 'Add category successfully!',
             });
+            dispatch(CATEGORY_LIST_REQUEST());
         }
         if (categoryCreate?.state === REQUEST_STATE.ERROR) {
             notification.error({
@@ -48,6 +53,7 @@ function Category(props) {
                 description: 'Email or password is incorrect!',
             });
         }
+        dispatch(CATEGORY_CREATE_RESET());
     }, [categoryCreate?.state]);
 
     const dataSource = categoryData?.data?.data

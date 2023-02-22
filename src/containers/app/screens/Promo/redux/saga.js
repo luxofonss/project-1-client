@@ -1,83 +1,35 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
+import { apiCreatePromo, apiGetAllPromo } from '~/app-data/promo';
 import {
-    PRODUCT_ADD,
-    PRODUCT_ADD_SUCCESS,
-    PRODUCT_ADD_FAIL,
-    PRODUCT_GET_SUCCESS,
-    PRODUCT_GET_FAIL,
-    PRODUCT_GET,
-    PRODUCT_EDIT,
-    PRODUCT_EDIT_SUCCESS,
-    PRODUCT_EDIT_FAIL,
-    PRODUCT_ENABLE,
-    PRODUCT_ENABLE_SUCCESS,
-    PRODUCT_ENABLE_FAIL,
-    PRODUCT_DISABLE_SUCCESS,
-    PRODUCT_DISABLE_FAIL,
-    PRODUCT_DISABLE,
+    CREATE_PROMO,
+    CREATE_PROMO_FAIL,
+    CREATE_PROMO_SUCCESS,
+    GET_ALL_PROMO,
+    GET_ALL_PROMO_FAIL,
+    GET_ALL_PROMO_SUCCESS,
 } from './action';
-import { apiAddProducts, apiGetProduct, apiEditProduct, apiDisableProduct, apiEnableProduct } from '~/app-data/product';
 
-function* handleAddProducts({ type, payload }) {
+function* handleCreatePromo({ type, payload }) {
     try {
-        const response = yield call(apiAddProducts, payload);
+        const response = yield call(apiCreatePromo, payload);
         if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_ADD_SUCCESS(response));
+            yield put(CREATE_PROMO_SUCCESS(response.data));
         } else {
-            yield put(PRODUCT_ADD_FAIL());
+            yield put(CREATE_PROMO_FAIL());
         }
     } catch (error) {
         console.log('error: ', error);
     }
 }
 
-function* handleGetProduct({ type, payload }) {
+function* handleGetAllPromo({ type, payload }) {
     try {
-        const response = yield call(apiGetProduct, payload);
+        const response = yield call(apiGetAllPromo, payload);
         if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_GET_SUCCESS(response));
+            yield put(GET_ALL_PROMO_SUCCESS(response.data));
         } else {
-            yield put(PRODUCT_GET_FAIL());
-        }
-    } catch (error) {
-        console.log('error: ', error);
-    }
-}
-
-function* handleEditProduct({ type, payload }) {
-    try {
-        const response = yield call(apiEditProduct, payload);
-        if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_EDIT_SUCCESS(response));
-        } else {
-            yield put(PRODUCT_EDIT_FAIL());
-        }
-    } catch (error) {
-        console.log('error: ', error);
-    }
-}
-
-function* handleEnableProduct({ type, payload }) {
-    try {
-        const response = yield call(apiEnableProduct, payload);
-        if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_ENABLE_SUCCESS(response));
-        } else {
-            yield put(PRODUCT_ENABLE_FAIL());
-        }
-    } catch (error) {
-        console.log('error: ', error);
-    }
-}
-
-function* handleDisableProduct({ type, payload }) {
-    try {
-        const response = yield call(apiDisableProduct, payload);
-        if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(PRODUCT_DISABLE_SUCCESS(response));
-        } else {
-            yield put(PRODUCT_DISABLE_FAIL());
+            yield put(GET_ALL_PROMO_FAIL());
         }
     } catch (error) {
         console.log('error: ', error);
@@ -85,9 +37,6 @@ function* handleDisableProduct({ type, payload }) {
 }
 
 export default function* productSaga() {
-    yield takeLatest(PRODUCT_ADD().type, handleAddProducts);
-    yield takeLatest(PRODUCT_GET().type, handleGetProduct);
-    yield takeLatest(PRODUCT_EDIT().type, handleEditProduct);
-    yield takeLatest(PRODUCT_ENABLE().type, handleEnableProduct);
-    yield takeLatest(PRODUCT_DISABLE().type, handleDisableProduct);
+    yield takeLatest(CREATE_PROMO().type, handleCreatePromo);
+    yield takeLatest(GET_ALL_PROMO().type, handleGetAllPromo);
 }

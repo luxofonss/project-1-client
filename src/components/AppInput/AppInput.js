@@ -21,6 +21,7 @@ function AppInput({ name, defaultValue, wrapperStyle = {}, required = false, ...
                 className={cx('input')}
                 placeholder={props.placeholder ? props.placeholder : ''}
                 autoComplete="off"
+                defaultValue={defaultValue ? defaultValue : ''}
                 {...register(name, {
                     ...(required ? { required: 'Trường này không được để trống' } : {}),
                     ...props.validate,
