@@ -72,7 +72,7 @@ export default function (props) {
                             backgroundImage: `url('https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/315652721_809865970070640_8534308457976519135_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=mylD2NLfKr8AX9-Q3lE&tn=FMdAK198RPW4kdFE&_nc_ht=scontent.fhan14-3.fna&oh=00_AfA5_iphLTLMqPTZJh3VGw6m0sANzq07FJ71oxzRdmRk4w&oe=639058FE')`,
                         }}
                     >
-                        <span style={{ color: 'white', fontWeight: 700 }}>{userDetail?.name.at(0).toUpperCase()}</span>
+                        <span style={{ color: 'white', fontWeight: 700 }}>{userDetail?.name?.at(0).toUpperCase()}</span>
                     </div>
                     <ul className="dropdown-menu">
                         <li>
