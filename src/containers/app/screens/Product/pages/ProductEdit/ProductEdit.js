@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 import { BackIcon, IconUpload } from '~/assets/svgs';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
 import { storage } from '~/firebase';
 import {
     PRODUCT_EDIT,
@@ -24,6 +23,7 @@ import accounting from 'accounting';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppTextArea from '~/components/AppTextArea';
+import AppButton from '~/components/AppButton/AppButton';
 
 const cx = classNames.bind(styles);
 
@@ -196,7 +196,7 @@ function ProductEdit() {
                             </Row>
                             <Row>
                                 <div className={cx('btn-wrapper')}>
-                                    <PrimaryButton
+                                    <AppButton
                                         disabled={
                                             product?.requestState === REQUEST_STATE.REQUEST || uploadingImage === true
                                                 ? true
@@ -209,7 +209,7 @@ function ProductEdit() {
                                         ) : (
                                             'Publish'
                                         )}
-                                    </PrimaryButton>
+                                    </AppButton>
                                 </div>
                             </Row>
                         </AppForm>

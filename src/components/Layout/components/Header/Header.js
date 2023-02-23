@@ -36,7 +36,7 @@ export default function (props) {
 
     return (
         <header className={cx('header')}>
-            <div className={cx('dropdown')}>
+            {/* <div className={cx('dropdown')}>
                 <div className={cx('notify')} data-bs-toggle="dropdown" aria-expanded="false">
                     <div className={cx('bell')}>
                         <IconBell />
@@ -60,7 +60,7 @@ export default function (props) {
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> */}
             <div className={cx('avatar')}>
                 <div className={cx('dropdown')}>
                     <div

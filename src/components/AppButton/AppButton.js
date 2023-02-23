@@ -7,7 +7,7 @@ function AppButton({
     children,
     type = 'button',
     color,
-    border = 'var(--primary-color)',
+    border = 'none',
     text = '',
     form,
     isLoading = false,
@@ -18,7 +18,7 @@ function AppButton({
             type={type}
             style={{
                 backgroundColor: isLoading ? '#fff' : color,
-                border: `1px solid ${border}`,
+                border: `${border}`,
                 color: text,
                 display: 'flex',
                 justifyContent: 'center',

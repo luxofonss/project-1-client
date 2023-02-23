@@ -10,7 +10,7 @@ import { CATEGORY_LIST_REQUEST } from '~/containers/app/screens/Category/redux/a
 import { useDispatch, useSelector } from 'react-redux';
 import { PRODUCT_GET } from '~/containers/app/screens/Product/redux/action';
 import ProductForm from '~/components/ProductForm/ProductForm';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
+import AppButton from '~/components/AppButton/AppButton';
 import Form from 'react-bootstrap/Form';
 
 const cx = classNames.bind(styles);
@@ -45,7 +45,7 @@ function CategoryEdit(props) {
 
     return (
         <Fragment>
-            <Link className={cx('back')} to="/category">
+            <Link className={cx('back')} to="/admin/category">
                 <BackIcon /> Category
             </Link>
             <div className={cx('container')}>
@@ -82,7 +82,7 @@ function CategoryEdit(props) {
                                 </div>
                             </Col>
                             <Col xs={6}>
-                                <PrimaryButton type="submit">Publish</PrimaryButton>
+                                <AppButton type="submit">Publish</AppButton>
                             </Col>
                         </Row>
                         <Row>
@@ -115,7 +115,7 @@ function CategoryEdit(props) {
                                 className="search me-2"
                                 aria-label="Search"
                             />
-                            <PrimaryButton variant="outline-success">Filter</PrimaryButton>
+                            <AppButton variant="outline-success">Filter</AppButton>
                         </Form>
                         <Form.Select className={styles.select} aria-label="Default select example">
                             <option value="1">All category</option>
@@ -129,7 +129,7 @@ function CategoryEdit(props) {
                         </Form.Select>
 
                         <Link to="/admin/product/add" className="normal-link-white">
-                            <PrimaryButton>Add</PrimaryButton>
+                            <AppButton>Add</AppButton>
                         </Link>
                     </div>
                     {productList?.state === 'SUCCESS' &&

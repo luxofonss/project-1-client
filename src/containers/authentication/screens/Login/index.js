@@ -13,8 +13,8 @@ import { getEmailValidationRegex, getPhoneNumberValidationRegex } from '~/helper
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
 import { Link } from 'react-router-dom';
+import AppButton from '~/components/AppButton/AppButton';
 // import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
@@ -146,9 +146,9 @@ function Login({ authAction = 'login' }) {
                                 {/* <Button className={cx('submit')}>
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
                                 </Button> */}
-                                <PrimaryButton>
+                                <AppButton>
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
-                                </PrimaryButton>
+                                </AppButton>
                             </div>
                         </Form>
                     )}
@@ -314,9 +314,9 @@ function Login({ authAction = 'login' }) {
                                 )} */}
                             </Form.Group>
                             <div className={cx('mx-auto', 'btn-wrapper')}>
-                                <PrimaryButton>
+                                <AppButton>
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign up'}
-                                </PrimaryButton>
+                                </AppButton>
                             </div>
                         </Form>
                     )}

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
 import { IconEdit, IconTrash } from '~/assets/svgs';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
+import AppButton from '~/components/AppButton/AppButton';
 import {
     CATEGORY_CREATE,
     CATEGORY_CREATE_RESET,
@@ -223,7 +223,7 @@ function Category(props) {
                 dataSource={dataSource}
                 onChange={onChange}
             />
-            <PrimaryButton onClick={showModal}>Add</PrimaryButton>
+            <AppButton onClick={showModal}>Add</AppButton>
 
             <Modal
                 width={500}
@@ -233,10 +233,10 @@ function Category(props) {
                 onCancel={handleCancel}
                 footer={
                     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
-                        <PrimaryButton key="back" onClick={handleCancel}>
+                        <AppButton key="back" onClick={handleCancel}>
                             Return
-                        </PrimaryButton>
-                        <PrimaryButton
+                        </AppButton>
+                        <AppButton
                             key="submit"
                             type="primary"
                             form="addCategoryForm"
@@ -244,7 +244,7 @@ function Category(props) {
                             onClick={handleOk}
                         >
                             Submit
-                        </PrimaryButton>
+                        </AppButton>
                     </div>
                 }
             >
@@ -296,7 +296,7 @@ function Category(props) {
                             </div>
                         </Col>
                     </Row>
-                    {/* <PrimaryButton type="submit">Add</PrimaryButton> */}
+                    {/* <AppButton type="submit">Add</AppButton> */}
                 </form>
             </Modal>
         </div>

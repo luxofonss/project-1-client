@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import styles from './AddProduct.module.sass';
 import classNames from 'classnames/bind';
 import { useForm } from 'react-hook-form';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
 import { Link } from 'react-router-dom';
 import { BackIcon, IconPlus, IconTrash, IconUpload, IconX } from '~/assets/svgs';
 import { storage } from '~/firebase';
@@ -186,9 +185,9 @@ function AddProduct() {
                                         </div>
                                     </Col>
                                 </Row>
-                                <AppButton type="button" onClick={clearStocks}>
+                                {/* <AppButton type="button" onClick={clearStocks}>
                                     Clear All
-                                </AppButton>
+                                </AppButton> */}
                             </Col>
                             <Col xs={10}>
                                 <div className={cx('upload-wrapper')}>
@@ -223,7 +222,7 @@ function AddProduct() {
                         </Row>
                         <Row>
                             <div>
-                                <PrimaryButton
+                                <AppButton
                                     disabled={
                                         product?.requestState === REQUEST_STATE.REQUEST || uploadingImage === true
                                             ? true
@@ -236,7 +235,7 @@ function AddProduct() {
                                     ) : (
                                         'Publish'
                                     )}
-                                </PrimaryButton>
+                                </AppButton>
                             </div>
                         </Row>
                     </div>

@@ -10,8 +10,6 @@ import AppButton from '~/components/AppButton/AppButton';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppSelectInput from '~/components/AppSelectInput';
-import DropdownSelect from '~/components/DropdownSelect/DropdownSelect';
-import PrimaryButton from '~/components/PrimaryButton/PrimaryButton';
 import ProductForm from '~/components/ProductForm/ProductForm';
 import { CATEGORY_LIST_REQUEST } from '~/containers/app/screens/Category/redux/action';
 import { PRODUCT_GET } from '~/containers/app/screens/Product/redux/action';
@@ -37,7 +35,7 @@ function Product(props) {
         return state.product.listProduct;
     });
     const categoryList = useSelector((state) => {
-        return state.category.categoryList;
+        return state.category?.categoryList;
     });
     const productList = product?.data?.data;
     console.log('productList', productList);
@@ -78,14 +76,15 @@ function Product(props) {
                         </div>
                     </AppForm>
 
-                    <div>
+                    {/* <div>
                         <div onClick={() => setFormat(false)}>luoi</div>
                         <div onClick={() => setFormat(true)}>bang</div>
+                    </div> */}
+                    <div className="bottom-right">
+                        <Link to="/admin/product/add" className="normal-link-white">
+                            <AppButton>Add</AppButton>
+                        </Link>
                     </div>
-
-                    <Link to="/admin/product/add" className="normal-link-white">
-                        <PrimaryButton>Add</PrimaryButton>
-                    </Link>
                 </div>
                 <Container className={cx('product-list')}>
                     <Row>

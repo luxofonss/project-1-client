@@ -44,14 +44,35 @@ export default function (props) {
     const userCheck = useSelector((state) => state?.user);
     const cartItems = [getNavItem(null, 'Đăng xuất', '/auth/logout', <LogoutOutlined />, null)];
     const dispatch = useDispatch();
+    const blur = useRef();
     const submitButton = useRef();
     const onSearch = (data) => {
         console.log(data);
         dispatch(PRODUCT_GET({ name: data.search }));
     };
 
+    var B = document.body,
+        H = document.documentElement,
+        height;
+
+    if (typeof document.height !== 'undefined') {
+        height = document.height; // For webkit browsers
+    } else {
+        height = Math.max(B.scrollHeight, B.offsetHeight, H.clientHeight, H.scrollHeight, H.offsetHeight);
+    }
+
+    const onOpenChange = (open) => {
+        if (open) {
+            console.log('height: ' + height);
+            blur.current.classList.add('blur-window');
+        } else {
+            blur.current.classList.remove('blur-window');
+        }
+    };
+
     return (
         <header className={cx('header')}>
+            <div style={{ height: `${height}px` }} ref={blur}></div>
             <div className={cx('logo')}>
                 <div className={cx('first')}>LUX</div>
                 <div className={cx('second')}>SHOP</div>
@@ -98,6 +119,7 @@ export default function (props) {
                             overlay={<Cart />}
                             placement="bottom"
                             trigger={['click']}
+                            onOpenChange={onOpenChange}
                         >
                             <div className={cx('header-nav')}>
                                 <IconCart />

@@ -10,13 +10,13 @@ import {
     GET_CART,
 } from '~/containers/app/screens/Customer/redux/action';
 import { getBase64 } from '~/helpers/media';
-import AppButton from '../../../../../../components/AppButton/AppButton';
 import CartProduct from '../CartProduct';
 import ChoosePromo from '../../../../../../components/Modals/ChoosePromo';
 import styles from './Cart.module.sass';
 import { notification } from 'antd';
 import { IconX } from '~/assets/svgs';
 import accounting from 'accounting';
+import AppButton from '~/components/AppButton/AppButton';
 
 const cx = classNames.bind(styles);
 
@@ -37,7 +37,8 @@ function Cart({ onGetValue, ...props }) {
     const totalPrice = useMemo(() => {
         let total;
         total = cartInfo?.data?.data?.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.cart_stock?.quantity * currentValue.Product.price,
+            (accumulator, currentValue) =>
+                accumulator + currentValue.cart_stocks?.quantity * currentValue.Product.price,
             0,
         );
         return total;
@@ -52,7 +53,7 @@ function Cart({ onGetValue, ...props }) {
                 console.log('stock', stock);
                 submitData.stockInfo.push({
                     id: stock.id,
-                    quantity: stock.cart_stock?.quantity,
+                    quantity: stock.cart_stocks?.quantity,
                 });
             });
             onGetValue(submitData);
@@ -160,7 +161,8 @@ function Cart({ onGetValue, ...props }) {
                 )}
                 {!props.purchase && (
                     <Link to="/purchase">
-                        <div className={cx('button')}> Purchase</div>
+                        {/* <div className={cx( 'button')}> Purchase</div> */}
+                        <AppButton style={{ width: '100%' }}>Purchase</AppButton>
                     </Link>
                 )}
             </div>

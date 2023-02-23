@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
@@ -36,22 +36,30 @@ function NoSiderLayout({ children, match }) {
     }, [isAuthenticated]);
     return (
         <div className={cx('app-layout')}>
-            <Layout>
-                <AppHeader />
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorBgLayout: 'linear-gradient(113.49deg, #b75337 -30.3%, #2d3a82 58.12%)',
+                    },
+                }}
+            >
                 <Layout>
-                    <Content
-                        style={{
-                            margin: '0px 0px',
-                            padding: '0 0px',
-                            minHeight: 280,
-                            position: 'relative',
-                        }}
-                    >
-                        {children}
-                    </Content>
-                    <Footer />
+                    <AppHeader />
+                    <Layout>
+                        <Content
+                            style={{
+                                margin: '0px 0px',
+                                padding: '0 0px',
+                                minHeight: 280,
+                                position: 'relative',
+                            }}
+                        >
+                            {children}
+                        </Content>
+                        <Footer />
+                    </Layout>
                 </Layout>
-            </Layout>
+            </ConfigProvider>
         </div>
     );
 }

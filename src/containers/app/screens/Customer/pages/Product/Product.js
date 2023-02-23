@@ -1,4 +1,4 @@
-import { Col, Divider, notification, Row } from 'antd';
+import { Carousel, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 import ProductItem from '~/components/ProductItem';
@@ -74,6 +74,15 @@ function Product(props) {
             }),
         );
     };
+
+    const imgs = [
+        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/306364146_2015783021925557_1903662116556994624_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=09Efm_ijjBQAX8rlny4&tn=8cxO5NLXVgS8b5XU&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDjYc-0ouD9C0QVVu9bNRGAkZ5H8gpou0-3gxtaSHK2Xw&oe=63FC3A9E',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302195814_2008714422632417_707195722424640066_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=730e14&_nc_ohc=k8VgmV_rnvcAX9mREq3&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDbCFSFcFnE8gE8U6wLcX7kyTcHI84LZ3NK16aC0rfDMw&oe=63FBF020',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302944940_2007413076095885_5844781582357933218_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=xxUd1gZ77GIAX-F-F-c&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDnmU4_cX_sg3yUVLzBoGJeCn4KOH26P3VFeU9QYVlOug&oe=63FBDD6B',
+        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/300800975_2004782463025613_8452339877912986129_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=kMN8GV7--ZUAX_4z_4B&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDlu8a_mXi3pMY7ZWsWnwMSMY5hGs5ru2w0pRlyX6KcZg&oe=63FBEC25',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/272308677_1843912142445980_4455593664181753044_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=crDvQI-HjK8AX_2K1Zu&_nc_ht=scontent-hkg4-1.xx&oh=00_AfAKL1e23zfUc1SYkYPEdbqYoOZhPra44Vh6o4SZoWtbDQ&oe=63FBF0EA',
+    ];
+
     return (
         <div className={cx('container')}>
             <Row>
@@ -141,7 +150,7 @@ function Product(props) {
                 </Col>
                 <Col xs={20}>
                     <div className={cx('main-view')}>
-                        <Row>
+                        {/* <Row>
                             <div
                                 className={cx('image-bg')}
                                 style={{
@@ -151,7 +160,24 @@ function Product(props) {
                                     backgroundRepeat: 'no-repeat',
                                 }}
                             ></div>
-                        </Row>
+                        </Row> */}
+
+                        <Carousel dots={false} autoplay>
+                            {imgs.map((src) => (
+                                <div>
+                                    <section
+                                        className={cx('image-bg')}
+                                        style={{
+                                            backgroundImage: `url(${src})`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover',
+                                            backgroundRepeat: 'no-repeat',
+                                        }}
+                                    ></section>
+                                </div>
+                            ))}
+                        </Carousel>
+
                         {products.state === 'SUCCESS' && (
                             // <div >
                             <Row className={cx('products-wrapper')} gutter={[24, 24]}>
