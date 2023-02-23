@@ -73,10 +73,12 @@ export default function (props) {
     return (
         <header className={cx('header')}>
             <div style={{ height: `${height}px` }} ref={blur}></div>
-            <div className={cx('logo')}>
-                <div className={cx('first')}>LUX</div>
-                <div className={cx('second')}>SHOP</div>
-            </div>
+            <Link to="/">
+                <div style={{ cursor: 'pointer' }} className={cx('logo')}>
+                    <div className={cx('first')}>LUX</div>
+                    <div className={cx('second')}>SHOP</div>
+                </div>
+            </Link>
             <div className={cx('search-nav')}>
                 <AppForm onSubmit={onSearch} style={{ height: '100%', width: '100%' }}>
                     <AppInput

@@ -33,6 +33,7 @@ function Login({ authAction = 'login' }) {
     } = useForm();
 
     const onSubmit = (data) => {
+        console.log(data);
         dispatch(LOGIN(data));
     };
 
@@ -146,7 +147,7 @@ function Login({ authAction = 'login' }) {
                                 {/* <Button className={cx('submit')}>
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
                                 </Button> */}
-                                <AppButton>
+                                <AppButton type="submit">
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
                                 </AppButton>
                             </div>
@@ -314,7 +315,7 @@ function Login({ authAction = 'login' }) {
                                 )} */}
                             </Form.Group>
                             <div className={cx('mx-auto', 'btn-wrapper')}>
-                                <AppButton>
+                                <AppButton type="submit">
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign up'}
                                 </AppButton>
                             </div>
