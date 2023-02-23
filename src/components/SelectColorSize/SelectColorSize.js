@@ -142,9 +142,9 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                 <div className={cx('wrapper')}>
                     <div className={cx('size')}>
                         {sizes.state === REQUEST_STATE.SUCCESS &&
-                            sizes?.data?.data.map((size) => {
+                            sizes?.data?.data.map((size, index) => {
                                 return (
-                                    <Fragment>
+                                    <Fragment key={index}>
                                         <label
                                             htmlFor={`size${index}${size.id}`}
                                             className={

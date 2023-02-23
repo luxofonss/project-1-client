@@ -133,7 +133,7 @@ function CategoryEdit(props) {
                         </Link>
                     </div>
                     {productList?.state === 'SUCCESS' &&
-                        productList.data?.data?.rows?.map((product) => (
+                        productList.data?.data?.map((product) => (
                             <Col key={product.id} className={cx('item-wrapper')} xs={3}>
                                 <ProductForm product={product}></ProductForm>
                             </Col>

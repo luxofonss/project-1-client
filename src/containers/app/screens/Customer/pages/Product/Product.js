@@ -1,4 +1,4 @@
-import { Col, notification, Row } from 'antd';
+import { Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 import ProductItem from '~/components/ProductItem';
@@ -24,7 +24,7 @@ function Product(props) {
         console.log('state', state);
         return state.product.listProduct.data;
     });
-    const categories = useSelector((state) => state.category.categoryList.data);
+    const categories = useSelector((state) => state.category?.categoryList?.data);
     const dispatch = useDispatch();
     const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
 
@@ -98,12 +98,15 @@ function Product(props) {
                                     </div>
                                 )}
                             </div>
+                            <Divider />
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Gender</h4>
                                 <AppRadio value={0} name="gender" label="Men" />
                                 <AppRadio value={1} name="gender" label="Women" />
                                 <AppRadio value={2} name="gender" label="All" />
                             </div>
+                            <Divider />
+
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Form</h4>
                                 <AppCheckbox value="Low top" name="form[0]" label="Low top" />
@@ -111,6 +114,8 @@ function Product(props) {
                                 <AppCheckbox value="Mid top" name="form[2]" label="Mid Top" />
                                 <AppCheckbox value="Mule" name="form[3]" label="Mule" />
                             </div>
+                            <Divider />
+
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Price</h4>
                                 <AppRadio value={12} name="price" label="$20 - $50" />
@@ -118,10 +123,15 @@ function Product(props) {
                                 <AppRadio value={221} name="price" label="$100 - $300" />
                                 <AppRadio value={332} name="price" label="Greater than $300" />
                             </div>
+                            <Divider />
+
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Size</h4>
                                 <AppSizeSelect name="size" />
                             </div>
+
+                            <Divider />
+
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Color</h4>
                                 <ColorSelection name="color" />
@@ -145,7 +155,7 @@ function Product(props) {
                         {products.state === 'SUCCESS' && (
                             // <div >
                             <Row className={cx('products-wrapper')} gutter={[24, 24]}>
-                                {products?.data?.rows?.map((product, index) => {
+                                {products?.data?.map((product, index) => {
                                     return (
                                         <Col key={product.id} xs={6}>
                                             <ProductItem

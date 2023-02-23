@@ -37,7 +37,7 @@ function Cart({ onGetValue, ...props }) {
     const totalPrice = useMemo(() => {
         let total;
         total = cartInfo?.data?.data?.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.cart_stock.quantity * currentValue.Product.price,
+            (accumulator, currentValue) => accumulator + currentValue.cart_stock?.quantity * currentValue.Product.price,
             0,
         );
         return total;
@@ -49,9 +49,10 @@ function Cart({ onGetValue, ...props }) {
             let submitData = { promoId: null, stockInfo: [] };
             submitData.promoId = promo?.id;
             cartInfo?.data?.data?.forEach((stock) => {
+                console.log('stock', stock);
                 submitData.stockInfo.push({
                     id: stock.id,
-                    quantity: stock.cart_stock.quantity,
+                    quantity: stock.cart_stock?.quantity,
                 });
             });
             onGetValue(submitData);
@@ -76,11 +77,11 @@ function Cart({ onGetValue, ...props }) {
         <div className={cx('cart-tab')} {...props}>
             <div className={cx('header')}>
                 <div className={cx('text')}>Added to your bag</div>
-                {!props.purchase && (
+                {/* {!props.purchase && (
                     <div className={cx('close')}>
                         <IconX width={16} height={16} />
                     </div>
-                )}
+                )} */}
             </div>
             <div className={cx('list')}>
                 {cartInfo.state === REQUEST_STATE.SUCCESS && cartInfo?.data?.data !== [] ? (

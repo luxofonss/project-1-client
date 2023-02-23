@@ -12,7 +12,7 @@ import { IconTrash } from '~/assets/svgs';
 const cx = classNames.bind(styles);
 
 function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
-    const [quantity, setQuantity] = useState(!inOrder ? product.cart_stock.quantity : null);
+    const [quantity, setQuantity] = useState(!inOrder ? product.cart_stock?.quantity : null);
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
 
     useEffect(() => {
         if (!inOrder)
-            if (quantityValue !== product.cart_stock.quantity) {
+            if (quantityValue !== product.cart_stock?.quantity) {
                 console.log('useEffect update running');
                 onUpdateProduct(product.id, quantityValue);
             }
@@ -67,7 +67,7 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                         <div className={cx('quantity')}>
                             <div className={cx('text')}>Quantity: </div>
                             <div className={cx('quantity-action')}>
-                                <div>{product.order_stocks.quantity}</div>
+                                <div>{product.order_stocks?.quantity}</div>
                             </div>
                         </div>
                     )}

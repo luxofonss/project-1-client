@@ -1,11 +1,12 @@
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { SIDER_COLLAPSE } from '~/app-configs';
+import { REQUEST_STATE, SIDER_COLLAPSE, TOKEN_KEY } from '~/app-configs';
 import AppHeader from '~/containers/app/screens/Customer/components/ClientHeader';
+import { CHECK_VALID_TOKEN, CHECK_VALID_TOKEN_FAIL, RESET_CHECK_VALID_TOKEN } from '~/redux/actions/user';
 import Footer from '../components/Footer';
 import styles from './ProductLayout.module.sass';
 
@@ -40,16 +41,26 @@ function ProductLayout({ children, match }) {
     const history = useHistory();
     const currentRouter = useSelector((state) => state.router.location);
     const [selectedSider, setSelectedSider] = useState(getSelectedNav());
+    const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        (async () => {
+            const accessToken = localStorage.getItem(TOKEN_KEY);
+            if (accessToken) {
+                if (isAuthenticated !== REQUEST_STATE.SUCCESS) {
+                    dispatch(CHECK_VALID_TOKEN());
+                }
+            } else {
+                dispatch(CHECK_VALID_TOKEN_FAIL());
+            }
+        })();
+    }, [dispatch]);
 
-    function toggleSider() {
-        setCollapsed(!collapsed);
-        localStorage.setItem(SIDER_COLLAPSE, !collapsed);
-    }
-
-    const onClickSliderMenu = (item) => {
-        history.push(item.key);
-    };
-
+    useEffect(() => {
+        if (isAuthenticated === REQUEST_STATE.ERROR) {
+            dispatch(RESET_CHECK_VALID_TOKEN());
+        }
+    }, [isAuthenticated]);
     function getSelectedNav() {
         if (currentRouter?.pathname.includes('/config/sign-ceft/')) {
             return '/config/select-ceft';
@@ -61,110 +72,18 @@ function ProductLayout({ children, match }) {
         console.log('selectedSider: ', selectedSider);
     }, [selectedSider]);
 
-    const handleMenuClick = (e) => {
-        localStorage.setItem('menuId', e.target.id);
-        history.push(e.target.key);
-    };
-
-    const targetMenuId = localStorage.getItem('menuId') || 'dashboard';
-
-    // useEffect(() => {
-    //     const targetMenu = document.getElementById(targetMenuId);
-    //     targetMenu.classList.add('active');
-    // }, [targetMenuId]);
-
     return (
         <div className={cx('app-layout')}>
-            <Layout>
-                <AppHeader />
-                <Layout>
-                    {/* <div className={cx('sider')}>
-                        <div className={cx('filter-wrapper')}>
-                            <h4>Categories</h4>
-                            <div>
-                                <div>
-                                    <input type="checkbox" name="category" /> 1
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="category" /> 2
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="category" /> 3
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="category" /> 4
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="category" /> 5
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('filter-wrapper')}>
-                            <h4>Gender</h4>
-                            <div>
-                                <div>
-                                    <input type="radio" name="gender" /> Men
-                                </div>
-                                <div>
-                                    <input type="radio" name="gender" /> Women
-                                </div>
-                                <div>
-                                    <input type="radio" name="gender" /> All
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('filter-wrapper')}>
-                            <h4>Form</h4>
-                            <div>
-                                <div>
-                                    <input type="checkbox" name="form" /> Low Top
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="form" /> High Top
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="form" /> Mid Top
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="form" /> Mule
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('filter-wrapper')}>
-                            <h4>Price</h4>
-                            <div>
-                                <div>
-                                    <input type="checkbox" name="price" /> $20 - $50
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="price" /> $50 - $100
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="price" /> $100 - $300
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="price" /> Greater than $300
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('filter-wrapper')}>
-                            <h4>Size</h4>
-                            <div>
-                                <div>
-                                    <input type="checkbox" name="size" /> Free
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="size" /> S
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="size" /> M
-                                </div>
-                                <div>
-                                    <input type="checkbox" name="size" /> L
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorBgLayout: 'linear-gradient(113.49deg, #b75337 -30.3%, #2d3a82 58.12%)',
+                    },
+                }}
+            >
+                <Layout style={{ background: 'red!important' }}>
+                    <AppHeader />
+
                     <Content
                         style={{
                             margin: '0px 0px',
@@ -177,7 +96,7 @@ function ProductLayout({ children, match }) {
                     </Content>
                     <Footer />
                 </Layout>
-            </Layout>
+            </ConfigProvider>
         </div>
     );
 }

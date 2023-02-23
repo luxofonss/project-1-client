@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function ProductItem(props) {
     return (
         <div>
-            <div className={cx('item')}>
+            <div style={props.width ? { width: props.width } : {}} className={cx('item')}>
                 {props.sale !== null && <div className={cx('tag')}>{props.sale}% Sale off</div>}
                 <div
                     style={{
@@ -22,11 +22,11 @@ function ProductItem(props) {
                     className={cx('image')}
                 ></div>
                 <div className={cx('top')}>
-                    <div className={(cx('name'), 'text_over_flow_1')}>{props.name}</div>
+                    <div className={('text_over_flow_1', cx('name'))}>{props.name}</div>
 
-                    <div className={cx('star')}>
+                    {/* <div className={cx('star')}>
                         <IconStar width={20} height={18} /> (5)
-                    </div>
+                    </div> */}
                 </div>
                 <div className={cx('footer')}>
                     <div className={cx('price')}>{props.price} VND</div>

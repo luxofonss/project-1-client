@@ -39,7 +39,7 @@ function Product(props) {
     const categoryList = useSelector((state) => {
         return state.category.categoryList;
     });
-    const productList = product?.data?.data?.rows;
+    const productList = product?.data?.data;
     console.log('productList', productList);
 
     console.log('categoryList', categoryList);

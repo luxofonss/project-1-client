@@ -124,7 +124,20 @@ function AddProduct() {
                                                     <AppSelectInput
                                                         name={`stockData[${index}].size`}
                                                         label="Size"
-                                                        options={[35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]}
+                                                        options={[
+                                                            '35',
+                                                            '36',
+                                                            '37',
+                                                            '38',
+                                                            '39',
+                                                            '40',
+                                                            '41',
+                                                            '42',
+                                                            '43',
+                                                            '44',
+                                                            '45',
+                                                            '46',
+                                                        ]}
                                                     />
                                                 </Col>
                                                 <Col xs={7}>
@@ -153,6 +166,7 @@ function AddProduct() {
                                                     <AppInput
                                                         name={`stockData[${index}].total`}
                                                         label="Total"
+                                                        type="number"
                                                         placeholder="Number of products"
                                                     />
                                                 </Col>

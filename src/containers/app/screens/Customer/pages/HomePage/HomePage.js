@@ -31,15 +31,34 @@ function HomePage(props) {
     const onChange = (currentSlide) => {
         console.log(currentSlide);
     };
+
+    const imgs = [
+        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/306364146_2015783021925557_1903662116556994624_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=09Efm_ijjBQAX8rlny4&tn=8cxO5NLXVgS8b5XU&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDjYc-0ouD9C0QVVu9bNRGAkZ5H8gpou0-3gxtaSHK2Xw&oe=63FC3A9E',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302195814_2008714422632417_707195722424640066_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=730e14&_nc_ohc=k8VgmV_rnvcAX9mREq3&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDbCFSFcFnE8gE8U6wLcX7kyTcHI84LZ3NK16aC0rfDMw&oe=63FBF020',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302944940_2007413076095885_5844781582357933218_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=xxUd1gZ77GIAX-F-F-c&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDnmU4_cX_sg3yUVLzBoGJeCn4KOH26P3VFeU9QYVlOug&oe=63FBDD6B',
+        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/300800975_2004782463025613_8452339877912986129_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=kMN8GV7--ZUAX_4z_4B&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDlu8a_mXi3pMY7ZWsWnwMSMY5hGs5ru2w0pRlyX6KcZg&oe=63FBEC25',
+        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/272308677_1843912142445980_4455593664181753044_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=crDvQI-HjK8AX_2K1Zu&_nc_ht=scontent-hkg4-1.xx&oh=00_AfAKL1e23zfUc1SYkYPEdbqYoOZhPra44Vh6o4SZoWtbDQ&oe=63FBF0EA',
+    ];
     return (
         <div className={cx('container')}>
-            {/* <section>
-                <Carousel autoPlay afterChange={onChange}>
-                    <div>tes</div>
-                    <div>tes2</div>
+            <div>
+                <Carousel autoplay>
+                    {imgs.map((src) => (
+                        <div>
+                            <section
+                                className={cx('top-section')}
+                                style={{
+                                    backgroundImage: `url(${src})`,
+                                    backgroundPosition: 'center',
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'no-repeat',
+                                }}
+                            ></section>
+                        </div>
+                    ))}
                 </Carousel>
-            </section> */}
-            <section
+            </div>
+            {/* <section
                 className={cx('top-section')}
                 style={{
                     backgroundImage: `url(${background})`,
@@ -47,12 +66,12 @@ function HomePage(props) {
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                 }}
-            ></section>
+            ></section> */}
 
             <Divider>
                 <h3 className={cx('heading')}>OUR CATEGORIES</h3>
             </Divider>
-            {categories.requestState === REQUEST_STATE.SUCCESS && (
+            {categories?.requestState === REQUEST_STATE.SUCCESS && (
                 <section className={cx('categories')}>
                     <Row gutter={[30, 30]}>
                         <Col xs={12}>
@@ -115,8 +134,6 @@ function HomePage(props) {
                                         <div className={cx('description')}>{categoryList[2]?.description}</div>
                                     </div>
                                 </Col>
-                            </Row>
-                            <Row gutter={[30, 30]}>
                                 <Col xs={24}>
                                     <div
                                         style={{
@@ -143,6 +160,7 @@ function HomePage(props) {
                                     </div>
                                 </Col>
                             </Row>
+                            {/* <Row gutter={[30, 30]}></Row> */}
                         </Col>
                     </Row>
                 </section>
@@ -153,10 +171,11 @@ function HomePage(props) {
                 </Divider>
                 <Carousel dots={false} slidesToShow={4} autoplay afterChange={onChange}>
                     {products.state === REQUEST_STATE.SUCCESS &&
-                        products?.data?.rows?.map((product, index) => {
+                        products?.data?.map((product, index) => {
                             return (
-                                <div style={{ width: '70px', height: '120px' }}>
+                                <div>
                                     <ProductItem
+                                        width="80%"
                                         image={product.Images[0]?.src}
                                         name={product.name}
                                         price={accounting.formatNumber(product.price)}

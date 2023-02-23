@@ -77,7 +77,7 @@ function ProductEdit() {
         } else {
             const editedData2 = {
                 ...data,
-                image: productEdit?.data?.data.rows[0]?.image,
+                image: productEdit?.data?.data[0]?.image,
                 deletedAt: data.status == 0 ? '' : moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
                 id: id,
             };
@@ -86,7 +86,7 @@ function ProductEdit() {
         }
     };
 
-    console.log('productEdit?.data?.data.rows[0]', productEdit?.data?.data);
+    console.log('productEdit?.data?.data[0]', productEdit?.data?.data);
     return (
         <Fragment>
             <Link className={cx('back')} to="/admin/product">
@@ -105,19 +105,19 @@ function ProductEdit() {
                                     <AppInput
                                         label="Name"
                                         name="name"
-                                        defaultValue={productEdit?.data?.data.rows[0]?.name}
+                                        defaultValue={productEdit?.data?.data[0]?.name}
                                     />
 
                                     <AppInput
                                         label="Category"
                                         name="category"
-                                        defaultValue={productEdit?.data?.data.rows[0]?.category?.name}
+                                        defaultValue={productEdit?.data?.data[0]?.category?.name}
                                     />
 
                                     <AppTextArea
                                         label="Description"
                                         name="description"
-                                        defaultValue={productEdit?.data?.data.rows[0]?.description}
+                                        defaultValue={productEdit?.data?.data[0]?.description}
                                     />
                                 </Col>
                                 <Col xs={4}>
@@ -126,14 +126,14 @@ function ProductEdit() {
                                             <AppInput
                                                 label="Price (VND)"
                                                 name="price"
-                                                defaultValue={productEdit?.data?.data.rows[0]?.price}
+                                                defaultValue={productEdit?.data?.data[0]?.price}
                                             />
                                         </Col>
                                         <Col xs={6}>
                                             <AppInput
                                                 label="Code"
                                                 name="id"
-                                                defaultValue={productEdit?.data?.data.rows[0]?.id}
+                                                defaultValue={productEdit?.data?.data[0]?.id}
                                             />
                                         </Col>
                                     </Row>
@@ -142,7 +142,7 @@ function ProductEdit() {
                                             <AppInput
                                                 label="Total quantity"
                                                 name="quantity"
-                                                defaultValue={productEdit?.data?.data.rows[0]?.Stocks.reduce(
+                                                defaultValue={productEdit?.data?.data[0]?.Stocks.reduce(
                                                     (accumulator = 0, current, index) => {
                                                         return accumulator + current.stock;
                                                     },
@@ -154,7 +154,7 @@ function ProductEdit() {
                                             <AppInput
                                                 label="Promo"
                                                 name="promo"
-                                                defaultValue={productEdit?.data?.data.rows[0]?.promo}
+                                                defaultValue={productEdit?.data?.data[0]?.promo}
                                             />
                                         </Col>
                                     </Row>
@@ -183,7 +183,7 @@ function ProductEdit() {
                                             backgroundImage: `url(${
                                                 selectedImage
                                                     ? URL.createObjectURL(selectedImage)
-                                                    : productEdit?.data?.data.rows[0]?.Images[0]?.src
+                                                    : productEdit?.data?.data[0]?.Images[0]?.src
                                             })`,
                                             width: '250px',
                                             height: '250px',

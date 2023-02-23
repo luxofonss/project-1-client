@@ -1,11 +1,12 @@
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { SIDER_COLLAPSE } from '~/app-configs';
+import { REQUEST_STATE, SIDER_COLLAPSE, TOKEN_KEY } from '~/app-configs';
 import AppHeader from '~/containers/app/screens/Customer/components/ClientHeader';
+import { CHECK_VALID_TOKEN, CHECK_VALID_TOKEN_FAIL, RESET_CHECK_VALID_TOKEN } from '~/redux/actions/user';
 import Footer from '../components/Footer';
 import styles from './CustomerLayout.sass';
 
@@ -40,16 +41,26 @@ function CustomerLayout({ children, match }) {
     const history = useHistory();
     const currentRouter = useSelector((state) => state.router.location);
     const [selectedSider, setSelectedSider] = useState(getSelectedNav());
+    const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        (async () => {
+            const accessToken = localStorage.getItem(TOKEN_KEY);
+            if (accessToken) {
+                if (isAuthenticated !== REQUEST_STATE.SUCCESS) {
+                    dispatch(CHECK_VALID_TOKEN());
+                }
+            } else {
+                dispatch(CHECK_VALID_TOKEN_FAIL());
+            }
+        })();
+    }, [dispatch]);
 
-    function toggleSider() {
-        setCollapsed(!collapsed);
-        localStorage.setItem(SIDER_COLLAPSE, !collapsed);
-    }
-
-    const onClickSliderMenu = (item) => {
-        history.push(item.key);
-    };
-
+    useEffect(() => {
+        if (isAuthenticated === REQUEST_STATE.ERROR) {
+            dispatch(RESET_CHECK_VALID_TOKEN());
+        }
+    }, [isAuthenticated]);
     function getSelectedNav() {
         if (currentRouter?.pathname.includes('/config/sign-ceft/')) {
             return '/config/select-ceft';
@@ -61,34 +72,30 @@ function CustomerLayout({ children, match }) {
         console.log('selectedSider: ', selectedSider);
     }, [selectedSider]);
 
-    const handleMenuClick = (e) => {
-        localStorage.setItem('menuId', e.target.id);
-        history.push(e.target.key);
-    };
-
-    const targetMenuId = localStorage.getItem('menuId') || 'dashboard';
-
-    // useEffect(() => {
-    //     const targetMenu = document.getElementById(targetMenuId);
-    //     targetMenu.classList.add('active');
-    // }, [targetMenuId]);
-
     return (
         <div className={cx('app-layout')}>
-            <Layout>
-                <AppHeader />
-                <Content
-                    style={{
-                        margin: '0px 0px',
-                        padding: '0 0px',
-                        minHeight: 280,
-                        position: 'relative',
-                    }}
-                >
-                    {children}
-                </Content>
-                <Footer />
-            </Layout>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorBgLayout: 'linear-gradient(113.49deg, #b75337 -30.3%, #2d3a82 58.12%)',
+                    },
+                }}
+            >
+                <Layout>
+                    <AppHeader />
+                    <Content
+                        style={{
+                            margin: '0px 0px',
+                            padding: '0 0px',
+                            minHeight: 280,
+                            position: 'relative',
+                        }}
+                    >
+                        {children}
+                    </Content>
+                    <Footer />
+                </Layout>
+            </ConfigProvider>
         </div>
     );
 }

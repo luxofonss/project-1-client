@@ -12,7 +12,7 @@ function PrivateRoute({ component: Component, location, role, ...rest }) {
     const dispatch = useDispatch();
     const userRole = useSelector((state) => state.user?.profile?.role);
     const isAuthenticated = useSelector((state) => state.user?.verifyAuthState);
-    console.log(userRole);
+
     useEffect(() => {
         (async () => {
             const accessToken = localStorage.getItem(TOKEN_KEY);
@@ -24,7 +24,7 @@ function PrivateRoute({ component: Component, location, role, ...rest }) {
                 dispatch(CHECK_VALID_TOKEN_FAIL());
             }
         })();
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (isAuthenticated === REQUEST_STATE.ERROR) {
@@ -34,6 +34,8 @@ function PrivateRoute({ component: Component, location, role, ...rest }) {
 
     switch (isAuthenticated) {
         case REQUEST_STATE?.SUCCESS: {
+            console.log('test', role.includes(userRole), userRole);
+
             if (userRole)
                 if (role.includes(userRole)) return <Route {...rest} render={(props) => <Component {...props} />} />;
                 else return <Redirect to={{ pathname: '/page-not-found', state: { from: location } }} />;

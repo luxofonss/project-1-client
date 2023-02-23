@@ -2,19 +2,23 @@
      display: flex
      justify-content: space-between
      flex-direction: column
-     padding: 8px
-     height: 250px!important
+     padding: 16px
+     margin: 0 auto
+     // height: 250px!important
      width: 100%
      border-radius: 4px
-     background: #FFFFFF
-     box-shadow: 0px 2px 40px rgba(85, 85, 85, 0.07)
+     background: rgba(255, 255, 255, 0.1)
+     box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25)
      transition: all 0.3s ease
      position: relative
      cursor: pointer
 
      &:hover
-          box-shadow: 0px 5.2226px 14.8771px 2px rgba(177, 174, 199, 0.5)
-          transform: scale(1.01)
+          // box-shadow: 0px 5.2226px 14.8771px 2px rgba(177, 174, 199, 0.5)
+          box-shadow: rgb(53, 72, 78) 1px 3px 10px
+          animation: 0.3s ease-in-out 0s 1 normal none running growth
+          // transform: scale(1.01)
+          background: rgba(255, 255, 255, 0.2)
      .tag
           position: absolute
           top: 8px
@@ -34,36 +38,40 @@
 
      .image
           // width: 100%!important
-          height: 180px!important
+          height: 220px!important
+          border-radius: 8px
 
      .top
           display: flex
           justify-content: space-between
           align-items: center
-          margin-top: 8px
+          margin-top: 12px
+          color: var(--light-100)
 
           .star
                margin-top: 4px
-               color: var(--dark-text-2)
+               color: var(--light-100)
                display: flex
                align-items: center
 
           .name
-               // color: var(--dark-text-2)
-               // font-size: 18px
+               // color: var(--light-100)
+               font-size: 17px!important
                font-family: "IBM Plex Sans",'SF Pro Display','Inter','Manrope', sans-serif
                font-style: normal
                font-weight: 600
-               font-size: 14.9436px
+               // font-size: 14.9436px
+               text-transform: uppercase
                line-height: 23px
-               color: #000000
+               color: var(--light-100)
 
      .footer
           display: flex
           justify-content: space-between
           align-items: center
-          margin-top: 8px
+          margin-top: 0px
           margin-bottom: 6px
+          color: var(--light-100)
 
 .view-more
      font-size: 17px

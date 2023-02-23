@@ -62,15 +62,6 @@ function CustomerProfileLayout({ children, match }) {
     const currentRouter = useSelector((state) => state.router.location);
     const [selectedSider, setSelectedSider] = useState(getSelectedNav());
 
-    function toggleSider() {
-        setCollapsed(!collapsed);
-        localStorage.setItem(SIDER_COLLAPSE, !collapsed);
-    }
-
-    const onClickSliderMenu = (item) => {
-        history.push(item.key);
-    };
-
     function getSelectedNav() {
         if (currentRouter?.pathname.includes('/config/sign-ceft/')) {
             return '/config/select-ceft';
@@ -86,13 +77,6 @@ function CustomerProfileLayout({ children, match }) {
         localStorage.setItem('menuId', e.target.id);
         history.push(e.target.key);
     };
-
-    // const targetMenuId = localStorage.getItem('menuId') || 'dashboard';
-
-    // useEffect(() => {
-    //     const targetMenu = document.getElementById(targetMenuId);
-    //     targetMenu.classList.add('active');
-    // }, [targetMenuId]);
 
     return (
         <div className={cx('app-layout')}>

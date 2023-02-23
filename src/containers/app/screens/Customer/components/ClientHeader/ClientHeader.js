@@ -52,14 +52,17 @@ export default function (props) {
 
     return (
         <header className={cx('header')}>
-            <div className={cx('logo')}>Logo</div>
+            <div className={cx('logo')}>
+                <div className={cx('first')}>LUX</div>
+                <div className={cx('second')}>SHOP</div>
+            </div>
             <div className={cx('search-nav')}>
                 <AppForm onSubmit={onSearch} style={{ height: '100%', width: '100%' }}>
                     <AppInput
                         wrapperStyle={{ height: '100%', width: '100%' }}
                         name="search"
                         placeholder="Search something..."
-                        style={{ backgroundColor: 'var(--light-80)', color: 'var(--light-0)' }}
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: 'var(--light-80)' }}
                     />
                     <button style={{ display: 'none' }} ref={submitButton} type="submit">
                         submit
@@ -81,15 +84,6 @@ export default function (props) {
                 </Link>
                 <Link to="/product" className={cx('item')}>
                     Products
-                </Link>
-                {/* <Link to="/product/men" className={cx('item')}>
-                    Men
-                </Link>
-                <Link to="/product/women" className={cx('item')}>
-                    Women
-                </Link> */}
-                <Link to="/product/sale" className={cx('item')}>
-                    Sale off
                 </Link>
                 <Link to="/about" className={cx('item')}>
                     About us
