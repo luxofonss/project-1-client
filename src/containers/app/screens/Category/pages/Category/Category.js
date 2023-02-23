@@ -33,7 +33,7 @@ function Category(props) {
         setLimit(pagination.pageSize);
         console.log('params', pagination, pageSize, filters, sorter, extra);
     };
-    const categoryData = useSelector((state) => state.category.categoryList);
+    const categoryData = useSelector((state) => state.category?.categoryList);
     const categoryCreate = useSelector((state) => state.category.categoryCreate);
 
     console.log(categoryData);

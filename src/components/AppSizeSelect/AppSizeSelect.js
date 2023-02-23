@@ -49,9 +49,10 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
     return (
         <div className={cx('wrapper')}>
             {sizes.state === REQUEST_STATE.SUCCESS &&
-                sizes?.data?.data.map((size) => {
+                sizes?.data?.data.map((size, index) => {
                     return (
                         <div
+                            key={index}
                             onClick={onClickItem}
                             sizeIndex={size.id}
                             className={checkedList.includes(size.id.toString()) ? cx('active-item') : cx('item')}

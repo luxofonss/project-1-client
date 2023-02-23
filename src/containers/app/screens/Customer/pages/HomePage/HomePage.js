@@ -18,8 +18,8 @@ const cx = classNames.bind(styles);
 
 function HomePage(props) {
     const dispatch = useDispatch();
-    const categories = useSelector((state) => state.category.categoryList);
-    const products = useSelector((state) => state.product.listProduct.data);
+    const categories = useSelector((state) => state.category?.categoryList);
+    const products = useSelector((state) => state.product?.listProduct?.data);
     useEffect(() => {
         dispatch(PRODUCT_GET());
         dispatch(CATEGORY_LIST_REQUEST());

@@ -121,7 +121,7 @@ export default function (props) {
                                     }}
                                 >
                                     <span style={{ color: 'white', fontWeight: 700 }}>
-                                        {userDetail?.name.at(0).toUpperCase()}
+                                        {userDetail?.name?.at(0).toUpperCase()}
                                     </span>
                                 </div>
                                 <ul className="dropdown-menu">
