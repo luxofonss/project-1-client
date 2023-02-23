@@ -64,13 +64,18 @@
                text-transform: uppercase
                line-height: 23px
                color: var(--light-100)
+               display: -webkit-box !important
+               -webkit-line-clamp: 1
+               -webkit-box-orient: vertical
+               overflow: hidden
+               text-overflow: ellipsis
 
      .footer
           display: flex
           justify-content: space-between
           align-items: center
-          margin-top: 0px
-          margin-bottom: 6px
+          margin-top: 8px
+          margin-bottom: 0px
           color: var(--light-100)
 
 .view-more

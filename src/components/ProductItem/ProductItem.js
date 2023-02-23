@@ -22,7 +22,7 @@ function ProductItem(props) {
                     className={cx('image')}
                 ></div>
                 <div className={cx('top')}>
-                    <div className={('text_over_flow_1', cx('name'))}>{props.name}</div>
+                    <div className={cx('name')}>{props.name}</div>
 
                     {/* <div className={cx('star')}>
                         <IconStar width={20} height={18} /> (5)
