@@ -1,17 +1,10 @@
-import { Header } from 'antd/lib/layout/layout';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getNavItem } from '~/components/Layout/AppLayout/AppLayout';
-import { LogoutOutlined } from '@ant-design/icons';
-import hustLogo from '~/assets/images/header/hust-logo.jpeg';
-import { TOKEN_KEY } from '~/app-configs';
-import { useSelector } from 'react-redux';
-import classNames from 'classnames/bind';
-import styles from './Header.module.sass';
-import { NoticeDot, NoticeIcon, Union, UserIcon, LogoutIcon, IconBell } from '~/assets/svgs';
-import { set } from 'react-hook-form';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import classNames from 'classnames/bind';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { TOKEN_KEY } from '~/app-configs';
+import styles from './Header.module.sass';
 
 const cx = classNames.bind(styles);
 

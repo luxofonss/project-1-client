@@ -28,15 +28,15 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
     } = useFormContext();
 
     const onClickItem = (e) => {
-        const sizeIndex = e.target.getAttribute('sizeIndex');
-        console.log(sizeIndex, e.target.innerHTML);
+        const sizeindex = e.target.getAttribute('sizeindex');
+        console.log(sizeindex, e.target.innerHTML);
         let array = checked;
-        let index = array.indexOf(sizeIndex);
+        let index = array.indexOf(sizeindex);
         if (index !== -1) {
             array.splice(index, 1);
             setChecked([...array]);
         } else {
-            setChecked([...checked, sizeIndex]);
+            setChecked([...checked, sizeindex]);
         }
     };
 
@@ -54,7 +54,7 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
                         <div
                             key={index}
                             onClick={onClickItem}
-                            sizeIndex={size.id}
+                            sizeindex={size.id}
                             className={checkedList.includes(size.id.toString()) ? cx('active-item') : cx('item')}
                         >
                             {size.size}

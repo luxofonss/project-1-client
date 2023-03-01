@@ -46,6 +46,7 @@ const AppSelectInput = ({ minWidth, name, required, options, valueField, nameFie
             document.removeEventListener('click', handleClick);
         };
     }, []);
+    console.log('options: ', options);
 
     return (
         <div style={{ minWidth: minWidth ? minWidth : null }} ref={wrapperRef}>

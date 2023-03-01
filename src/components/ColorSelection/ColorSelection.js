@@ -28,14 +28,14 @@ const ColorSelection = ({ name, value, required = false, ...props }) => {
     } = useFormContext();
 
     const onClickItem = (e) => {
-        const colorIndex = e.target.getAttribute('colorIndex');
+        const colorindex = e.target.getAttribute('colorindex');
         let array = checked;
-        let index = array.indexOf(colorIndex);
+        let index = array.indexOf(colorindex);
         if (index !== -1) {
             array.splice(index, 1);
             setChecked([...array]);
         } else {
-            setChecked([...checked, colorIndex]);
+            setChecked([...checked, colorindex]);
         }
     };
 
@@ -48,11 +48,12 @@ const ColorSelection = ({ name, value, required = false, ...props }) => {
     return (
         <div className={cx('wrapper')}>
             {colors.state === REQUEST_STATE.SUCCESS &&
-                colors?.data?.data.map((color) => {
+                colors?.data?.data.map((color, index) => {
                     return (
                         <div
+                            key={index}
                             onClick={onClickItem}
-                            colorIndex={color.id}
+                            colorindex={color.id}
                             style={{ background: `${color.code}` }}
                             className={checked.includes(color.id.toString()) ? cx('active-item') : cx('item')}
                         >

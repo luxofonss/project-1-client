@@ -37,9 +37,10 @@ const ChoosePromo = ({ onSubmit, ...props }) => {
             </div>
             <Modal footer={[]} title="Voucher" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 {promoList.state === REQUEST_STATE.SUCCESS &&
-                    promoList?.data?.data?.map((promo) => {
+                    promoList?.data?.data?.map((promo, index) => {
                         return (
                             <div
+                                key={index}
                                 onClick={() => handleChoosePromo(promo.id, promo.percent, promo.discount, promo.code)}
                                 className={cx('promo-wrapper')}
                             >

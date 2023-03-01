@@ -1,4 +1,4 @@
-import { Col, Layout, Menu, Row } from 'antd';
+import { Col, ConfigProvider, Layout, Menu, Row } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
@@ -80,54 +80,60 @@ function CustomerProfileLayout({ children, match }) {
 
     return (
         <div className={cx('app-layout')}>
-            <Layout>
-                <ClientHeader />
-                <Content
-                    style={{
-                        margin: '24px 100px',
-                        // padding: 24,
-                        minHeight: 280,
-                        position: 'relative',
-                    }}
-                >
-                    <Row gutter={0}>
-                        <Col xs={5}>
-                            <div className={cx('slider')}>
-                                <div className={cx('logo')}>
-                                    <LogoAdmin />
-                                </div>
-                                <menu className={cx('menu')}>
-                                    {menuItems.map((item) => (
-                                        // <div className={cx('menu-item')}>
-                                        <Link
-                                            onClick={(e) => {
-                                                handleMenuClick(e);
-                                            }}
-                                            id={item.key}
-                                            key={item.key}
-                                            to={item.path}
-                                            className={cx('menu-item')}
-                                        >
-                                            <div className={cx('text normal-link')}> {item.label}</div>
-                                            <div className={cx('icon')}>{item.icon}</div>
-                                        </Link>
-                                        // </div>
-                                    ))}
-                                </menu>
-                                <div className={cx('slider-footer')}>
-                                    <div className={cx('more')}>
-                                        <a href="#">I need help!</a>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorBgLayout: 'linear-gradient(113.49deg, #b75337 -30.3%, #2d3a82 58.12%)',
+                    },
+                }}
+            >
+                <Layout>
+                    <ClientHeader />
+                    <Content
+                        style={{
+                            margin: '24px 100px',
+                            // padding: 24,
+                            minHeight: 280,
+                            position: 'relative',
+                        }}
+                    >
+                        <Row gutter={0}>
+                            <Col xs={5}>
+                                <div className={cx('slider')}>
+                                    <div className={cx('logo')}>Profile</div>
+                                    <menu className={cx('menu')}>
+                                        {menuItems.map((item) => (
+                                            // <div className={cx('menu-item')}>
+                                            <Link
+                                                onClick={(e) => {
+                                                    handleMenuClick(e);
+                                                }}
+                                                id={item.key}
+                                                key={item.key}
+                                                to={item.path}
+                                                className={cx('menu-item')}
+                                            >
+                                                <div className={cx('text normal-link')}> {item.label}</div>
+                                                <div className={cx('icon')}>{item.icon}</div>
+                                            </Link>
+                                            // </div>
+                                        ))}
+                                    </menu>
+                                    <div className={cx('slider-footer')}>
+                                        <div className={cx('more')}>
+                                            <a href="#">I need help!</a>
+                                        </div>
+                                        <div className={cx('copy-right')}>Copyright of Luxofons</div>
                                     </div>
-                                    <div className={cx('copy-right')}>Copyright of Luxofons</div>
                                 </div>
-                            </div>
-                        </Col>
-                        <Col xs={1}></Col>
-                        <Col xs={17}>{children}</Col>
-                    </Row>
-                </Content>
-                <Footer />
-            </Layout>
+                            </Col>
+                            <Col xs={1}></Col>
+                            <Col xs={17}>{children}</Col>
+                        </Row>
+                    </Content>
+                    <Footer />
+                </Layout>
+            </ConfigProvider>
         </div>
     );
 }

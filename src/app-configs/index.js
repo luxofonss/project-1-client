@@ -8,6 +8,14 @@ export const Configs = {
     PAGE_SIZE_4: 4,
 };
 
+export const ORDER_STATUS = {
+    PENDING: 'orange',
+    APPROVED: 'green',
+    DELIVERING: 'blue',
+    REFUSED: 'red',
+    CANCELLED: 'grey',
+};
+
 export const REQUEST_STATE = {
     ERROR: 'ERROR',
     REQUEST: 'REQUEST',

@@ -45,8 +45,9 @@ const menuItems = [
     getMenu('Dashboard', '/admin', 'dashboard', <IconDashboard />),
     getMenu('Product', '/admin/product', 'product', <IconShopBasket />),
     getMenu('Category', '/admin/category', 'category', <IconCategory />),
-    getMenu('User', '/admin/payment', 'user', <IconUser />),
-    getMenu('Order', '/admin/request-history', 'order', <IconOrder />),
+    getMenu('Promo', '/admin/promo', 'promo', <IconUser />),
+    getMenu('User', '/admin/users', 'user', <IconUser />),
+    getMenu('Order', '/admin/orders', 'order', <IconOrder />),
     getMenu('Transaction', '/admin/support-request', 'transaction', <IconTransaction />),
 ];
 

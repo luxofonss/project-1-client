@@ -31,7 +31,13 @@ function ProductItem(props) {
                 <div className={cx('footer')}>
                     <div className={cx('price')}>{props.price} VND</div>
                     <div className={cx('button')}>
-                        <SelectColorSize index={props.index} size={null} color={null} stocks={props.stock} />
+                        <SelectColorSize
+                            id={props.id}
+                            index={props.index}
+                            size={null}
+                            color={null}
+                            stocks={props.stock}
+                        />
                     </div>
                 </div>
             </div>

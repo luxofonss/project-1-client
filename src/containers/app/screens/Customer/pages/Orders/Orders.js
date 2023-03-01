@@ -1,4 +1,4 @@
-import { Collapse } from 'antd';
+import { Collapse, Divider } from 'antd';
 import classNames from 'classnames/bind';
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,27 +26,28 @@ function Orders(props) {
     return (
         <div className={cx('items-wrapper')}>
             <div className={cx('header')}>
-                <div>Total orders: </div>
+                <h4>Your orders: </h4>
                 {/* <div>Sort by date: </div> */}
             </div>
-            <div className="divider"></div>
+            <Divider />
             <div className={cx('item-list')}>
                 <Collapse onChange={onChange}>
-                    {orderList.state === REQUEST_STATE.SUCCESS &&
-                        orderList?.data?.data?.map((order, index) => {
-                            return (
-                                <Panel header={<OrderItem order={order} index={index} />} key={index}>
-                                    <div>userAddress : {order.userAddress}</div>
-                                    <div>useFullName : {order.userFullName}</div>
-                                    <div>totalPrice :{order.totalPrice}</div>
-                                    <div>fee : {order.fee}</div>
-                                    <div>payment : {order.payment}</div>
-                                    {order.hasStocks?.map((stock, index) => {
-                                        return <CartProduct key={index} product={stock} inOrder={true} />;
-                                    })}
-                                </Panel>
-                            );
-                        })}
+                    {orderList.state === REQUEST_STATE.SUCCESS && orderList?.data?.data?.length > 0
+                        ? orderList?.data?.data?.map((order, index) => {
+                              return (
+                                  <Panel header={<OrderItem order={order} index={index} />} key={index}>
+                                      <div>userAddress : {order.userAddress}</div>
+                                      <div>useFullName : {order.userFullName}</div>
+                                      <div>totalPrice :{order.totalPrice}</div>
+                                      <div>fee : {order.fee}</div>
+                                      <div>payment : {order.payment}</div>
+                                      {order.hasStocks?.map((stock, index) => {
+                                          return <CartProduct key={index} product={stock} inOrder={true} />;
+                                      })}
+                                  </Panel>
+                              );
+                          })
+                        : orderList?.data?.data?.length === 0 && <div>You haven't bought any product!</div>}
                 </Collapse>
             </div>
         </div>

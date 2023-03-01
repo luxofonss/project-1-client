@@ -1,4 +1,4 @@
-import { Pagination } from 'antd';
+import { Pagination, Spin } from 'antd';
 import classNames from 'classnames/bind';
 import { Fragment, useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -16,6 +16,7 @@ import { PRODUCT_GET } from '~/containers/app/screens/Product/redux/action';
 import { isEmptyValue } from '~/helpers/check';
 import styles from './Product.module.sass';
 const cx = classNames.bind(styles);
+import noProduct from '~/assets/images/no_product.png';
 
 function Product(props) {
     const [categories, setCategories] = useState([]);
@@ -39,13 +40,11 @@ function Product(props) {
     });
     const productList = product?.data?.data;
     console.log('productList', productList);
-
-    console.log('categoryList', categoryList);
-    console.log('is empty', isEmptyValue(categoryList.data));
-
     const onFilter = (data) => {
         console.log(data);
-        dispatch(PRODUCT_GET(data));
+        if (data.id === 'all') {
+            dispatch(PRODUCT_GET({ name: data.name }));
+        } else dispatch(PRODUCT_GET(data));
     };
 
     const onPaginationChange = (page, pageSize) => {
@@ -60,11 +59,16 @@ function Product(props) {
                 <div className={cx('header')}>
                     <AppForm onSubmit={(data) => onFilter(data)}>
                         <div className={cx('filter-form')}>
-                            <AppInput required={false} label="Tìm theo tên" name="name"></AppInput>
+                            <AppInput
+                                wrapperStyle={{ minWidth: '250px' }}
+                                required={false}
+                                label="Tìm theo tên"
+                                name="name"
+                            ></AppInput>
                             {!isEmptyValue(categoryList.data?.data?.rows) && (
                                 <AppSelectInput
                                     required
-                                    options={categoryList.data.data.rows}
+                                    options={[{ name: 'All', id: 'all' }, ...categoryList.data.data.rows]}
                                     nameField="name"
                                     valueField="id"
                                     label="Danh mục"
@@ -72,14 +76,9 @@ function Product(props) {
                                     minWidth={250}
                                 ></AppSelectInput>
                             )}
-                            <AppButton type="submit">Submit</AppButton>
+                            <AppButton type="submit">Filter</AppButton>
                         </div>
                     </AppForm>
-
-                    {/* <div>
-                        <div onClick={() => setFormat(false)}>luoi</div>
-                        <div onClick={() => setFormat(true)}>bang</div>
-                    </div> */}
                     <div className="bottom-right">
                         <Link to="/admin/product/add" className="normal-link-white">
                             <AppButton>Add</AppButton>
@@ -89,14 +88,22 @@ function Product(props) {
                 <Container className={cx('product-list')}>
                     <Row>
                         {format === false ? (
-                            productList ? (
+                            product.state === 'SUCCESS' && productList.length > 0 ? (
                                 productList.map((product) => (
                                     <Col key={product.id} className={cx('item-wrapper')} xs={3}>
                                         <ProductForm product={product}></ProductForm>
                                     </Col>
                                 ))
+                            ) : product.state === 'SUCCESS' && productList?.length === 0 ? (
+                                <div className="flex-center">
+                                    <img src={noProduct} alt="no-product" />
+                                </div>
+                            ) : product.state === 'REQUEST' ? (
+                                <div className="flex-center">
+                                    <Spin />
+                                </div>
                             ) : (
-                                'loading...'
+                                'FAIL'
                             )
                         ) : (
                             <div>table</div>
@@ -112,7 +119,9 @@ function Product(props) {
                                           pageSizeOptions={['10', '20', '30']}
                                           defaultCurrent={1}
                                           onChange={onPaginationChange}
-                                          total={product?.data?.data?.count ? product?.data?.data?.count : 10}
+                                          total={
+                                              product?.data?.data?.rows?.length ? product?.data?.data?.rows?.length : 10
+                                          }
                                       />
                                   </div>
                               </Row>

@@ -13,7 +13,7 @@ import styles from './SelectColorSize.module.sass';
 
 const cx = classNames.bind(styles);
 
-const SelectColorSize = ({ index, size, color, name, stocks, value, required = false, ...props }) => {
+const SelectColorSize = ({ id, index, size, color, name, stocks, value, required = false, ...props }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [sizeSelected, setSizeSelected] = useState(size);
     const [quantity, setQuantity] = useState();
@@ -118,6 +118,8 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
         setIsModalOpen(false);
     };
 
+    console.log('selected size: ', sizeSelected);
+
     return (
         <Fragment>
             <AppButton
@@ -146,7 +148,7 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                                 return (
                                     <Fragment key={index}>
                                         <label
-                                            htmlFor={`size${index}${size.id}`}
+                                            htmlFor={`size${id}${index}${size.id}`}
                                             className={
                                                 sizeList.includes(size.id)
                                                     ? size.id.toString() === sizeSelected
@@ -162,7 +164,7 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                                                 setValue('sizeId', e.target.value);
                                                 setSizeSelected(e.target.value);
                                             }}
-                                            id={`size${index}${size.id}`}
+                                            id={`size${id}${index}${size.id}`}
                                             value={size.id}
                                             type="radio"
                                         />
@@ -172,9 +174,9 @@ const SelectColorSize = ({ index, size, color, name, stocks, value, required = f
                     </div>
 
                     <div style={{ marginTop: '24px' }} className={cx('color')}>
-                        {colorListRender?.map((color) => {
+                        {colorListRender?.map((color, index) => {
                             return (
-                                <Fragment>
+                                <Fragment key={index}>
                                     <label
                                         htmlFor={`color${index}${color.id}`}
                                         className={

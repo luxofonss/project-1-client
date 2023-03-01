@@ -3,7 +3,7 @@ import { useForm, useFormContext } from 'react-hook-form';
 import styles from './AppInput.module.sass';
 
 const cx = classNames.bind(styles);
-function AppInput({ name, defaultValue, wrapperStyle = {}, required = false, ...props }) {
+function AppInput({ name, minWidth, defaultValue, wrapperStyle = {}, required = false, ...props }) {
     const {
         register,
         formState: { errors },

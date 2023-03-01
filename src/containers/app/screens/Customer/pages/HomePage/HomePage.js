@@ -173,7 +173,7 @@ function HomePage(props) {
                     {products.state === REQUEST_STATE.SUCCESS &&
                         products?.data?.map((product, index) => {
                             return (
-                                <div>
+                                <div key={index}>
                                     <ProductItem
                                         width="80%"
                                         image={product.Images[0]?.src}
@@ -181,6 +181,7 @@ function HomePage(props) {
                                         price={accounting.formatNumber(product.price)}
                                         stock={product.Stocks}
                                         index={index}
+                                        id={product.id}
                                         sale={product.promo ? product.promo : null}
                                     />
                                 </div>
