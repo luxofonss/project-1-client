@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { notification, Spin } from 'antd';
+import { Modal, notification, Spin } from 'antd';
 import { REQUEST_STATE } from '~/app-configs';
 import { LOGIN, SIGNUP } from '~/redux/actions/user';
 import styles from './Login.module.sass';
@@ -25,6 +25,7 @@ function Login({ authAction = 'login' }) {
     const history = useHistory();
     const [show, setShow] = useState(false);
     const [action, setAction] = useState(authAction);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {
         register,
@@ -42,8 +43,11 @@ function Login({ authAction = 'login' }) {
     };
 
     useEffect(() => {
-        if (user.authState == REQUEST_STATE.SUCCESS) {
+        if (user.authState == REQUEST_STATE.SUCCESS && action === 'login') {
             history.push('/');
+        }
+        if (user.authState == REQUEST_STATE.SUCCESS && action === 'sign up') {
+            setIsModalOpen(true);
         }
         if (user?.authState === REQUEST_STATE.ERROR && action === 'login') {
             notification.error({
@@ -59,8 +63,38 @@ function Login({ authAction = 'login' }) {
         }
     }, [user?.authState]);
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleReload = () => {
+        window.location.reload();
+    };
+
     return (
         <div className={cx('login-wrapper')}>
+            <Modal
+                centered
+                // title="Choose size and color"
+                open={isModalOpen}
+                onOk={handleOk}
+                width={550}
+                footer={[]}
+                onCancel={handleCancel}
+            >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+                    <h4>Sign up successfully!</h4>
+                    <Link to="/auth">
+                        <AppButton onClick={handleReload}>Login</AppButton>
+                    </Link>
+                </div>
+            </Modal>
             <Row className={cx('login-main', 'mt-0  gx-5')}>
                 <Col className={cx('login')} xs={6}>
                     <div className={cx('header-nav', 'mt-2', 'd-flex justify-content-between')}>
