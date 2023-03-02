@@ -47,8 +47,8 @@ function Product(props) {
 
     const onSubmit = (data) => {
         console.log('data', data);
-        console.log(data.price.startPrice);
-        console.log(JSON.stringify(data.price));
+        // console.log(data.price.startPrice);
+        // console.log(JSON.stringify(data.price));
         let dataFilter = {
             formFilter: [],
             categoryId: [],
