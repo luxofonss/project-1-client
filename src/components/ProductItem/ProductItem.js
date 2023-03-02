@@ -23,10 +23,6 @@ function ProductItem(props) {
                 ></div>
                 <div className={cx('top')}>
                     <div className={cx('name')}>{props.name}</div>
-
-                    {/* <div className={cx('star')}>
-                        <IconStar width={20} height={18} /> (5)
-                    </div> */}
                 </div>
                 <div className={cx('footer')}>
                     <div className={cx('price')}>{props.price} VND</div>

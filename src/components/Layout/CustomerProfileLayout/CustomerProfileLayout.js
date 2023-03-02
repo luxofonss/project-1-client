@@ -60,14 +60,10 @@ function CustomerProfileLayout({ children, match }) {
     const [collapsed, setCollapsed] = useState(localStorage.getItem(SIDER_COLLAPSE) ?? false);
     const history = useHistory();
     const currentRouter = useSelector((state) => state.router.location);
-    const [selectedSider, setSelectedSider] = useState(getSelectedNav());
+    const user = useSelector((state) => state.user?.profile);
+    const [selectedSider, setSelectedSider] = useState();
 
-    function getSelectedNav() {
-        if (currentRouter?.pathname.includes('/config/sign-ceft/')) {
-            return '/config/select-ceft';
-        }
-        return currentRouter?.pathname;
-    }
+    console.log('user', user);
 
     useEffect(() => {
         console.log('selectedSider: ', selectedSider);
@@ -100,7 +96,10 @@ function CustomerProfileLayout({ children, match }) {
                         <Row gutter={0}>
                             <Col xs={5}>
                                 <div className={cx('slider')}>
-                                    <div className={cx('logo')}>Profile</div>
+                                    <div className={cx('logo')}>
+                                        <div className={cx('name-circle')}>{user?.name[0]}</div>
+                                        <div className={cx('name')}>{user?.name}</div>
+                                    </div>
                                     <menu className={cx('menu')}>
                                         {menuItems.map((item) => (
                                             // <div className={cx('menu-item')}>

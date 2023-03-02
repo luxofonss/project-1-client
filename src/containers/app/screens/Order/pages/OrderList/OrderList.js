@@ -11,49 +11,64 @@ import AppButton from '~/components/AppButton/AppButton';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppDateInput from '~/components/AppDateInput';
 import { Link } from 'react-router-dom';
+import accounting from 'accounting';
 
 const columns = [
     {
         title: 'STT',
         render: (_, record, index) => index + 1,
         key: 'stt',
+        width: 60,
+        fixed: 'left',
     },
     {
         title: 'Full Name',
         dataIndex: 'userFullName',
         key: 'fullName',
         width: 160,
+        fixed: 'left',
     },
     {
         title: 'Phone',
         dataIndex: 'userPhone',
         key: 'userPhone',
+        width: 110,
     },
-    {
-        title: 'Email',
-        dataIndex: 'userEmail',
-        key: 'userEmail',
-    },
+    // {
+    //     title: 'Email',
+    //     dataIndex: 'userEmail',
+    //     key: 'userEmail',
+    //     width: 150,
+    // },
     {
         title: 'Address',
         dataIndex: 'userAddress',
         key: 'userAddress',
+        width: 350,
     },
     {
         title: 'Payment',
         dataIndex: 'payment',
         key: 'payment',
+        width: 100,
     },
     {
         title: 'Created at',
         render: (_, { createdAt }) => createdAt?.slice(0, 10),
         key: 'createdAt',
-        width: 120,
+        width: 110,
+    },
+    {
+        title: 'Total (VND)',
+        render: (_, { totalPrice }) => accounting.formatNumber(totalPrice),
+        key: 'totalPrice',
+        width: 100,
     },
     {
         title: 'Promo',
         render: (_, { Promo }) => Promo?.code,
         key: 'promo',
+        width: 100,
     },
     {
         title: 'Status',
@@ -62,6 +77,8 @@ const columns = [
         render: (_, { status }) => {
             return <Tag color={ORDER_STATUS[status]}>{status}</Tag>;
         },
+        width: 100,
+        fixed: 'right',
     },
     {
         title: 'Action',
@@ -69,10 +86,12 @@ const columns = [
         render: (_, record) => (
             <Space size="middle">
                 <Link to={`/admin/orders/${record.id}`}>
-                    <Button>Detail</Button>
+                    <Button>View detail</Button>
                 </Link>
             </Space>
         ),
+        fixed: 'right',
+        width: 110,
     },
 ];
 
@@ -94,6 +113,10 @@ function OrderList(props) {
                         <h4>Orders list</h4>
                     </div>
                     <Table
+                        scroll={{
+                            x: 'calc(700px + 50%)',
+                        }}
+                        size="middle"
                         columns={columns}
                         dataSource={orderList.state === REQUEST_STATE.SUCCESS ? orderList?.data?.data : []}
                     />

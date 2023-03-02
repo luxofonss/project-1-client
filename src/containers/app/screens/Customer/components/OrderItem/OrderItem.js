@@ -40,7 +40,7 @@ function OrderItem({ order, index, ...props }) {
                         <div className={cx('price')}>{accounting.formatNumber(order.totalPrice)} VND</div>
                     </Col>
                     <Col xs={3}>
-                        <div className={cx('status')}>{order.status === 'PENDING' ? <Tag>Pending</Tag> : 'TEST'}</div>
+                        <div className={cx('status')}>{order.status}</div>
                     </Col>
                 </Row>
             </div>

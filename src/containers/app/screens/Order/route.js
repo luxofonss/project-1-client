@@ -21,15 +21,15 @@ export default {
 };
 
 export const childRoutes = [
-    // {
-    //     path: '/admin/promo/add',
-    //     exact: true,
-    //     isPrivate: true,
-    //     role: [ROLE.ADMIN],
-    //     layout: AppLayout,
-    //     component: lazy(async () => {
-    //         await initModules([orderModule, categoryModule], 'app');
-    //         return import('./pages/Addpromo');
-    //     }),
-    // },
+    {
+        path: '/admin/orders/:id',
+        exact: true,
+        isPrivate: true,
+        role: [ROLE.ADMIN],
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([orderModule], 'app');
+            return import('./pages/OrderDetail');
+        }),
+    },
 ];

@@ -1,9 +1,9 @@
 import { Collapse, Divider } from 'antd';
 import classNames from 'classnames/bind';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_STATE } from '~/app-configs';
-import CartProduct from '../../components/CartProduct';
+import OrderDetailItem from '../../../Order/components/OrderDetailItem';
 import OrderItem from '../../components/OrderItem';
 import { GET_ORDER } from '../../redux/action';
 import styles from './Orders.module.sass';
@@ -36,14 +36,7 @@ function Orders(props) {
                         ? orderList?.data?.data?.map((order, index) => {
                               return (
                                   <Panel header={<OrderItem order={order} index={index} />} key={index}>
-                                      <div>userAddress : {order.userAddress}</div>
-                                      <div>useFullName : {order.userFullName}</div>
-                                      <div>totalPrice :{order.totalPrice}</div>
-                                      <div>fee : {order.fee}</div>
-                                      <div>payment : {order.payment}</div>
-                                      {order.hasStocks?.map((stock, index) => {
-                                          return <CartProduct key={index} product={stock} inOrder={true} />;
-                                      })}
+                                      <OrderDetailItem order={order} />
                                   </Panel>
                               );
                           })

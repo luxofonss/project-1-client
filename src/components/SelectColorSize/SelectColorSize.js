@@ -16,7 +16,8 @@ const cx = classNames.bind(styles);
 const SelectColorSize = ({ id, index, size, color, name, stocks, value, required = false, ...props }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [sizeSelected, setSizeSelected] = useState(size);
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(1);
+    const [quantityError, setQuantityError] = useState(false);
     const [validate, setValidate] = useState(false);
     const [error, setError] = useState(false);
     const [colorSelected, setColorSelected] = useState(color);
@@ -82,17 +83,17 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
     }, [colorSelected, sizeSelected]);
 
     const onSubmit = () => {
-        console.log('stock info', quantity, stockId);
         if (!quantity && !stockId) {
             setError(true);
-            console.log('set error');
         } else {
             if (quantity > remainingStock) {
                 setValidate(true);
+            } else if (quantity < 0) {
+                setQuantityError(true);
             } else {
                 setError(false);
                 setValidate(false);
-                console.log('data: ', stockId, quantity);
+
                 dispatch(
                     ADD_PRODUCT_TO_CART({
                         stockId: stockId,
@@ -107,7 +108,6 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
     const showModal = () => {
         if (user.profile?.id) setIsModalOpen(true);
         else {
-            console.log('auth');
             history.push('/auth');
         }
     };
@@ -117,8 +117,6 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    console.log('selected size: ', sizeSelected);
 
     return (
         <Fragment>
@@ -178,7 +176,7 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
                             return (
                                 <Fragment key={index}>
                                     <label
-                                        htmlFor={`color${index}${color.id}`}
+                                        htmlFor={`color${id}${index}${color.id}`}
                                         className={
                                             colorList.includes(color.id)
                                                 ? color.id.toString() == colorSelected
@@ -194,7 +192,7 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
                                             setValue('colorId', e.target.value);
                                             setColorSelected(color.id);
                                         }}
-                                        id={`color${index}${color.id}`}
+                                        id={`color${id}${index}${color.id}`}
                                         value={color.id}
                                         name="color"
                                         type="radio"
@@ -221,6 +219,9 @@ const SelectColorSize = ({ id, index, size, color, name, stocks, value, required
                     {remainingStock && <div className={cx('total')}>Total: {remainingStock}</div>}
                     {error && (
                         <div style={{ color: 'red', marginBottom: '12px' }}>Please choose size color and quantity</div>
+                    )}
+                    {quantityError && (
+                        <div style={{ color: 'red', marginBottom: '12px' }}>Quantity must be greater than 0</div>
                     )}
                     <AppButton onClick={onSubmit} type="submit">
                         Submit

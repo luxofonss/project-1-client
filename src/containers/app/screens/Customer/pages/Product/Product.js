@@ -47,6 +47,8 @@ function Product(props) {
 
     const onSubmit = (data) => {
         console.log('data', data);
+        console.log(data.price.startPrice);
+        console.log(JSON.stringify(data.price));
         let dataFilter = {
             formFilter: [],
             categoryId: [],
@@ -73,11 +75,11 @@ function Product(props) {
     };
 
     const imgs = [
-        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/306364146_2015783021925557_1903662116556994624_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=09Efm_ijjBQAX8rlny4&tn=8cxO5NLXVgS8b5XU&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDjYc-0ouD9C0QVVu9bNRGAkZ5H8gpou0-3gxtaSHK2Xw&oe=63FC3A9E',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302195814_2008714422632417_707195722424640066_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=730e14&_nc_ohc=k8VgmV_rnvcAX9mREq3&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDbCFSFcFnE8gE8U6wLcX7kyTcHI84LZ3NK16aC0rfDMw&oe=63FBF020',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302944940_2007413076095885_5844781582357933218_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=xxUd1gZ77GIAX-F-F-c&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDnmU4_cX_sg3yUVLzBoGJeCn4KOH26P3VFeU9QYVlOug&oe=63FBDD6B',
-        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/300800975_2004782463025613_8452339877912986129_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=kMN8GV7--ZUAX_4z_4B&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDlu8a_mXi3pMY7ZWsWnwMSMY5hGs5ru2w0pRlyX6KcZg&oe=63FBEC25',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/272308677_1843912142445980_4455593664181753044_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=crDvQI-HjK8AX_2K1Zu&_nc_ht=scontent-hkg4-1.xx&oh=00_AfAKL1e23zfUc1SYkYPEdbqYoOZhPra44Vh6o4SZoWtbDQ&oe=63FBF0EA',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/313916918_589727319821579_7334257236869657543_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=kFYKYeFW_p8AX-R6vJ8&_nc_ht=scontent.fhph1-2.fna&oh=03_AdTY4--ZGCnKc1ovrfgln6cwhRXdEo8YRURmGYQKD9LaDQ&oe=6428078A',
+        'https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/334573877_917255962640644_3794278279880240981_n.png?_nc_cat=106&ccb=1-7&_nc_sid=ae9488&_nc_ohc=UBo318a9l9MAX8-z7Dh&_nc_oc=AQkqpj-LPo_Y_6VPWfbCYSLSavqmQkvGpqlVcU9LCD1La0LgfxoftPj3zJR9yMv1S2OAjKZVWpNm9jZNVWLpV_Mi&_nc_ht=scontent.fhph1-3.fna&oh=03_AdRj5cDP8dYLR9y-OW_rRgMRwer2PTWSyRuK_IEnNwrCvA&oe=64281234',
+        'https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/308509440_507412460886874_1663276275052894772_n.png?_nc_cat=106&ccb=1-7&_nc_sid=ae9488&_nc_ohc=8qK4NN2RB_wAX9zmops&_nc_ht=scontent.fhph1-3.fna&oh=03_AdQiI-Rwz7o7XETPb8EVQvoCz0kpwnM8lLHut9mWfFO53w&oe=6427F6B8',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/287129963_812878136786217_5297080395305685712_n.png?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=FsIfELRZWbcAX_YLRkg&_nc_ht=scontent.fhph1-2.fna&oh=03_AdTV0WFcyLkcHEtA-rEyRaJROmJFFUc46gCNBcElnZUntg&oe=6427F6EC',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/270780464_1065053420954779_5323044563060479996_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=qfSqQhupucMAX9rTklN&_nc_ht=scontent.fhph1-2.fna&oh=03_AdSsM4wD9JhaDLik0cBKD3pv2cwvowV2wXP05ZXG-tk78Q&oe=6427FC2C',
     ];
 
     console.log('state:', products.state);
@@ -125,11 +127,27 @@ function Product(props) {
                             <Divider />
 
                             <div className={cx('filter-wrapper')}>
-                                <h4 className={cx('header')}>Price</h4>
-                                <AppRadio value={12} name="price" label="$20 - $50" />
-                                <AppRadio value={31} name="price" label="$50 - $100" />
-                                <AppRadio value={221} name="price" label="$100 - $300" />
-                                <AppRadio value={332} name="price" label="Greater than $300" />
+                                <h4 className={cx('header')}>Price (VND)</h4>
+                                <AppRadio
+                                    value={{ startPrice: 0, endPrice: 490000 }}
+                                    name="price"
+                                    label="0 - 490,000"
+                                />
+                                <AppRadio
+                                    value={{ startPrice: 500000, endPrice: 690000 }}
+                                    name="price"
+                                    label="500,000 - 690,000"
+                                />
+                                <AppRadio
+                                    value={{ startPrice: 700000, endPrice: 999999 }}
+                                    name="price"
+                                    label="700,000 - 999,000"
+                                />
+                                <AppRadio
+                                    value={{ startPrice: 1000000, endPrice: 999990000 }}
+                                    name="price"
+                                    label="Greater than 1,000,000"
+                                />
                             </div>
                             <Divider />
 
@@ -171,21 +189,27 @@ function Product(props) {
                             </div>
                         ) : products.state === 'SUCCESS' ? (
                             <Row className={cx('products-wrapper')} gutter={[24, 24]}>
-                                {products?.data?.data?.map((product, index) => {
-                                    return (
-                                        <Col key={product.id} xs={6}>
-                                            <ProductItem
-                                                image={product.Images[0]?.src}
-                                                name={product.name}
-                                                price={accounting.formatNumber(product.price)}
-                                                stock={product.Stocks}
-                                                index={index}
-                                                id={product.id}
-                                                sale={product.promo ? product.promo : null}
-                                            />
-                                        </Col>
-                                    );
-                                })}
+                                {products?.data?.data?.length > 0 ? (
+                                    products?.data?.data?.map((product, index) => {
+                                        return (
+                                            <Col key={product.id} xs={6}>
+                                                <ProductItem
+                                                    image={product.Images[0]?.src}
+                                                    name={product.name}
+                                                    price={accounting.formatNumber(product.price)}
+                                                    stock={product.Stocks}
+                                                    index={index}
+                                                    id={product.id}
+                                                    sale={product.promo ? product.promo : null}
+                                                />
+                                            </Col>
+                                        );
+                                    })
+                                ) : (
+                                    <div style={{ width: '100%' }} className="flex-center">
+                                        <h4 style={{ color: 'white' }}>No product</h4>
+                                    </div>
+                                )}
                             </Row>
                         ) : (
                             <div className={cx('product-state')}>

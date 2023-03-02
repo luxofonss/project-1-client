@@ -33,11 +33,11 @@ function HomePage(props) {
     };
 
     const imgs = [
-        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/306364146_2015783021925557_1903662116556994624_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=09Efm_ijjBQAX8rlny4&tn=8cxO5NLXVgS8b5XU&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDjYc-0ouD9C0QVVu9bNRGAkZ5H8gpou0-3gxtaSHK2Xw&oe=63FC3A9E',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302195814_2008714422632417_707195722424640066_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=730e14&_nc_ohc=k8VgmV_rnvcAX9mREq3&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDbCFSFcFnE8gE8U6wLcX7kyTcHI84LZ3NK16aC0rfDMw&oe=63FBF020',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/302944940_2007413076095885_5844781582357933218_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=xxUd1gZ77GIAX-F-F-c&_nc_ht=scontent-hkg4-1.xx&oh=00_AfDnmU4_cX_sg3yUVLzBoGJeCn4KOH26P3VFeU9QYVlOug&oe=63FBDD6B',
-        'https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/300800975_2004782463025613_8452339877912986129_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=kMN8GV7--ZUAX_4z_4B&_nc_ht=scontent-hkg4-2.xx&oh=00_AfDlu8a_mXi3pMY7ZWsWnwMSMY5hGs5ru2w0pRlyX6KcZg&oe=63FBEC25',
-        'https://scontent-hkg4-1.xx.fbcdn.net/v/t39.30808-6/272308677_1843912142445980_4455593664181753044_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=crDvQI-HjK8AX_2K1Zu&_nc_ht=scontent-hkg4-1.xx&oh=00_AfAKL1e23zfUc1SYkYPEdbqYoOZhPra44Vh6o4SZoWtbDQ&oe=63FBF0EA',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/313916918_589727319821579_7334257236869657543_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=kFYKYeFW_p8AX-R6vJ8&_nc_ht=scontent.fhph1-2.fna&oh=03_AdTY4--ZGCnKc1ovrfgln6cwhRXdEo8YRURmGYQKD9LaDQ&oe=6428078A',
+        'https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/334573877_917255962640644_3794278279880240981_n.png?_nc_cat=106&ccb=1-7&_nc_sid=ae9488&_nc_ohc=UBo318a9l9MAX8-z7Dh&_nc_oc=AQkqpj-LPo_Y_6VPWfbCYSLSavqmQkvGpqlVcU9LCD1La0LgfxoftPj3zJR9yMv1S2OAjKZVWpNm9jZNVWLpV_Mi&_nc_ht=scontent.fhph1-3.fna&oh=03_AdRj5cDP8dYLR9y-OW_rRgMRwer2PTWSyRuK_IEnNwrCvA&oe=64281234',
+        'https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/308509440_507412460886874_1663276275052894772_n.png?_nc_cat=106&ccb=1-7&_nc_sid=ae9488&_nc_ohc=8qK4NN2RB_wAX9zmops&_nc_ht=scontent.fhph1-3.fna&oh=03_AdQiI-Rwz7o7XETPb8EVQvoCz0kpwnM8lLHut9mWfFO53w&oe=6427F6B8',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/287129963_812878136786217_5297080395305685712_n.png?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=FsIfELRZWbcAX_YLRkg&_nc_ht=scontent.fhph1-2.fna&oh=03_AdTV0WFcyLkcHEtA-rEyRaJROmJFFUc46gCNBcElnZUntg&oe=6427F6EC',
+        'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/270780464_1065053420954779_5323044563060479996_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=qfSqQhupucMAX9rTklN&_nc_ht=scontent.fhph1-2.fna&oh=03_AdSsM4wD9JhaDLik0cBKD3pv2cwvowV2wXP05ZXG-tk78Q&oe=6427FC2C',
     ];
     return (
         <div className={cx('container')}>
@@ -58,15 +58,6 @@ function HomePage(props) {
                     ))}
                 </Carousel>
             </div>
-            {/* <section
-                className={cx('top-section')}
-                style={{
-                    backgroundImage: `url(${background})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                }}
-            ></section> */}
 
             <Divider>
                 <h3 className={cx('heading')}>OUR CATEGORIES</h3>
@@ -79,7 +70,7 @@ function HomePage(props) {
                                 <div
                                     style={{
                                         background:
-                                            "url('https://scontent.fhan5-2.fna.fbcdn.net/v/t39.30808-6/315715926_2071599396343919_5338240303691794685_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=qioXWdL1K6gAX-2NdEN&_nc_ht=scontent.fhan5-2.fna&oh=00_AfC7s-IeRarQF9Rga-JDUwPdm3DWP_DxZ3gDxU93bf5jDg&oe=63F895C8')",
+                                            "url('https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/334695820_1232508884017062_3236167228936700264_n.png?_nc_cat=105&ccb=1-7&_nc_sid=ae9488&_nc_ohc=HPN9eAe7N8AAX_EGAff&_nc_ht=scontent.fhph1-3.fna&oh=03_AdTkLVBeNKYXQEGeF6s7edZoK6I9RwXAfvaZNZtyo5sDHQ&oe=6428285C')",
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat',
@@ -97,7 +88,7 @@ function HomePage(props) {
                                         <div
                                             style={{
                                                 background:
-                                                    "url('https://scontent.fhan14-2.fna.fbcdn.net/v/t39.30808-6/312716249_2052404871596705_6205041918050153472_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=kyDXWQSM3kQAX-mq2TQ&_nc_ht=scontent.fhan14-2.fna&oh=00_AfC9Uz46J4pUcehgrfQ_jK_QKrIL37sNjqd-VQF0zSzlDg&oe=63FA1443')",
+                                                    "url('https://scontent.fhph1-3.fna.fbcdn.net/v/t1.15752-9/263472462_1717378368469106_8037385631388094076_n.png?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=KVBht1Up_5MAX9NFWyd&_nc_ht=scontent.fhph1-3.fna&oh=03_AdRC3iUQE4l1KqFSyZNA_j_5lYuGLdrJKgPNnMSYiNYyIQ&oe=6427F162')",
                                                 backgroundPosition: 'center',
                                                 backgroundSize: 'cover',
                                                 backgroundRepeat: 'no-repeat',
@@ -110,20 +101,11 @@ function HomePage(props) {
                                     </div>
                                 </Col>
                                 <Col xs={12}>
-                                    <div
-                                        style={{
-                                            background:
-                                                "url('https://scontent.fhan14-1.fna.fbcdn.net/v/t39.30808-6/306364146_2015783021925557_1903662116556994624_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=R4geU4q7IXcAX_sI12t&_nc_ht=scontent.fhan14-1.fna&oh=00_AfCuML3qFubwjB9ii_KsIK0rpSwc7mztKQvN4IingIOxFw&oe=63FA405E')",
-                                            backgroundPosition: 'center',
-                                            backgroundSize: 'cover',
-                                            backgroundRepeat: 'no-repeat',
-                                        }}
-                                        className={cx('right-1')}
-                                    >
+                                    <div className={cx('right-1')}>
                                         <div
                                             style={{
                                                 background:
-                                                    "url('https://scontent.fhan5-11.fna.fbcdn.net/v/t39.30808-6/277218154_1886911651479362_4955413408354261361_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=f1AXKOcQbCoAX9u7_k-&_nc_ht=scontent.fhan5-11.fna&oh=00_AfA_kIc0RqELyRKyFIDrUaHx0dldT7J1jgbvfAOiYVzWIg&oe=63F8F2C3')",
+                                                    "url('https://scontent.fhph2-1.fna.fbcdn.net/v/t1.15752-9/312614773_649308793375056_4471702986921592190_n.png?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=mbScLdHbdK0AX9yy8ke&_nc_ht=scontent.fhph2-1.fna&oh=03_AdQuK94H5ct8E0g7gJcURgitxmsFi1FY_9Z1rQ-_BgzAYA&oe=6427FDF1')",
                                                 backgroundPosition: 'center',
                                                 backgroundSize: 'cover',
                                                 backgroundRepeat: 'no-repeat',
@@ -135,20 +117,11 @@ function HomePage(props) {
                                     </div>
                                 </Col>
                                 <Col xs={24}>
-                                    <div
-                                        style={{
-                                            background:
-                                                "url('https://scontent.fhan5-11.fna.fbcdn.net/v/t39.30808-6/213153598_1703783239792205_8609044775481625139_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=A2KPhGWYHJ8AX8eTL2m&_nc_ht=scontent.fhan5-11.fna&oh=00_AfAJgdBB4DX-9VzSzCcBBrbgOKCjWUiWNcwh26JY41DnLg&oe=63F83343')",
-                                            backgroundPosition: 'center',
-                                            backgroundSize: 'cover',
-                                            backgroundRepeat: 'no-repeat',
-                                        }}
-                                        className={cx('right-2')}
-                                    >
+                                    <div className={cx('right-2')}>
                                         <div
                                             style={{
                                                 background:
-                                                    "url('https://scontent.fhan14-1.fna.fbcdn.net/v/t39.30808-6/247977598_1811480602355801_3880567627003469686_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=tLq-o8iA5EMAX_Q8Yno&_nc_ht=scontent.fhan14-1.fna&oh=00_AfB24TkRgQPfI2Uy_kUF4V4og3kVf5miTPA4eUpg2wc-Lg&oe=63F96914')",
+                                                    "url('https://scontent.fhph1-1.fna.fbcdn.net/v/t1.15752-9/334562622_597269221877844_6880321016149664524_n.png?_nc_cat=100&ccb=1-7&_nc_sid=ae9488&_nc_ohc=RgAWNeyTc7kAX_mCIZe&_nc_ht=scontent.fhph1-1.fna&oh=03_AdQPM1I3yc-KqEq7WC12MDtHjpP0s2U_cG-wqg8MlDdgwg&oe=6427FB03')",
                                                 backgroundPosition: 'center',
                                                 backgroundSize: 'cover',
                                                 backgroundRepeat: 'no-repeat',

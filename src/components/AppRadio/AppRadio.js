@@ -22,7 +22,7 @@ const AppRadio = ({ name, value, required = false, ...props }) => {
     return (
         <div className={cx('wrapper')}>
             <input
-                id={`radio-${value}`}
+                id={`radio-${value.startPrice}`}
                 className={cx('radio')}
                 type="radio"
                 {...register(name, {
@@ -35,7 +35,7 @@ const AppRadio = ({ name, value, required = false, ...props }) => {
                 onChange={onChange}
                 {...props}
             />
-            <label className={required ? 'required, label' : 'label'} htmlFor={`radio-${value}`}>
+            <label className={required ? 'required, label' : 'label'} htmlFor={`radio-${value.startPrice}`}>
                 {props.label}
             </label>
             {errors[name]?.type === 'required' && <div className="error-message">{errors[name].message}</div>}

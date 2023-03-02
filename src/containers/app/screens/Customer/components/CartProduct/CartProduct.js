@@ -11,7 +11,7 @@ import { IconTrash } from '~/assets/svgs';
 
 const cx = classNames.bind(styles);
 
-function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
+function CartProduct({ detail = false, inOrder = false, onUpdateProduct, product, ...props }) {
     const [quantity, setQuantity] = useState(!inOrder ? product.cart_stocks?.quantity : null);
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
@@ -25,10 +25,11 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                 onUpdateProduct(product.id, quantityValue);
             }
     }, [quantityValue]);
+    console.log('product', product.Product?.Images);
 
     return (
         <div className={cx('cart-product')}>
-            <Row>
+            <Row style={{ width: '100%' }}>
                 <Col xs={!inOrder ? 8 : 4}>
                     <div
                         style={{
@@ -42,8 +43,8 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                 </Col>
                 <Col xs={16}>
                     <div className={cx('top')}>
-                        <div className={(cx('name'), 'text_over_flow_1')}>{product.Product.name}</div>
-                        {!inOrder && (
+                        <div className={(cx('name'), 'text_over_flow_1')}>{product.Product?.name}</div>
+                        {!inOrder && !detail && (
                             <div
                                 className={cx('close')}
                                 onClick={(e) => {
@@ -56,12 +57,12 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                         )}
                     </div>
                     <div className={cx('color-price')}>
-                        <div>{product.Color.color}</div>
-                        <div className={cx('price')}>{accounting.formatNumber(product.Product.price)} VND</div>
+                        <div>{product.Color?.color}</div>
+                        <div className={cx('price')}>{accounting.formatNumber(product.Product?.price)} VND</div>
                     </div>
                     <div className={cx('size')}>
                         <div>Size: </div>
-                        <div>{product.Size.size}</div>
+                        <div>{product.Size?.size}</div>
                     </div>
                     {inOrder && (
                         <div className={cx('quantity')}>
@@ -71,7 +72,7 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                             </div>
                         </div>
                     )}
-                    {!inOrder && (
+                    {!inOrder && !detail && (
                         <div className={cx('quantity')}>
                             <div className={cx('text')}>Quantity: </div>
                             <div className={cx('quantity-action')}>
@@ -89,7 +90,7 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                                 >
                                     -
                                 </div>
-                                <div>{quantity}</div>
+                                <div>{quantity !== null ? quantity : product.order_stocks.quantity}</div>
                                 <div
                                     className={cx('action')}
                                     onClick={(e) => {
@@ -107,8 +108,6 @@ function CartProduct({ inOrder = false, onUpdateProduct, product, ...props }) {
                             </div>
                         </div>
                     )}
-
-                    {error && !inOrder && <div>Only {product.stock} items remaining</div>}
                 </Col>
             </Row>
         </div>
