@@ -17,15 +17,12 @@ function CartProduct({ detail = false, inOrder = false, onUpdateProduct, product
     const dispatch = useDispatch();
 
     const quantityValue = useDebounceValue(quantity, 500);
-
     useEffect(() => {
         if (!inOrder)
             if (quantityValue !== product.cart_stocks?.quantity) {
-                console.log('useEffect update running');
                 onUpdateProduct(product.id, quantityValue);
             }
     }, [quantityValue]);
-    console.log('product', product.Product?.Images);
 
     return (
         <div className={cx('cart-product')}>

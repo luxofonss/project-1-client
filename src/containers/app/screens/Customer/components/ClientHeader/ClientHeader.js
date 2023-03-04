@@ -2,7 +2,7 @@ import { Dropdown } from 'antd';
 import classNames from 'classnames/bind';
 import React, { Fragment, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { TOKEN_KEY } from '~/app-configs';
 import { IconCart, IconSearch } from '~/assets/svgs';
 import AppButton from '~/components/AppButton/AppButton';
@@ -40,9 +40,24 @@ export default function (props) {
     const dispatch = useDispatch();
     const blur = useRef();
     const submitButton = useRef();
+    const history = useHistory();
+
     const onSearch = (data) => {
         console.log(data);
-        dispatch(PRODUCT_GET({ name: data.search }));
+        const path = history.location.pathname;
+        if (path === '/product') {
+            let search = new URLSearchParams(history.location.search);
+            console.log(search.get('name'));
+            if (search.get('name') !== null) {
+                let index = history.location.search.indexOf(search.get('name'));
+                let newSearch = history.location.search.slice(0, index) + data.search;
+                history.push(path + newSearch);
+            } else {
+                history.push(path + history.location.search + `&name=${data.search}`);
+            }
+        } else {
+            history.push(`/product?name=${data.search}`);
+        }
     };
 
     var B = document.body,

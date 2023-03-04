@@ -1,6 +1,6 @@
 import { Carousel, Col, Divider, notification, Row, Spin } from 'antd';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import ProductItem from '~/components/ProductItem';
 import styles from './Product.module.sass';
 import { PRODUCT_GET } from '../../../Product/redux/action';
@@ -22,14 +22,15 @@ const cx = classNames.bind(styles);
 function Product(props) {
     const products = useSelector((state) => state.product.listProduct);
     const categories = useSelector((state) => state.category?.categoryList?.data);
-    const dispatch = useDispatch();
     const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         if (addProductToCategory.state == REQUEST_STATE.SUCCESS) {
             notification.success({
                 message: 'Success',
-                description: 'Add product to cart successfully!',
+                description: 'Change cart item successfully!',
             });
         }
         if (addProductToCategory?.state === REQUEST_STATE.ERROR) {
@@ -40,8 +41,16 @@ function Product(props) {
         }
         dispatch(ADD_PRODUCT_TO_CART_RESET());
     }, [addProductToCategory?.state]);
+
+    const params = useParams();
+    const searchParams = Object.fromEntries(new URLSearchParams(location.search.substring(1)));
+
+    console.log(history.location);
     useEffect(() => {
-        dispatch(PRODUCT_GET());
+        dispatch(PRODUCT_GET(searchParams));
+    }, [params]);
+
+    useEffect(() => {
         dispatch(CATEGORY_LIST_REQUEST());
     }, []);
 
@@ -49,6 +58,7 @@ function Product(props) {
         console.log('data', data);
         // console.log(data.price.startPrice);
         // console.log(JSON.stringify(data.price));
+
         let dataFilter = {
             formFilter: [],
             categoryId: [],
@@ -63,15 +73,14 @@ function Product(props) {
                 dataFilter.formFilter.push(form);
             }
         });
-        dispatch(
-            PRODUCT_GET({
-                sizeId: data.size,
-                categoryId: dataFilter.categoryId,
-                form: dataFilter.formFilter,
-                gender: data.gender,
-                color: data.color,
-            }),
-        );
+        const test = new URLSearchParams({
+            sizeId: data.size,
+            categoryId: dataFilter.categoryId,
+            form: dataFilter.formFilter,
+            gender: data.gender,
+            color: data.color,
+        }).toString();
+        history.push(`product?${test}`);
     };
 
     const imgs = [
@@ -81,9 +90,6 @@ function Product(props) {
         'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/287129963_812878136786217_5297080395305685712_n.png?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=FsIfELRZWbcAX_YLRkg&_nc_ht=scontent.fhph1-2.fna&oh=03_AdTV0WFcyLkcHEtA-rEyRaJROmJFFUc46gCNBcElnZUntg&oe=6427F6EC',
         'https://scontent.fhph1-2.fna.fbcdn.net/v/t1.15752-9/270780464_1065053420954779_5323044563060479996_n.png?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=qfSqQhupucMAX9rTklN&_nc_ht=scontent.fhph1-2.fna&oh=03_AdSsM4wD9JhaDLik0cBKD3pv2cwvowV2wXP05ZXG-tk78Q&oe=6427FC2C',
     ];
-
-    console.log('state:', products.state);
-
     return (
         <div className={cx('container')}>
             <Row>

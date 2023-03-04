@@ -1,18 +1,14 @@
-import React, { useEffect, useMemo } from 'react';
-import styles from './HomePage.module.sass';
-import classNames from 'classnames/bind';
-import { Col, Row, Carousel, Divider } from 'antd';
-import AppButton from '~/components/AppButton/AppButton';
-import background from '~/assets/images/background.jpg';
-import { IconStar } from '~/assets/svgs';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { CATEGORY_LIST_REQUEST } from '../../../Category/redux/action';
-import { current } from '@reduxjs/toolkit';
-import { REQUEST_STATE } from '~/app-configs';
-import { PRODUCT_GET } from '../../../Product/redux/action';
-import ProductItem from '~/components/ProductItem';
 import accounting from 'accounting';
+import { Carousel, Col, Divider, Row } from 'antd';
+import classNames from 'classnames/bind';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { REQUEST_STATE } from '~/app-configs';
+import ProductItem from '~/components/ProductItem';
+import { GET_SIZE } from '~/redux/actions/size';
+import { CATEGORY_LIST_REQUEST } from '../../../Category/redux/action';
+import { PRODUCT_GET } from '../../../Product/redux/action';
+import styles from './HomePage.module.sass';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +19,7 @@ function HomePage(props) {
     useEffect(() => {
         dispatch(PRODUCT_GET());
         dispatch(CATEGORY_LIST_REQUEST());
+        dispatch(GET_SIZE());
     }, []);
 
     const categoryList = categories?.data?.data?.rows;

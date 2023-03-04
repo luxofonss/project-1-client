@@ -18,7 +18,7 @@ import emptyCart from '~/assets/images/empty_cart.png';
 const cx = classNames.bind(styles);
 
 function Cart({ onClose, onGetValue, ...props }) {
-    const [promo, setPromo] = useState({ discount: 0, percent: 0 });
+    const [promo, setPromo] = useState({});
     const cartInfo = useSelector((state) => state.customer.cart);
     const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
     const dispatch = useDispatch();
@@ -143,6 +143,12 @@ function Cart({ onClose, onGetValue, ...props }) {
                             <div>accounting.formatNumber(promo?.discount) VND</div>
                         </div>
                     )}
+                    {props.purchase && (
+                        <div className={cx('total')}>
+                            <div>Total</div>
+                            <div>{accounting.formatNumber(totalPrice)} VND</div>
+                        </div>
+                    )}
                     {!props.purchase && (
                         <div className={cx('total')}>
                             <div>Total</div>
@@ -163,7 +169,7 @@ function Cart({ onClose, onGetValue, ...props }) {
                                     totalPrice * (promo?.percent / 100) > promo?.discount
                                         ? totalPrice - 50000 - promo?.discount
                                         : totalPrice - 50000 - totalPrice * (promo?.percent / 100),
-                                )}{' '}
+                                )}
                                 VND
                             </div>
                         </div>
