@@ -154,6 +154,7 @@ export default function (props) {
                                             className={cx('image')}
                                             style={
                                                 userDetail?.avatar && {
+                                                    height: '100%',
                                                     objectFit: 'contain',
                                                     backgroundSize: 'cover',
                                                     backgroundRepeat: 'no-repeat',
@@ -165,6 +166,7 @@ export default function (props) {
                                             {!userDetail?.avatar && (
                                                 <div
                                                     style={{
+                                                        height: '100%',
                                                         display: 'flex',
                                                         justifyContent: 'center',
                                                         alignItems: 'center',

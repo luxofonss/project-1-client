@@ -30,7 +30,6 @@ function Profile(props) {
                 message: 'Success',
                 description: 'Update profile successfully!',
             });
-            dispatch(UPDATE_PROFILE_RESET());
         }
         if (updateProfile === REQUEST_STATE.ERROR) {
             notification.error({
@@ -38,6 +37,7 @@ function Profile(props) {
                 description: 'Something wrong, please try again!',
             });
         }
+        dispatch(UPDATE_PROFILE_RESET());
     }, [updateProfile]);
 
     const handleEnableUpdate = () => {

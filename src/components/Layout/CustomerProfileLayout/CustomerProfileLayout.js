@@ -1,29 +1,19 @@
-import { Button, Col, ConfigProvider, Layout, Menu, Modal, Row, Spin } from 'antd';
+import { Col, ConfigProvider, Layout, Modal, Row, Spin } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { v4 } from 'uuid';
 import { REQUEST_STATE, SIDER_COLLAPSE } from '~/app-configs';
-import {
-    IconDashboard,
-    IconShopBasket,
-    IconOrder,
-    IconUser,
-    IconTransaction,
-    LogoAdmin,
-    IconCategory,
-    IconUpload,
-} from '~/assets/svgs';
+import { IconOrder, IconUpload, IconUser } from '~/assets/svgs';
 import AppButton from '~/components/AppButton/AppButton';
-import AppHeader from '~/components/Layout/components/Header';
 import ClientHeader from '~/containers/app/screens/Customer/components/ClientHeader';
+import { storage } from '~/firebase';
+import { UPDATE_PROFILE } from '~/redux/actions/user';
 import Footer from '../components/Footer';
 import styles from './CustomerProfileLayout.sass';
-import { storage } from '~/firebase';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { v4 } from 'uuid';
-import { UPDATE_PROFILE } from '~/redux/actions/user';
 
 const cx = classNames.bind(styles);
 
