@@ -1,4 +1,4 @@
-import { delay, put, takeLatest, call } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
 import { apiAddProductToCart, apiGetCart } from '~/app-data/cart';
 import { apiCreateOrder, apiGetOrder } from '~/app-data/order';
@@ -67,6 +67,7 @@ function* handleCreateOrder({ type, payload }) {
         console.log('error: ', error);
     }
 }
+
 export default function* productSaga() {
     yield takeLatest(ADD_PRODUCT_TO_CART().type, handleAddProductToCart);
     yield takeLatest(GET_CART().type, handleGetCart);

@@ -146,7 +146,7 @@ function Cart({ onClose, onGetValue, ...props }) {
                     {props.purchase && (
                         <div className={cx('total')}>
                             <div>Total</div>
-                            <div>{accounting.formatNumber(totalPrice)} VND</div>
+                            <div>{accounting.formatNumber(totalPrice + 50000)} VND</div>
                         </div>
                     )}
                     {!props.purchase && (

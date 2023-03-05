@@ -47,6 +47,34 @@ export function SIGNUP_FAIL(payload) {
     };
 }
 
+export function UPDATE_PROFILE(payload) {
+    return {
+        type: 'UPDATE_PROFILE',
+        payload: payload,
+    };
+}
+
+export function UPDATE_PROFILE_SUCCESS(payload) {
+    return {
+        type: 'UPDATE_PROFILE_SUCCESS',
+        payload: payload,
+    };
+}
+
+export function UPDATE_PROFILE_FAIL(payload) {
+    return {
+        type: 'UPDATE_PROFILE_FAIL',
+        payload: payload,
+    };
+}
+
+export function UPDATE_PROFILE_RESET(payload) {
+    return {
+        type: 'UPDATE_PROFILE_RESET',
+        payload: payload,
+    };
+}
+
 export function UPDATE_DOCUMENT_STORE_ADDRESS(payload) {
     return {
         type: 'UPDATE_DOCUMENT_STORE_ADDRESS',

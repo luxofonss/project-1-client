@@ -14,6 +14,10 @@ import {
     SIGNUP_FAIL,
     SIGNUP,
     SIGNUP_SUCCESS,
+    UPDATE_PROFILE,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    UPDATE_PROFILE_RESET,
 } from '~/redux/actions/user';
 
 const defaultState = {
@@ -22,6 +26,7 @@ const defaultState = {
     verifyAuthState: null, // for get profile
     deployMetamaskState: null,
     errorMessageKey: '',
+    updateProfile: null,
 };
 
 export default function userReducer(state = defaultState, action) {
@@ -132,6 +137,33 @@ export default function userReducer(state = defaultState, action) {
                 ...defaultState,
             };
         }
+
+        case UPDATE_PROFILE().type: {
+            return {
+                ...state,
+                updateProfile: REQUEST_STATE.REQUEST,
+            };
+        }
+        case UPDATE_PROFILE_SUCCESS().type: {
+            return {
+                ...state,
+                updateProfile: REQUEST_STATE.SUCCESS,
+            };
+        }
+        case UPDATE_PROFILE_FAIL().type: {
+            return {
+                ...state,
+                updateProfile: REQUEST_STATE.ERROR,
+            };
+        }
+        case UPDATE_PROFILE_RESET().type: {
+            return {
+                ...state,
+                state: null,
+                updateProfile: null,
+            };
+        }
+
         default:
             return state;
     }

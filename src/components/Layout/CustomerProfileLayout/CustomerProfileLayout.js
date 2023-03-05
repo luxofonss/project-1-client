@@ -1,10 +1,10 @@
-import { Col, ConfigProvider, Layout, Menu, Row } from 'antd';
+import { Button, Col, ConfigProvider, Layout, Menu, Modal, Row, Spin } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { SIDER_COLLAPSE } from '~/app-configs';
+import { REQUEST_STATE, SIDER_COLLAPSE } from '~/app-configs';
 import {
     IconDashboard,
     IconShopBasket,
@@ -13,11 +13,17 @@ import {
     IconTransaction,
     LogoAdmin,
     IconCategory,
+    IconUpload,
 } from '~/assets/svgs';
+import AppButton from '~/components/AppButton/AppButton';
 import AppHeader from '~/components/Layout/components/Header';
 import ClientHeader from '~/containers/app/screens/Customer/components/ClientHeader';
 import Footer from '../components/Footer';
 import styles from './CustomerProfileLayout.sass';
+import { storage } from '~/firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { v4 } from 'uuid';
+import { UPDATE_PROFILE } from '~/redux/actions/user';
 
 const cx = classNames.bind(styles);
 
@@ -44,25 +50,32 @@ export function getMenu(label, path, key, icon) {
 }
 
 const menuItems = [
-    getMenu('User', '/admin/payment', 'user', <IconUser />),
+    getMenu('Profile', '/profile', 'profile', <IconUser />),
     getMenu('Order', '/orders', 'order', <IconOrder />),
 ];
 
-const UserInfo = () => <Link to="/me/info">Chỉnh sửa thông tin cá nhân</Link>;
-const ContractManager = () => (
-    <Link className={cx('nav-text')} to="/">
-        Quản lý hợp đồng
-    </Link>
-);
-
 function CustomerProfileLayout({ children, match }) {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
+    const [uploadingImage, setUploadingImage] = useState(false);
     const [collapsed, setCollapsed] = useState(localStorage.getItem(SIDER_COLLAPSE) ?? false);
-    const history = useHistory();
+    const [selectedImage, setSelectedImage] = useState(null);
     const currentRouter = useSelector((state) => state.router.location);
+    const updateProfile = useSelector((state) => state.user.updateProfile);
     const user = useSelector((state) => state.user?.profile);
     const [selectedSider, setSelectedSider] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const history = useHistory();
+    const dispatch = useDispatch();
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     console.log('user', user);
 
     useEffect(() => {
@@ -72,6 +85,33 @@ function CustomerProfileLayout({ children, match }) {
     const handleMenuClick = (e) => {
         localStorage.setItem('menuId', e.target.id);
         history.push(e.target.key);
+    };
+
+    const currentPath = history.location.pathname;
+
+    const handleChange = (event) => {
+        if (event.target.files[0]) {
+            setSelectedImage(event.target.files[0]);
+        }
+    };
+
+    const onChangeAvatar = () => {
+        const storageRef = ref(storage, `/images/${selectedImage + v4()}`);
+        const uploadTask = uploadBytesResumable(storageRef, selectedImage);
+        setUploadingImage(true);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {},
+            (err) => {
+                console.log(err);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
+                    setUploadingImage(false);
+                    dispatch(UPDATE_PROFILE({ avatar: URL }));
+                });
+            },
+        );
     };
 
     return (
@@ -97,25 +137,118 @@ function CustomerProfileLayout({ children, match }) {
                             <Col xs={5}>
                                 <div className={cx('slider')}>
                                     <div className={cx('logo')}>
-                                        <div className={cx('name-circle')}>{user?.name[0]}</div>
-                                        <div className={cx('name')}>{user?.name}</div>
+                                        <div
+                                            onClick={showModal}
+                                            style={user?.avatar && { backgroundImage: `url("${user.avatar}")` }}
+                                            className={cx('name-circle')}
+                                        >
+                                            {!user?.avatar && user?.lastName[0]}
+                                        </div>
+
+                                        <Modal
+                                            title="Change avatar"
+                                            open={isModalOpen}
+                                            onOk={handleOk}
+                                            footer={[]}
+                                            onCancel={handleCancel}
+                                        >
+                                            <div className={cx('upload-wrapper')}>
+                                                <div className={cx('upload')}>
+                                                    <input
+                                                        style={{ display: 'none' }}
+                                                        id="image"
+                                                        type="file"
+                                                        onChange={(event) => {
+                                                            handleChange(event);
+                                                        }}
+                                                    ></input>
+                                                    {user?.avatar && !selectedImage && (
+                                                        <div
+                                                            className={cx('selected-image')}
+                                                            style={{
+                                                                backgroundImage: `url("${user.avatar}")`,
+                                                                borderRadius: '24px',
+                                                                width: '200px',
+                                                                height: '200px',
+                                                                backgroundSize: 'cover',
+                                                                backgroundRepeat: 'no-repeat',
+                                                                margin: '0 auto',
+                                                            }}
+                                                        ></div>
+                                                    )}
+                                                    {selectedImage && (
+                                                        <div
+                                                            className={cx('selected-image')}
+                                                            style={{
+                                                                backgroundImage: `url(${URL.createObjectURL(
+                                                                    selectedImage,
+                                                                )})`,
+                                                                borderRadius: '24px',
+                                                                width: '200px',
+                                                                height: '200px',
+                                                                backgroundSize: 'cover',
+                                                                backgroundRepeat: 'no-repeat',
+                                                                margin: '0 auto',
+                                                            }}
+                                                        ></div>
+                                                    )}
+                                                    {!selectedImage && !user?.avatar && (
+                                                        <label className={cx('label')} htmlFor="image">
+                                                            <span style={{ display: 'block' }}>Tải lên hình ảnh</span>
+                                                            <IconUpload />
+                                                        </label>
+                                                    )}
+                                                </div>
+                                                {selectedImage && !user?.avatar && (
+                                                    <label className={cx('label flex-center mt-2')} htmlFor="image">
+                                                        <span style={{ display: 'block' }}>Tải lên hình ảnh</span>
+                                                        <IconUpload />
+                                                    </label>
+                                                )}
+                                                {user?.avatar && (
+                                                    <label className={cx('label flex-center mt-2')} htmlFor="image">
+                                                        <span style={{ display: 'block' }}>Tải lên hình ảnh</span>
+                                                        <IconUpload />
+                                                    </label>
+                                                )}
+                                            </div>
+                                            <Row>
+                                                {selectedImage && (
+                                                    <div className="bottom-right">
+                                                        <AppButton onClick={onChangeAvatar}>
+                                                            {updateProfile === REQUEST_STATE.REQUEST ||
+                                                            uploadingImage === true ? (
+                                                                <Spin />
+                                                            ) : (
+                                                                'Confirm'
+                                                            )}
+                                                        </AppButton>
+                                                    </div>
+                                                )}
+                                            </Row>
+                                        </Modal>
+                                        <div className={cx('name')}>{user?.lastName + ' ' + user?.firstName}</div>
                                     </div>
                                     <menu className={cx('menu')}>
                                         {menuItems.map((item) => (
-                                            // <div className={cx('menu-item')}>
-                                            <Link
-                                                onClick={(e) => {
-                                                    handleMenuClick(e);
-                                                }}
-                                                id={item.key}
-                                                key={item.key}
-                                                to={item.path}
-                                                className={cx('menu-item')}
-                                            >
-                                                <div className={cx('text normal-link')}> {item.label}</div>
-                                                <div className={cx('icon')}>{item.icon}</div>
-                                            </Link>
-                                            // </div>
+                                            <div>
+                                                <Link
+                                                    onClick={(e) => {
+                                                        handleMenuClick(e);
+                                                    }}
+                                                    id={item.key}
+                                                    key={item.key}
+                                                    to={item.path}
+                                                    className={
+                                                        currentPath === item.path
+                                                            ? cx('menu-item-active')
+                                                            : cx('menu-item')
+                                                    }
+                                                >
+                                                    <div className={cx('text normal-link')}> {item.label}</div>
+                                                    <div className={cx('icon')}>{item.icon}</div>
+                                                </Link>
+                                            </div>
                                         ))}
                                     </menu>
                                     <div className={cx('slider-footer')}>

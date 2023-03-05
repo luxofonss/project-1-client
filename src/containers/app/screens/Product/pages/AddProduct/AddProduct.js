@@ -185,9 +185,6 @@ function AddProduct() {
                                         </div>
                                     </Col>
                                 </Row>
-                                {/* <AppButton type="button" onClick={clearStocks}>
-                                    Clear All
-                                </AppButton> */}
                             </Col>
                             <Col xs={10}>
                                 <div className={cx('upload-wrapper')}>

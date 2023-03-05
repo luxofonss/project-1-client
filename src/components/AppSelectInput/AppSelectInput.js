@@ -6,7 +6,7 @@ import styles from './AppSelectInput.module.sass';
 
 const cx = classNames.bind(styles);
 
-const AppSelectInput = ({ minWidth, name, required, options, valueField, nameField, label, ...props }) => {
+const AppSelectInput = ({ minWidth, disabled, name, required, options, valueField, nameField, label, ...props }) => {
     const { register, setValue } = useFormContext();
     const [selectValue, setSelectValue] = useState(valueField ? options[0][valueField] : options[0]);
     const [selectValueName, setSelectValueName] = useState(nameField ? options[0][nameField] : options[0]);
@@ -17,26 +17,31 @@ const AppSelectInput = ({ minWidth, name, required, options, valueField, nameFie
     const _name = name;
 
     const handleSelect = (value, valueName, index) => {
-        setValue(_name, value);
-        setSelectValue(value);
-        setSelectValueName(valueName);
-        setActive(index);
-        handleSelectClick();
+        if (!disabled) {
+            setValue(_name, value);
+            setSelectValue(value);
+            setSelectValueName(valueName);
+            setActive(index);
+            handleSelectClick();
+        }
     };
 
     const handleSelectClick = () => {
-        selections.current.classList.toggle('hide');
-        setIconClick(!iconClick);
+        if (!disabled) {
+            selections.current.classList.toggle('hide');
+            setIconClick(!iconClick);
+        }
     };
 
     const handleClick = (event) => {
         const { target } = event;
-
-        if (!selections.current.classList.contains('hide'))
-            if (!wrapperRef.current.contains(target)) {
-                selections.current.classList.add('hide');
-                setIconClick(!iconClick);
-            }
+        if (!disabled) {
+            if (!selections.current.classList.contains('hide'))
+                if (!wrapperRef.current.contains(target)) {
+                    selections.current.classList.add('hide');
+                    setIconClick(!iconClick);
+                }
+        }
     };
 
     useEffect(() => {
@@ -46,7 +51,6 @@ const AppSelectInput = ({ minWidth, name, required, options, valueField, nameFie
             document.removeEventListener('click', handleClick);
         };
     }, []);
-    console.log('options: ', options);
 
     return (
         <div style={{ minWidth: minWidth ? minWidth : null }} ref={wrapperRef}>

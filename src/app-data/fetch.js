@@ -50,6 +50,8 @@ export const GET = (path, params, options = {}) => {
 
     const _url = (options.isFullPath ? path : Configs.BASE_API + path) + (_params === '' ? '' : '?' + _params);
 
+    console.log('params: ', params);
+    console.log('getting');
     const _options = getOptions(options);
 
     return axios.get(_url, _options).then((response) => response.data);

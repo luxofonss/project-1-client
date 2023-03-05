@@ -6,8 +6,8 @@ import { useFormContext } from 'react-hook-form';
 
 const cx = classNames.bind(styles);
 
-const AppRadio = ({ name, value, required = false, ...props }) => {
-    const [checked, setChecked] = useState(false);
+const AppRadio = ({ id, name, value, required = false, ...props }) => {
+    const [checked, setChecked] = useState();
     const {
         register,
         setValue,
@@ -16,26 +16,26 @@ const AppRadio = ({ name, value, required = false, ...props }) => {
 
     const onChange = (e) => {
         setValue(name, value);
-        setChecked(true);
+        setChecked(value);
     };
 
     return (
         <div className={cx('wrapper')}>
             <input
-                id={`radio-${value}`}
+                id={id ? id : `radio-${value}`}
                 className={cx('radio')}
                 type="radio"
                 {...register(name, {
-                    ...(required ? { required: 'Vui lòng chọn ngày' } : {}),
+                    ...(required ? { required: 'Vui lòng chọn' } : {}),
                     ...props.validate,
                 })}
                 value={value}
                 name={name}
-                checked={checked}
+                checked={checked === value ? true : false}
                 onChange={onChange}
                 {...props}
             />
-            <label className={required ? 'required, label' : 'label'} htmlFor={`radio-${value}`}>
+            <label className={required ? 'required, label' : 'label'} htmlFor={id ? id : `radio-${value}`}>
                 {props.label}
             </label>
             {errors[name]?.type === 'required' && <div className="error-message">{errors[name].message}</div>}

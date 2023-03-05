@@ -38,6 +38,7 @@ export const apiAddProducts = async (body) => {
 };
 export const apiGetProduct = async (params) => {
     try {
+        console.log('search params: ', params);
         const response = await GET(`/api/product`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,

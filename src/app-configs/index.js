@@ -16,6 +16,28 @@ export const ORDER_STATUS = {
     CANCELLED: 'grey',
 };
 
+export const PRICE_RAGE = [
+    {
+        id: 0,
+        startPrice: 0,
+        endPrice: 499000,
+    },
+    {
+        id: 1,
+        startPrice: 500000,
+        endPrice: 749000,
+    },
+    {
+        id: 2,
+        startPrice: 750000,
+        endPrice: 999000,
+    },
+    {
+        id: 3,
+        startPrice: 1000000,
+        endPrice: 9999999999,
+    },
+];
 export const REQUEST_STATE = {
     ERROR: 'ERROR',
     REQUEST: 'REQUEST',

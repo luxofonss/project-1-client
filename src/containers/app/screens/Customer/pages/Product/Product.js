@@ -12,10 +12,11 @@ import AppForm from '~/components/AppForm';
 import AppRadio from '~/components/AppRadio';
 import AppSizeSelect from '~/components/AppSizeSelect';
 import AppButton from '~/components/AppButton/AppButton';
-import { REQUEST_STATE } from '~/app-configs';
+import { PRICE_RAGE, REQUEST_STATE } from '~/app-configs';
 import { ADD_PRODUCT_TO_CART_RESET } from '../../redux/action';
 import accounting from 'accounting';
 import ColorSelection from '~/components/ColorSelection';
+import { getArrayParams } from '~/helpers/validator';
 
 const cx = classNames.bind(styles);
 
@@ -45,9 +46,12 @@ function Product(props) {
     const params = useParams();
     const searchParams = Object.fromEntries(new URLSearchParams(location.search.substring(1)));
 
-    console.log(history.location);
+    console.log(searchParams);
+
+    getArrayParams(searchParams);
+
     useEffect(() => {
-        dispatch(PRODUCT_GET(searchParams));
+        dispatch(PRODUCT_GET(getArrayParams(searchParams)));
     }, [params]);
 
     useEffect(() => {
@@ -77,6 +81,7 @@ function Product(props) {
             sizeId: data.size,
             categoryId: dataFilter.categoryId,
             form: dataFilter.formFilter,
+            price: data.price,
             gender: data.gender,
             color: data.color,
         }).toString();
@@ -134,26 +139,28 @@ function Product(props) {
 
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Price (VND)</h4>
-                                <AppRadio
-                                    value={{ startPrice: 0, endPrice: 490000 }}
-                                    name="price"
-                                    label="0 - 490,000"
-                                />
-                                <AppRadio
-                                    value={{ startPrice: 500000, endPrice: 690000 }}
-                                    name="price"
-                                    label="500,000 - 690,000"
-                                />
-                                <AppRadio
-                                    value={{ startPrice: 700000, endPrice: 999999 }}
-                                    name="price"
-                                    label="700,000 - 999,000"
-                                />
-                                <AppRadio
-                                    value={{ startPrice: 1000000, endPrice: 999990000 }}
-                                    name="price"
-                                    label="Greater than 1,000,000"
-                                />
+                                {PRICE_RAGE.map((range) => {
+                                    if (range.endPrice === 9999999999)
+                                        return (
+                                            <AppRadio
+                                                id={`price${range.id}`}
+                                                name="price"
+                                                value={range.id}
+                                                label={`Greater than ${accounting.formatNumber(range.startPrice)}`}
+                                            />
+                                        );
+                                    else
+                                        return (
+                                            <AppRadio
+                                                id={`price${range.id}`}
+                                                name="price"
+                                                value={range.id}
+                                                label={`${accounting.formatNumber(
+                                                    range.startPrice,
+                                                )} - ${accounting.formatNumber(range.endPrice)}`}
+                                            />
+                                        );
+                                })}
                             </div>
                             <Divider />
 

@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { SIDER_COLLAPSE } from '~/app-configs';
 import {
-    IconDashboard,
-    IconShopBasket,
-    IconOrder,
-    IconUser,
-    IconTransaction,
-    LogoAdmin,
     IconCategory,
+    IconDashboard,
+    IconOrder,
+    IconShopBasket,
+    IconTransaction,
+    IconUser,
+    LogoAdmin,
 } from '~/assets/svgs';
 import AppHeader from '~/components/Layout/components/Header';
 import styles from './AppLayout.module.sass';
@@ -51,33 +51,12 @@ const menuItems = [
     getMenu('Transaction', '/admin/support-request', 'transaction', <IconTransaction />),
 ];
 
-const UserInfo = () => <Link to="/me/info">Chỉnh sửa thông tin cá nhân</Link>;
-const ContractManager = () => (
-    <Link className={cx('nav-text')} to="/">
-        Quản lý hợp đồng
-    </Link>
-);
-const RequestHistory = () => (
-    <Link className={cx('nav-text')} to="/request-history">
-        Lịch sử yêu cầu
-    </Link>
-);
-
 function AppLayout({ children, match }) {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
     const [collapsed, setCollapsed] = useState(localStorage.getItem(SIDER_COLLAPSE) ?? false);
     const history = useHistory();
     const currentRouter = useSelector((state) => state.router.location);
     const [selectedSider, setSelectedSider] = useState(getSelectedNav());
-
-    function toggleSider() {
-        setCollapsed(!collapsed);
-        localStorage.setItem(SIDER_COLLAPSE, !collapsed);
-    }
-
-    const onClickSliderMenu = (item) => {
-        history.push(item.key);
-    };
 
     function getSelectedNav() {
         if (currentRouter?.pathname.includes('/config/sign-ceft/')) {
@@ -94,13 +73,6 @@ function AppLayout({ children, match }) {
         localStorage.setItem('menuId', e.target.id);
         history.push(e.target.key);
     };
-
-    const targetMenuId = localStorage.getItem('menuId') || 'dashboard';
-
-    useEffect(() => {
-        const targetMenu = document.getElementById(targetMenuId);
-        targetMenu.classList.add('active');
-    }, [targetMenuId]);
 
     return (
         <div className={cx('app-layout')}>
@@ -119,7 +91,7 @@ function AppLayout({ children, match }) {
                             id={item.key}
                             key={item.key}
                             to={item.path}
-                            className={cx('menu-item')}
+                            className={item.path === currentRouter.pathname ? cx('menu-item-active') : cx('menu-item')}
                         >
                             <div className={cx('text normal-link')}> {item.label}</div>
                             <div className={cx('icon')}>{item.icon}</div>

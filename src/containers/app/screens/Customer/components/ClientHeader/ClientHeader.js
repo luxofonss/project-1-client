@@ -1,6 +1,6 @@
 import { Dropdown } from 'antd';
 import classNames from 'classnames/bind';
-import React, { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { TOKEN_KEY } from '~/app-configs';
@@ -9,7 +9,6 @@ import AppButton from '~/components/AppButton/AppButton';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import Cart from '~/containers/app/screens/Customer/components/Cart';
-import { PRODUCT_GET } from '~/containers/app/screens/Product/redux/action';
 import { GET_CART } from '../../redux/action';
 import styles from './ClientHeader.module.sass';
 
@@ -19,20 +18,6 @@ function handleLogout() {
     localStorage.removeItem(TOKEN_KEY);
     window.location.reload(false);
 }
-
-const ListItem = React.forwardRef(({ className, children, title, ...props }, forwardedRef) => (
-    <li>
-        <NavigationMenu.Link asChild>
-            <a className={cx('ListItemLink', className)} {...props} ref={forwardedRef}>
-                <div className="ListItemHeading">{title}</div>
-                <p className="ListItemText">{children}</p>
-            </a>
-        </NavigationMenu.Link>
-    </li>
-));
-
-const onClickCart = (item) => {};
-
 export default function (props) {
     const userDetail = useSelector((state) => state?.user?.profile);
     const userCheck = useSelector((state) => state?.user);
@@ -82,6 +67,8 @@ export default function (props) {
         }
     };
 
+    const currentPath = history.location.pathname;
+
     return (
         <Fragment>
             <div style={isBlur ? { height: `${height}px` } : { height: '0px' }} ref={blur}></div>
@@ -115,13 +102,13 @@ export default function (props) {
                 </div>
 
                 <div className={cx('menu')}>
-                    <Link to="/" className={cx('item')}>
+                    <Link to="/" className={currentPath === '/' ? cx('item-active') : cx('item')}>
                         Home
                     </Link>
-                    <Link to="/product" className={cx('item')}>
+                    <Link to="/product" className={currentPath === '/product' ? cx('item-active') : cx('item')}>
                         Products
                     </Link>
-                    <Link to="/about" className={cx('item')}>
+                    <Link to="/about" className={currentPath === '/about' ? cx('item-active') : cx('item')}>
                         About us
                     </Link>
                 </div>
@@ -143,47 +130,60 @@ export default function (props) {
                                 </Dropdown>
                             </div>
                             <div className={cx('avatar')}>
-                                <div className={cx('dropdown')}>
-                                    <div
-                                        className={cx('image', ' d-flex justify-content-center align-items-center')}
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        style={{
-                                            objectFit: 'cover',
-                                            backgroundImage: `url('https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/315652721_809865970070640_8534308457976519135_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=mylD2NLfKr8AX9-Q3lE&tn=FMdAK198RPW4kdFE&_nc_ht=scontent.fhan14-3.fna&oh=00_AfA5_iphLTLMqPTZJh3VGw6m0sANzq07FJ71oxzRdmRk4w&oe=639058FE')`,
-                                        }}
-                                    >
-                                        <span style={{ color: 'white', fontWeight: 700 }}>
-                                            {userDetail?.name?.at(0).toUpperCase()}
-                                        </span>
-                                    </div>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                Action
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div className="dropdown-item" href="#">
-                                                <Link to="/orders">My orders</Link>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={handleLogout}
-                                                className="dropdown-item"
-                                                href="#"
-                                            >
+                                <Dropdown
+                                    // overlay={<Menu items={cartItems} onClick={onClickCart} />}
+                                    overlay={
+                                        <div className={cx('user')}>
+                                            <Link to="/profile">My account</Link>
+
+                                            <Link to="/orders">My orders</Link>
+
+                                            {userDetail?.role === '1' ? <Link to="/admin/product">Admin</Link> : null}
+
+                                            <div style={{ cursor: 'pointer' }} onClick={handleLogout} href="#">
                                                 Logout
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className={cx('welcome')}>
-                                    <span className={cx('welcome-1')}>Welcome back,</span>
-                                    <span className={cx('welcome-2')}>{userDetail ? userDetail.name : ''}</span>
-                                </div>
+                                        </div>
+                                    }
+                                    placement="bottom"
+                                    trigger={['click']}
+                                    onOpenChange={onOpenChange}
+                                >
+                                    <div className={cx('header-nav')}>
+                                        <div
+                                            className={cx('image')}
+                                            style={
+                                                userDetail?.avatar && {
+                                                    objectFit: 'contain',
+                                                    backgroundSize: 'cover',
+                                                    backgroundRepeat: 'no-repeat',
+                                                    backgroundPosition: 'center',
+                                                    backgroundImage: `url("${userDetail.avatar}")`,
+                                                }
+                                            }
+                                        >
+                                            {!userDetail?.avatar && (
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        color: 'white',
+                                                        fontWeight: 700,
+                                                    }}
+                                                >
+                                                    {userDetail?.lastName?.at(0).toUpperCase()}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </Dropdown>
+                            </div>
+                            <div className={cx('welcome')}>
+                                <span className={cx('welcome-1')}>Welcome back,</span>
+                                <span className={cx('welcome-2')}>
+                                    {userDetail ? userDetail?.lastName + ' ' + userDetail?.firstName : ''}
+                                </span>
                             </div>
                         </Fragment>
                     ) : (

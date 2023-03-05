@@ -3,6 +3,24 @@ import { PUT } from '~/app-data/fetch';
 import { DELETE } from '~/app-data/fetch';
 import { POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
+import { apiProfile } from '../auth';
+
+export const apiUpdateProfile = async (params) => {
+    try {
+        const response = await PUT('/api/user/update', params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response.data,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
 
 export const apiListIssuer = async (params) => {
     try {

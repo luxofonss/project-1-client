@@ -60,4 +60,15 @@ export const childRoutes = [
             return import('./pages/Orders');
         }),
     },
+    {
+        path: '/profile',
+        exact: true,
+        isPrivate: true,
+        role: [ROLE.ADMIN, ROLE.USER],
+        layout: CustomerProfileLayout,
+        component: lazy(async () => {
+            await initModules([customerModule], 'app');
+            return import('./pages/Profile');
+        }),
+    },
 ];

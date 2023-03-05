@@ -88,9 +88,15 @@
         .welcome
             display: flex
             flex-direction: column
+            max-width: 200px
 
             .welcome-1
                 font-size: 10px
 
             .welcome-2
                 font-weight: 700
+                display: -webkit-box !important
+                -webkit-line-clamp: 1
+                -webkit-box-orient: vertical
+                overflow: hidden
+                text-overflow: ellipsis
