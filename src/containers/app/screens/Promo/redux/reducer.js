@@ -5,6 +5,14 @@ import {
     CREATE_PROMO_FAIL,
     CREATE_PROMO_RESET,
     CREATE_PROMO_SUCCESS,
+    DISABLE_PROMO,
+    DISABLE_PROMO_FAIL,
+    DISABLE_PROMO_RESET,
+    DISABLE_PROMO_SUCCESS,
+    ENABLE_PROMO,
+    ENABLE_PROMO_FAIL,
+    ENABLE_PROMO_RESET,
+    ENABLE_PROMO_SUCCESS,
     GET_ALL_PROMO,
     GET_ALL_PROMO_FAIL,
     GET_ALL_PROMO_RESET,
@@ -73,6 +81,72 @@ export default combineReducers({
                 };
             }
             case GET_ALL_PROMO_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    enablePromo: (state = { ...defaultState }, action) => {
+        switch (action.type) {
+            case ENABLE_PROMO().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case ENABLE_PROMO_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case ENABLE_PROMO_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                    errorMessageKey: action.payload,
+                };
+            }
+            case ENABLE_PROMO_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    disablePromo: (state = { ...defaultState }, action) => {
+        switch (action.type) {
+            case DISABLE_PROMO().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case DISABLE_PROMO_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case DISABLE_PROMO_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                    errorMessageKey: action.payload,
+                };
+            }
+            case DISABLE_PROMO_RESET().type: {
                 return {
                     ...state,
                     state: null,

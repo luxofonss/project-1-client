@@ -1,23 +1,21 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import styles from './AddProduct.module.sass';
+import { Col, Row, Spin } from 'antd';
 import classNames from 'classnames/bind';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { BackIcon, IconPlus, IconTrash, IconUpload, IconX } from '~/assets/svgs';
-import { storage } from '~/firebase';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { v4 } from 'uuid';
-import { PRODUCT_ADD } from '~/containers/app/screens/Product/redux/action';
-import { CATEGORY_LIST_REQUEST } from '~/containers/app/screens/Category/redux/action';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spin, Row, Col } from 'antd';
+import { Link } from 'react-router-dom';
+import { v4 } from 'uuid';
 import { REQUEST_STATE } from '~/app-configs';
+import { BackIcon, IconPlus, IconUpload, IconX } from '~/assets/svgs';
+import AppButton from '~/components/AppButton/AppButton';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppSelectApi from '~/components/AppSelectApi';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppTextArea from '~/components/AppTextArea';
-import AppButton from '~/components/AppButton/AppButton';
+import { PRODUCT_ADD } from '~/containers/app/screens/Product/redux/action';
+import { storage } from '~/firebase';
+import styles from './AddProduct.module.sass';
 
 const cx = classNames.bind(styles);
 
@@ -26,14 +24,10 @@ function AddProduct() {
     const [counter, setCounter] = React.useState(1);
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
-    const product = useSelector((state) => {
-        console.log(state);
-        return state.product.createProduct;
-    });
+    const product = useSelector((state) => state.product.createProduct);
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        console.log('submit', data);
         const storageRef = ref(storage, `/images/${selectedImage + v4()}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedImage);
         setUploadingImage(true);
@@ -46,7 +40,6 @@ function AddProduct() {
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
                     const uploadData = { ...data, images: [URL] };
-                    console.log(uploadData);
                     setUploadingImage(false);
                     dispatch(PRODUCT_ADD(uploadData));
                 });

@@ -42,13 +42,13 @@ export function getMenu(label, path, key, icon) {
 }
 
 const menuItems = [
-    getMenu('Dashboard', '/admin', 'dashboard', <IconDashboard />),
+    getMenu('Dashboard', '/admin/dashboard', 'dashboard', <IconDashboard />),
     getMenu('Product', '/admin/product', 'product', <IconShopBasket />),
     getMenu('Category', '/admin/category', 'category', <IconCategory />),
-    getMenu('Promo', '/admin/promo', 'promo', <IconUser />),
+    getMenu('Promo', '/admin/promo', 'promo', <IconTransaction />),
     getMenu('User', '/admin/users', 'user', <IconUser />),
     getMenu('Order', '/admin/orders', 'order', <IconOrder />),
-    getMenu('Transaction', '/admin/support-request', 'transaction', <IconTransaction />),
+    // getMenu('Transaction', '/admin/support-request', 'transaction', <IconTransaction />),
 ];
 
 function AppLayout({ children, match }) {
@@ -65,10 +65,6 @@ function AppLayout({ children, match }) {
         return currentRouter?.pathname;
     }
 
-    useEffect(() => {
-        console.log('selectedSider: ', selectedSider);
-    }, [selectedSider]);
-
     const handleMenuClick = (e) => {
         localStorage.setItem('menuId', e.target.id);
         history.push(e.target.key);
@@ -79,7 +75,13 @@ function AppLayout({ children, match }) {
             {/* <Sider width={300} className={cx('slider')} trigger={null} collapsible collapsed={collapsed}> */}
             <div className={cx('slider')}>
                 <div className={cx('logo')}>
-                    <LogoAdmin />
+                    {/* <LogoAdmin /> */}
+                    <Link to="/">
+                        <div style={{ cursor: 'pointer' }} className="logo">
+                            <div className="first">LUX</div>
+                            <div className="second">SHOP</div>
+                        </div>
+                    </Link>
                 </div>
                 <menu className={cx('menu')}>
                     {menuItems.map((item) => (
@@ -91,7 +93,9 @@ function AppLayout({ children, match }) {
                             id={item.key}
                             key={item.key}
                             to={item.path}
-                            className={item.path === currentRouter.pathname ? cx('menu-item-active') : cx('menu-item')}
+                            className={
+                                currentRouter.pathname.includes(item.path) ? cx('menu-item-active') : cx('menu-item')
+                            }
                         >
                             <div className={cx('text normal-link')}> {item.label}</div>
                             <div className={cx('icon')}>{item.icon}</div>

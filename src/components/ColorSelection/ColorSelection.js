@@ -43,7 +43,6 @@ const ColorSelection = ({ name, value, required = false, ...props }) => {
         setCheckedList([...checked]);
         setValue(name, checked);
     }, [checked]);
-    console.log('checked', checked);
 
     return (
         <div className={cx('wrapper')}>

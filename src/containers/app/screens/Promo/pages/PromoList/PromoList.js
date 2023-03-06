@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styles from './PromoList.module.sass';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_ALL_PROMO, CREATE_PROMO } from '../../redux/action';
-import { Col, Modal, Row, Space, Table, Tag } from 'antd';
+import {
+    GET_ALL_PROMO,
+    CREATE_PROMO,
+    DISABLE_PROMO,
+    ENABLE_PROMO,
+    ENABLE_PROMO_RESET,
+    DISABLE_PROMO_RESET,
+    CREATE_PROMO_RESET,
+} from '../../redux/action';
+import { Button, Col, Modal, notification, Row, Space, Table, Tag } from 'antd';
 import { REQUEST_STATE } from '~/app-configs';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
@@ -11,74 +19,63 @@ import AppButton from '~/components/AppButton/AppButton';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppDateInput from '~/components/AppDateInput';
 
-const columns = [
-    {
-        title: 'STT',
-        render: (_, record, index) => index + 1,
-        key: 'stt',
-    },
-    {
-        title: 'Code',
-        dataIndex: 'code',
-        key: 'code',
-    },
-    {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-    },
-    {
-        title: 'Percent',
-        dataIndex: 'percent',
-        key: 'percent',
-    },
-    {
-        title: 'Discount',
-        dataIndex: 'discount',
-        key: 'discount',
-    },
-    {
-        title: 'Quantity',
-        dataIndex: 'quantity',
-        key: 'quantity',
-    },
-    {
-        title: 'Expiry',
-        render: (_, { expiry }) => expiry?.slice(0, 10),
-        key: 'expiry',
-    },
-    {
-        title: 'Status',
-        key: 'status',
-        dataIndex: 'isActive',
-        render: (_, { isActive }) => (
-            <Tag color={isActive ? 'green' : 'volcano'}>{isActive ? 'Active' : 'Disabled'}</Tag>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                {/* <a>Invite {record.name}</a>
-                <a>Delete</a> */}
-            </Space>
-        ),
-    },
-];
-
 const cx = classNames.bind(styles);
 
 function PromoList(props) {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const promoList = useSelector((state) => state.promo.promoList);
-
-    console.log('promoList', promoList);
+    const enablePromo = useSelector((state) => state.promo.enablePromo);
+    const disablePromo = useSelector((state) => state.promo.disablePromo);
+    const createPromo = useSelector((state) => state.promo.createPromo);
 
     useEffect(() => {
         dispatch(GET_ALL_PROMO());
     }, []);
+
+    //Notifications
+    useEffect(() => {
+        if (enablePromo?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Enable promo successfully!',
+            });
+            dispatch(ENABLE_PROMO_RESET());
+        }
+        if (enablePromo?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        if (disablePromo?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Disable promo successfully!',
+            });
+            dispatch(DISABLE_PROMO_RESET());
+        }
+        if (disablePromo?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        if (createPromo?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Create promo successfully!',
+            });
+            dispatch(CREATE_PROMO_RESET());
+        }
+        if (createPromo?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        dispatch(GET_ALL_PROMO());
+    }, [enablePromo?.state, disablePromo?.state, createPromo?.state]);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -94,6 +91,75 @@ function PromoList(props) {
         console.log(data);
         dispatch(CREATE_PROMO(data));
     };
+
+    const handleEnablePromo = (id) => {
+        dispatch(ENABLE_PROMO({ id: id }));
+    };
+
+    const handleDisablePromo = (id) => {
+        dispatch(DISABLE_PROMO({ id: id }));
+    };
+
+    const columns = [
+        {
+            title: 'STT',
+            render: (_, record, index) => index + 1,
+            key: 'stt',
+        },
+        {
+            title: 'Code',
+            dataIndex: 'code',
+            key: 'code',
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        {
+            title: 'Percent',
+            dataIndex: 'percent',
+            key: 'percent',
+        },
+        {
+            title: 'Discount',
+            dataIndex: 'discount',
+            key: 'discount',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        },
+        {
+            title: 'Expiry',
+            render: (_, { expiry }) => expiry?.slice(0, 10),
+            key: 'expiry',
+        },
+        {
+            title: 'Status',
+            key: 'status',
+            dataIndex: 'isActive',
+            render: (_, { isActive }) => (
+                <Tag color={isActive ? 'green' : 'volcano'}>{isActive ? 'Active' : 'Inactive'}</Tag>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+                <Space size="middle">
+                    {record.isActive ? (
+                        <Button danger onClick={(e) => handleDisablePromo(record.id)}>
+                            Disable
+                        </Button>
+                    ) : (
+                        <Button onClick={() => handleEnablePromo(record.id)}>Enable</Button>
+                    )}
+                </Space>
+            ),
+        },
+    ];
     return (
         <div className={cx('container')}>
             <Row gutter={64}>

@@ -20,7 +20,6 @@ function Profile(props) {
     const updateProfile = useSelector((state) => state.user.updateProfile);
 
     const onSubmit = (data) => {
-        console.log('data: ', data);
         dispatch(UPDATE_PROFILE(data));
     };
 

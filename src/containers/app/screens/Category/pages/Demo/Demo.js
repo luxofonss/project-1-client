@@ -9,7 +9,6 @@ function Demo(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
-        console.log('open');
         setIsModalOpen(true);
     };
 
@@ -21,15 +20,8 @@ function Demo(props) {
         setIsModalOpen(false);
     };
     return (
-        <div className={cx('container')}>
-            <Button type="primary" onClick={showModal}>
-                Add
-            </Button>
-            <Modal width={1000} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+        <div className={cx('container flex-center')}>
+            <h3>Welcome to LUXSHOP admin dashboard</h3>
         </div>
     );
 }

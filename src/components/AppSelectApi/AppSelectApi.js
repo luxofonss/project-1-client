@@ -42,7 +42,6 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                 apiPath = apiURL;
             } else {
                 apiPath = process.env.REACT_APP_BASE_API_URL + apiURL;
-                console.log(apiPath);
             }
             const response = await axios.get(apiPath);
             setOptions(response?.data?.rows);

@@ -34,8 +34,6 @@ function PrivateRoute({ component: Component, location, role, ...rest }) {
 
     switch (isAuthenticated) {
         case REQUEST_STATE?.SUCCESS: {
-            console.log('test', role, role.includes(userRole), userRole);
-
             if (userRole)
                 if (role.includes(userRole)) return <Route {...rest} render={(props) => <Component {...props} />} />;
                 else return <Redirect to={{ pathname: '/page-not-found', state: { from: location } }} />;

@@ -24,9 +24,8 @@ function HomePage(props) {
 
     const categoryList = categories?.data?.data?.rows;
 
-    console.log('categoryList', categoryList);
     const onChange = (currentSlide) => {
-        console.log(currentSlide);
+        // console.log(currentSlide);
     };
 
     const imgs = [

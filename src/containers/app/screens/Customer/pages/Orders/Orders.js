@@ -15,13 +15,12 @@ function Orders(props) {
     const dispatch = useDispatch();
     const orderList = useSelector((state) => state.customer.order);
 
-    console.log('orderList', orderList);
     useEffect(() => {
         dispatch(GET_ORDER());
     }, []);
 
     const onChange = (key) => {
-        console.log(key);
+        // console.log(key);
     };
     return (
         <div className={cx('items-wrapper')}>

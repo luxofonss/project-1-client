@@ -6,8 +6,7 @@ import { useFormContext } from 'react-hook-form';
 
 const cx = classNames.bind(styles);
 
-const AppRadio = ({ id, name, value, required = false, ...props }) => {
-    const [checked, setChecked] = useState();
+const AppRadio = ({ checked, onChecked, id, name, value, required = false, ...props }) => {
     const {
         register,
         setValue,
@@ -16,7 +15,7 @@ const AppRadio = ({ id, name, value, required = false, ...props }) => {
 
     const onChange = (e) => {
         setValue(name, value);
-        setChecked(value);
+        onChecked(value);
     };
 
     return (

@@ -12,10 +12,8 @@ const cx = classNames.bind(styles);
 const AppSizeSelect = ({ name, value, required = false, ...props }) => {
     const [checked, setChecked] = useState([]);
     const [checkedList, setCheckedList] = useState([]);
-    const sizes = useSelector((state) => {
-        console.log(state);
-        return state.size;
-    });
+    const sizes = useSelector((state) => state.size);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,7 +27,7 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
 
     const onClickItem = (e) => {
         const sizeindex = e.target.getAttribute('sizeindex');
-        console.log(sizeindex, e.target.innerHTML);
+
         let array = checked;
         let index = array.indexOf(sizeindex);
         if (index !== -1) {
@@ -41,7 +39,6 @@ const AppSizeSelect = ({ name, value, required = false, ...props }) => {
     };
 
     useLayoutEffect(() => {
-        console.log('test');
         setCheckedList([...checked]);
         setValue(name, checked);
     }, [checked]);

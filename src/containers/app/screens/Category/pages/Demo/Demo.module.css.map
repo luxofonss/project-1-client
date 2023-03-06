@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,UAAU,CAAC;EACN,KAAK,EAAE,IAAI;EACX,gBAAgB,EAAE,YAAY;EAC9B,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,kBAAkB;CAAG",
-    "sources": [
-        "Demo.module.sass"
-    ],
-    "names": [],
-    "file": "Demo.module.css"
-}

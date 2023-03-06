@@ -15,7 +15,6 @@ const AppCheckbox = ({ name, value, required = false, ...props }) => {
     } = useFormContext();
 
     const onChange = (e) => {
-        console.log(e.target.checked, value);
         if (e.target.checked === true) {
             setChecked(true);
             setValue(name, value);

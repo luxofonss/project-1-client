@@ -59,8 +59,6 @@ const AppSearchInput = ({
         };
     }, []);
 
-    console.log('props.provinceCode', props.provinceCode);
-
     useEffect(() => {
         const fetch = async () => {
             if (props.province === true) {

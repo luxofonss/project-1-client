@@ -5,6 +5,7 @@ import { REQUEST_STATE } from '~/app-configs';
 import { GET_ALL_PROMO } from '~/containers/app/screens/Promo/redux/action';
 import styles from './ChoosePromo.module.sass';
 import classNames from 'classnames/bind';
+import accounting from 'accounting';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +25,7 @@ const ChoosePromo = ({ onSubmit, ...props }) => {
     };
 
     useEffect(() => {
-        dispatch(GET_ALL_PROMO());
+        dispatch(GET_ALL_PROMO({ isActive: true }));
     }, []);
 
     const handleChoosePromo = (id, percent, discount, code) => {
@@ -45,13 +46,15 @@ const ChoosePromo = ({ onSubmit, ...props }) => {
                                 className={cx('promo-wrapper')}
                             >
                                 {promo.percent ? (
-                                    <div>{promo.percent} DISCOUNT</div>
+                                    <div className={cx('header-2')}>
+                                        <div>{promo.percent}% DISCOUNT</div>
+                                        <div>Max {accounting.formatNumber(promo.discount)}</div>
+                                    </div>
                                 ) : (
-                                    <div>{promo.discount} DISCOUNT PER ORDER</div>
+                                    <div className={cx('header-1')}>{promo.discount} DISCOUNT PER ORDER</div>
                                 )}
-                                <div>{promo.description}</div>
-                                <div>{promo.quantity} left</div>
-                                <div>Expiry: {promo.expiry?.slice(0, 10)}</div>
+                                <div className={cx('description')}>{promo.description}</div>
+                                <div className={cx('expiry')}>Expiry: {promo.expiry?.slice(0, 10)}</div>
                             </div>
                         );
                     })}

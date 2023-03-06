@@ -12,7 +12,6 @@ function AppFileInput({ name, required = false, ...props }) {
 
     const onChange = async (e) => {
         const res = await getBase64(e.target.files[0]);
-        // console.log(res);
     };
     return (
         <div className={cx('input-wrapper')}>

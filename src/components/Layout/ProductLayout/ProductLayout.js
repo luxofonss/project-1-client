@@ -68,10 +68,6 @@ function ProductLayout({ children, match }) {
         return currentRouter?.pathname;
     }
 
-    useEffect(() => {
-        console.log('selectedSider: ', selectedSider);
-    }, [selectedSider]);
-
     return (
         <div className={cx('app-layout')}>
             <ConfigProvider

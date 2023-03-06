@@ -23,10 +23,6 @@ function CategoryEdit(props) {
     const cateEdit = useSelector((state) => state.category.categoryList);
     const productList = useSelector((state) => state.product.listProduct);
 
-    console.log('productList', productList.data?.data?.rows);
-
-    // if(cateEdit.categories.)
-
     const {
         register,
         handleSubmit,
@@ -38,7 +34,6 @@ function CategoryEdit(props) {
     };
 
     useEffect(() => {
-        console.log('get data');
         dispatch(CATEGORY_LIST_REQUEST({ id: id }));
         dispatch(PRODUCT_GET({ categoryId: id }));
     }, []);

@@ -36,3 +36,37 @@ export const apiGetAllPromo = async (params) => {
         };
     }
 };
+
+export const apiEnablePromo = async (params) => {
+    try {
+        const response = await PATCH(`/api/promo/enable/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiDisablePromo = async (params) => {
+    try {
+        const response = await PATCH(`/api/promo/disable/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};

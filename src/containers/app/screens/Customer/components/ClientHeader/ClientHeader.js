@@ -28,11 +28,10 @@ export default function (props) {
     const history = useHistory();
 
     const onSearch = (data) => {
-        console.log(data);
         const path = history.location.pathname;
         if (path === '/product') {
             let search = new URLSearchParams(history.location.search);
-            console.log(search.get('name'));
+
             if (search.get('name') !== null) {
                 let index = history.location.search.indexOf(search.get('name'));
                 let newSearch = history.location.search.slice(0, index) + data.search;
@@ -57,7 +56,6 @@ export default function (props) {
 
     const onOpenChange = (open) => {
         if (open) {
-            console.log('height: ' + height);
             blur.current.classList.add('blur-window');
             setIsBlur(true);
             dispatch(GET_CART({ isActive: 1 }));
@@ -74,9 +72,9 @@ export default function (props) {
             <div style={isBlur ? { height: `${height}px` } : { height: '0px' }} ref={blur}></div>
             <header className={cx('header')}>
                 <Link to="/">
-                    <div style={{ cursor: 'pointer' }} className={cx('logo')}>
-                        <div className={cx('first')}>LUX</div>
-                        <div className={cx('second')}>SHOP</div>
+                    <div style={{ cursor: 'pointer' }} className="logo">
+                        <div className="first">LUX</div>
+                        <div className="second">SHOP</div>
                     </div>
                 </Link>
                 <div className={cx('search-nav')}>
@@ -138,7 +136,7 @@ export default function (props) {
 
                                             <Link to="/orders">My orders</Link>
 
-                                            {userDetail?.role === '1' ? <Link to="/admin/product">Admin</Link> : null}
+                                            {userDetail?.role === '1' ? <Link to="/admin/dashboard">Admin</Link> : null}
 
                                             <div style={{ cursor: 'pointer' }} onClick={handleLogout} href="#">
                                                 Logout

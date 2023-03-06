@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import ProductItem from '~/components/ProductItem';
 import styles from './Product.module.sass';
 import { PRODUCT_GET } from '../../../Product/redux/action';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CATEGORY_LIST_REQUEST } from '../../../Category/redux/action';
 import AppCheckbox from '~/components/AppCheckbox';
@@ -21,6 +21,8 @@ import { getArrayParams } from '~/helpers/validator';
 const cx = classNames.bind(styles);
 
 function Product(props) {
+    const [gender, setGender] = useState('');
+    const [price, setPrice] = useState('');
     const products = useSelector((state) => state.product.listProduct);
     const categories = useSelector((state) => state.category?.categoryList?.data);
     const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
@@ -46,8 +48,6 @@ function Product(props) {
     const params = useParams();
     const searchParams = Object.fromEntries(new URLSearchParams(location.search.substring(1)));
 
-    console.log(searchParams);
-
     getArrayParams(searchParams);
 
     useEffect(() => {
@@ -60,9 +60,6 @@ function Product(props) {
 
     const onSubmit = (data) => {
         console.log('data', data);
-        // console.log(data.price.startPrice);
-        // console.log(JSON.stringify(data.price));
-
         let dataFilter = {
             formFilter: [],
             categoryId: [],
@@ -86,6 +83,14 @@ function Product(props) {
             color: data.color,
         }).toString();
         history.push(`product?${test}`);
+    };
+
+    const handleSetGender = (gender) => {
+        setGender(gender);
+    };
+
+    const handleSetPrice = (price) => {
+        setPrice(price);
     };
 
     const imgs = [
@@ -120,12 +125,30 @@ function Product(props) {
                                 )}
                             </div>
                             <Divider />
-                            <div className={cx('filter-wrapper')}>
+                            <fieldset id="gender" className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Gender</h4>
-                                <AppRadio value={0} name="gender" label="Men" />
-                                <AppRadio value={1} name="gender" label="Women" />
-                                <AppRadio value={2} name="gender" label="All" />
-                            </div>
+                                <AppRadio
+                                    checked={gender}
+                                    onChecked={handleSetGender}
+                                    value={0}
+                                    name="gender"
+                                    label="Men"
+                                />
+                                <AppRadio
+                                    checked={gender}
+                                    onChecked={handleSetGender}
+                                    value={1}
+                                    name="gender"
+                                    label="Women"
+                                />
+                                <AppRadio
+                                    checked={gender}
+                                    onChecked={handleSetGender}
+                                    value={2}
+                                    name="gender"
+                                    label="All"
+                                />
+                            </fieldset>
                             <Divider />
 
                             <div className={cx('filter-wrapper')}>
@@ -137,12 +160,14 @@ function Product(props) {
                             </div>
                             <Divider />
 
-                            <div className={cx('filter-wrapper')}>
+                            <fieldset id="price" className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Price (VND)</h4>
                                 {PRICE_RAGE.map((range) => {
                                     if (range.endPrice === 9999999999)
                                         return (
                                             <AppRadio
+                                                checked={price}
+                                                onChecked={handleSetPrice}
                                                 id={`price${range.id}`}
                                                 name="price"
                                                 value={range.id}
@@ -152,6 +177,8 @@ function Product(props) {
                                     else
                                         return (
                                             <AppRadio
+                                                checked={price}
+                                                onChecked={handleSetPrice}
                                                 id={`price${range.id}`}
                                                 name="price"
                                                 value={range.id}
@@ -161,7 +188,7 @@ function Product(props) {
                                             />
                                         );
                                 })}
-                            </div>
+                            </fieldset>
                             <Divider />
 
                             <div className={cx('filter-wrapper')}>

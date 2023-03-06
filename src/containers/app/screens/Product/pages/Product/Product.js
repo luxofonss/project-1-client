@@ -26,29 +26,24 @@ function Product(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('dispatching');
         dispatch(PRODUCT_GET({ limit: limit, offset: offset }));
         dispatch(CATEGORY_LIST_REQUEST());
     }, [offset, limit]);
 
     const product = useSelector((state) => {
-        console.log('state: ', state);
         return state.product.listProduct;
     });
     const categoryList = useSelector((state) => {
         return state.category?.categoryList;
     });
     const productList = product?.data?.data;
-    console.log('productList', productList);
     const onFilter = (data) => {
-        console.log(data);
         if (data.id === 'all') {
             dispatch(PRODUCT_GET({ name: data.name }));
         } else dispatch(PRODUCT_GET(data));
     };
 
     const onPaginationChange = (page, pageSize) => {
-        console.log('page', page, pageSize);
         setOffset((page - 1) * pageSize);
         setLimit(pageSize);
     };

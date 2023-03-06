@@ -2,7 +2,7 @@ import { Col, ConfigProvider, Layout, Modal, Row, Spin } from 'antd';
 // import 'antd/dist/antd.css';
 import classNames from 'classnames/bind';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -66,11 +66,6 @@ function CustomerProfileLayout({ children, match }) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    console.log('user', user);
-
-    useEffect(() => {
-        console.log('selectedSider: ', selectedSider);
-    }, [selectedSider]);
 
     const handleMenuClick = (e) => {
         localStorage.setItem('menuId', e.target.id);
@@ -220,8 +215,8 @@ function CustomerProfileLayout({ children, match }) {
                                         <div className={cx('name')}>{user?.lastName + ' ' + user?.firstName}</div>
                                     </div>
                                     <menu className={cx('menu')}>
-                                        {menuItems.map((item) => (
-                                            <div>
+                                        {menuItems.map((item, index) => (
+                                            <div key={index}>
                                                 <Link
                                                     onClick={(e) => {
                                                         handleMenuClick(e);
@@ -230,7 +225,7 @@ function CustomerProfileLayout({ children, match }) {
                                                     key={item.key}
                                                     to={item.path}
                                                     className={
-                                                        currentPath === item.path
+                                                        currentPath.includes(item.path)
                                                             ? cx('menu-item-active')
                                                             : cx('menu-item')
                                                     }

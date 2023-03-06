@@ -43,6 +43,7 @@ function OrderDetail({ order, ...props }) {
                 message: 'Fail',
                 description: 'Something went wrong, please try again!',
             });
+            dispatch(APPROVE_ORDER_RESET());
         }
         if (deliveringOrder?.state === REQUEST_STATE.SUCCESS) {
             notification.success({
@@ -56,6 +57,7 @@ function OrderDetail({ order, ...props }) {
                 message: 'Fail',
                 description: 'Something went wrong, please try again!',
             });
+            dispatch(DELIVERING_ORDER_RESET());
         }
         if (cancelOrder?.state === REQUEST_STATE.SUCCESS) {
             notification.success({
@@ -69,6 +71,7 @@ function OrderDetail({ order, ...props }) {
                 message: 'Fail',
                 description: 'Something went wrong, please try again!',
             });
+            dispatch(CANCEL_ORDER_RESET());
         }
         dispatch(GET_ALL_ORDER({ id: id }));
     }, [approveOrder?.state, deliveringOrder?.state, cancelOrder?.state]);

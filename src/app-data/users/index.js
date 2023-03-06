@@ -22,9 +22,25 @@ export const apiUpdateProfile = async (params) => {
     }
 };
 
-export const apiListIssuer = async (params) => {
+export const apiGetAllUsers = async (params) => {
     try {
-        const response = await GET('/issuer/list/institution', params, { isFullPath: false });
+        const response = await GET('/api/user/', params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+export const apiUpdateUser = async (body) => {
+    try {
+        const response = await PUT(`/api/user/update/${body.id}`, body, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

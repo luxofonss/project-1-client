@@ -14,7 +14,6 @@ function OrderItem({ order, index, ...props }) {
                     <Col xs={6}>
                         <div className={cx('images')}>
                             {order.hasStocks?.map((product, index) => {
-                                console.log(product);
                                 return (
                                     <img
                                         key={index}

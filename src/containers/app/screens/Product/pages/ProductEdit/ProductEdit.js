@@ -28,10 +28,7 @@ import AppButton from '~/components/AppButton/AppButton';
 const cx = classNames.bind(styles);
 
 function ProductEdit() {
-    const productEdit = useSelector((state) => {
-        console.log('state: ', state);
-        return state.product.listProduct;
-    });
+    const productEdit = useSelector((state) => state.product.listProduct);
     const product = useSelector((state) => {
         return state.product.update;
     });
@@ -86,7 +83,6 @@ function ProductEdit() {
         }
     };
 
-    console.log('productEdit?.data?.data[0]', productEdit?.data?.data);
     return (
         <Fragment>
             <Link className={cx('back')} to="/admin/product">
@@ -97,7 +93,7 @@ function ProductEdit() {
                     {productEdit.state === 'SUCCESS' && (
                         <AppForm
                             onSubmit={(data) => {
-                                console.log('data: ', data);
+                                // console.log('data: ', data);
                             }}
                         >
                             <Row>
@@ -172,7 +168,6 @@ function ProductEdit() {
                                             onChange={(event) => {
                                                 // handleChange(event);
                                                 if (event.target.files[0]) {
-                                                    console.log('image upload');
                                                     setSelectedImage(event.target.files[0]);
                                                 }
                                             }}

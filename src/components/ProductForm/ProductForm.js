@@ -16,8 +16,6 @@ function ProductForm(props) {
         return totalProduct;
     }, []);
 
-    console.log(total);
-
     return (
         <Fragment>
             <div className={cx('item-container')}>

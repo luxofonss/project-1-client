@@ -28,15 +28,12 @@ function Category(props) {
         dispatch(CATEGORY_LIST_REQUEST({ offset: page * 10, limit: limit }));
     }, [page, limit]);
     const onChange = (pagination, filters, sorter, extra) => {
-        console.log('test', pagination);
+        'test', pagination;
         setPage(pagination.current - 1);
         setLimit(pagination.pageSize);
-        console.log('params', pagination, pageSize, filters, sorter, extra);
     };
     const categoryData = useSelector((state) => state.category?.categoryList);
     const categoryCreate = useSelector((state) => state.category.categoryCreate);
-
-    console.log(categoryData);
 
     useEffect(() => {
         if (categoryCreate.state == REQUEST_STATE.SUCCESS) {
@@ -76,8 +73,6 @@ function Category(props) {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log('submit');
-        console.log(data);
         dispatch(CATEGORY_CREATE(data));
 
         dispatch(CATEGORY_LIST_REQUEST());
@@ -117,7 +112,6 @@ function Category(props) {
             dataIndex: 'createdAt',
             key: 'createdAt',
             sorter: (a, b) => {
-                console.log(Date.parse(b.createdAt) - Date.parse(a.createdAt));
                 return Date.parse(a.createdAt) - Date.parse(b.createdAt);
             },
             sortDirections: ['descend'],

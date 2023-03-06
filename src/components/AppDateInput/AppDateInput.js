@@ -11,7 +11,6 @@ const AppDateInput = ({ name, required = false, ...props }) => {
     } = useFormContext();
 
     const onChange = (date, dateString) => {
-        // console.log(date, dateString);
         setValue(name, date);
     };
 

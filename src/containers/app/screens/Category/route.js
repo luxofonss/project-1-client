@@ -33,4 +33,15 @@ export const childRoutes = [
             return import('./pages/CategoryEdit');
         }),
     },
+    {
+        path: '/admin/dashboard',
+        exact: true,
+        isPrivate: true,
+        role: [ROLE.ADMIN],
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([categoryModule], 'app');
+            return import('./pages/Demo');
+        }),
+    },
 ];

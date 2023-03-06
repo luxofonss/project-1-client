@@ -1,4 +1,4 @@
-import { Col, Modal, notification, Row } from 'antd';
+import { Col, Modal, notification, Row, Spin } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,11 +23,8 @@ function Purchase(props) {
     const [districtCode, setDistrictCode] = useState(null);
     const purchase = useSelector((state) => state.customer.createOrder);
     const dispatch = useDispatch();
-    console.log('rerender');
 
-    useEffect(() => {
-        console.log(provinceCode, districtCode);
-    }, [provinceCode, districtCode]);
+    useEffect(() => {}, [provinceCode, districtCode]);
 
     function setProvince(e) {
         setProvinceCode(e);
@@ -44,11 +41,11 @@ function Purchase(props) {
             firstName: data.info.firstName,
             lastName: data.info.lastName,
             payment: paymentMethod,
+            fee: 50000,
             promoId: cartInfo.promoId ? cartInfo.promoId : '',
             stockInfo: cartInfo.stockInfo,
         };
 
-        console.log('submit data', submitData);
         dispatch(CREATE_ORDER(submitData));
     };
 
@@ -169,12 +166,14 @@ function Purchase(props) {
                     </Col>
                     <Col xs={10}>
                         <div className={cx('cart')}>
-                            <Cart onGetValue={handleGetCartValue} purchase={true} style={{ width: '100%' }} />
+                            <Cart onGetValue={handleGetCartValue} isPurchase={true} style={{ width: '100%' }} />
                         </div>
                     </Col>
                 </Row>
                 <div style={{ marginTop: 24 }} className="flex-center">
-                    <AppButton type="submit">Purchase</AppButton>
+                    <AppButton type="submit">
+                        {purchase.state === REQUEST_STATE.REQUEST ? <Spin /> : 'Purchase'}
+                    </AppButton>
                 </div>
             </AppForm>
         </div>

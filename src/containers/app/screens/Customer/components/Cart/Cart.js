@@ -17,7 +17,7 @@ import emptyCart from '~/assets/images/empty_cart.png';
 
 const cx = classNames.bind(styles);
 
-function Cart({ onClose, onGetValue, ...props }) {
+function Cart({ isPurchase = false, onClose, onGetValue, ...props }) {
     const [promo, setPromo] = useState({});
     const cartInfo = useSelector((state) => state.customer.cart);
     const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
@@ -40,7 +40,6 @@ function Cart({ onClose, onGetValue, ...props }) {
         );
         return total;
     }, [cartInfo?.data?.data]);
-    console.log('total', totalPrice);
 
     useEffect(() => {
         if (onGetValue) {
@@ -104,7 +103,7 @@ function Cart({ onClose, onGetValue, ...props }) {
 
             {cartInfo?.data?.data?.length > 0 && (
                 <div className={cx('footer')}>
-                    {props.purchase && (
+                    {isPurchase && (
                         <div className={cx('promo')}>
                             <ChoosePromo onSubmit={handleGetPromo} />
                             <div>{promo?.code}</div>
@@ -112,7 +111,7 @@ function Cart({ onClose, onGetValue, ...props }) {
                             <div>{!promo?.percent && promo?.discount ? promo?.discount : ''}</div>
                         </div>
                     )}
-                    {props.purchase && (
+                    {isPurchase && (
                         <Fragment>
                             <div className="flex-between">
                                 <div>Order Subtotal:</div>
@@ -124,7 +123,7 @@ function Cart({ onClose, onGetValue, ...props }) {
                             </div>
                         </Fragment>
                     )}
-                    {promo?.percent && props.purchase && (
+                    {promo?.percent && isPurchase && (
                         <div className={cx('promo')}>
                             <div>Discount: </div>
                             <div>
@@ -137,44 +136,44 @@ function Cart({ onClose, onGetValue, ...props }) {
                             </div>
                         </div>
                     )}
-                    {!promo?.percent && promo?.discount && props.purchase && (
+                    {!promo?.percent && promo?.discount && isPurchase && (
                         <div className={cx('promo')}>
                             <div>Discount:</div>
                             <div>accounting.formatNumber(promo?.discount) VND</div>
                         </div>
                     )}
-                    {props.purchase && (
+                    {isPurchase && !promo?.discount && (
                         <div className={cx('total')}>
                             <div>Total</div>
                             <div>{accounting.formatNumber(totalPrice + 50000)} VND</div>
                         </div>
                     )}
-                    {!props.purchase && (
+                    {!isPurchase && (
                         <div className={cx('total')}>
                             <div>Total</div>
                             <div>{accounting.formatNumber(totalPrice)} VND</div>
                         </div>
                     )}
-                    {props.purchase && !promo?.percent && promo?.discount && (
+                    {isPurchase && !promo?.percent && promo?.discount && (
                         <div className={cx('total')}>
                             <div>Total</div>
-                            <div>{accounting.formatNumber(totalPrice - 50000 - promo?.discount)} VND</div>
+                            <div>{accounting.formatNumber(totalPrice + 50000 - promo?.discount)} VND</div>
                         </div>
                     )}
-                    {props.purchase && promo?.percent && promo?.discount && (
+                    {isPurchase && promo?.percent && promo?.discount && (
                         <div className={cx('total')}>
                             <div>Total</div>
                             <div>
                                 {accounting.formatNumber(
                                     totalPrice * (promo?.percent / 100) > promo?.discount
-                                        ? totalPrice - 50000 - promo?.discount
-                                        : totalPrice - 50000 - totalPrice * (promo?.percent / 100),
+                                        ? totalPrice + 50000 - promo?.discount
+                                        : totalPrice + 50000 - totalPrice * (promo?.percent / 100),
                                 )}
                                 VND
                             </div>
                         </div>
                     )}
-                    {!props.purchase && (
+                    {!isPurchase && (
                         <Link to="/purchase">
                             <AppButton style={{ width: '100%' }}>Purchase</AppButton>
                         </Link>

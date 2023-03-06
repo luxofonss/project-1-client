@@ -26,7 +26,6 @@ const AppColorSelector = ({ name, stocks, value, required = false, ...props }) =
 
     const onClickItem = (e) => {
         const colorIndex = e.target.getAttribute('colorIndex');
-        console.log(colorIndex, e.target.innerHTML);
         let array = checked;
         let index = array.indexOf(colorIndex);
         if (index !== -1) {
@@ -38,12 +37,9 @@ const AppColorSelector = ({ name, stocks, value, required = false, ...props }) =
     };
 
     useLayoutEffect(() => {
-        console.log('test');
         setCheckedList(checked);
         setValue(name, checked);
     }, [checked]);
-
-    console.log(stocks);
 
     return (
         <div className={cx('wrapper')}>
