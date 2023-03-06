@@ -81,8 +81,8 @@ function Product(props) {
             sizeId: data.size,
             categoryId: dataFilter.categoryId,
             form: dataFilter.formFilter,
-            price: data.price ? data.price : null,
-            gender: data.gender,
+            price: data.price ? data.price : '',
+            gender: data.gender ? data.gender : '',
             color: data.color,
         }).toString();
         history.push(`product?${test}`);
