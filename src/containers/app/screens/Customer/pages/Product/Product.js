@@ -81,7 +81,7 @@ function Product(props) {
             sizeId: data.size,
             categoryId: dataFilter.categoryId,
             form: dataFilter.formFilter,
-            price: data.price,
+            price: data.price ? data.price : null,
             gender: data.gender,
             color: data.color,
         }).toString();
