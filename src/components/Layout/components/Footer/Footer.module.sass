@@ -19,3 +19,38 @@
                 flex-direction: column
                 width: 50%
                 gap: 0
+
+    .info
+        background: linear-gradient(to bottom, #969DC1 0%, #ffffff 100%)
+        padding: 32px 152px
+        .col-wrapper
+            display: flex
+            flex-direction: column
+            gap: 12px
+
+            .header
+                font-weight: 700
+                font-size: 20px
+                text-transform: uppercase
+                color: #000000
+
+            .item
+                font-weight: 500
+                font-size: 17px
+                color: #363636!important
+                cursor: pointer
+                transition: all .2s ease
+                text-decoration: none
+
+                a
+                    color: #363636!important
+
+                &:hover
+                    color: var(--pink-pink)
+
+            .social-wrapper,.apps
+                display: flex
+                gap: 16px
+
+                .item
+                    cursor: pointer

@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styles from './OrderList.module.sass';
-import classNames from 'classnames/bind';
-import { useDispatch, useSelector } from 'react-redux';
-import { GET_ALL_PROMO, CREATE_PROMO, GET_ALL_ORDER } from '../../redux/action';
-import { Button, Col, Modal, Row, Space, Table, Tag } from 'antd';
-import { ORDER_STATUS, REQUEST_STATE } from '~/app-configs';
-import AppForm from '~/components/AppForm';
-import AppInput from '~/components/AppInput';
-import AppButton from '~/components/AppButton/AppButton';
-import AppSelectInput from '~/components/AppSelectInput';
-import AppDateInput from '~/components/AppDateInput';
-import { Link } from 'react-router-dom';
 import accounting from 'accounting';
+import { Button, Col, Row, Space, Table, Tag } from 'antd';
+import classNames from 'classnames/bind';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { ORDER_STATUS, REQUEST_STATE } from '~/app-configs';
+import { GET_ALL_ORDER } from '../../redux/action';
+import styles from './OrderList.module.sass';
 
 const columns = [
     {
@@ -64,12 +59,12 @@ const columns = [
         key: 'totalPrice',
         width: 100,
     },
-    {
-        title: 'Promo',
-        render: (_, { Promo }) => Promo?.code,
-        key: 'promo',
-        width: 100,
-    },
+    // {
+    //     title: 'Promo',
+    //     render: (_, { Promo }) => Promo?.code,
+    //     key: 'promo',
+    //     width: 100,
+    // },
     {
         title: 'Status',
         key: 'status',
@@ -113,9 +108,9 @@ function OrderList(props) {
                         <h4>Orders list</h4>
                     </div>
                     <Table
-                        scroll={{
-                            x: 'calc(700px + 50%)',
-                        }}
+                        // scroll={{
+                        //     x: 800,
+                        // }}
                         size="middle"
                         columns={columns}
                         dataSource={orderList.state === REQUEST_STATE.SUCCESS ? orderList?.data?.data : []}

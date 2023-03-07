@@ -17,6 +17,7 @@ import { ADD_PRODUCT_TO_CART_RESET } from '../../redux/action';
 import accounting from 'accounting';
 import ColorSelection from '~/components/ColorSelection';
 import { getArrayParams } from '~/helpers/validator';
+import filter from '~/assets/images/filter.png';
 
 const cx = classNames.bind(styles);
 
@@ -108,6 +109,11 @@ function Product(props) {
                         <div className={cx('sider')}>
                             <AppButton className={cx('submit-filter')} type="submit">
                                 Filter
+                                <img
+                                    style={{ width: '16px', height: '16px', objectFit: 'cover' }}
+                                    src={filter}
+                                    atl="filter"
+                                />
                             </AppButton>
                             <div className={cx('filter-wrapper')}>
                                 <h4 className={cx('header')}>Categories</h4>

@@ -85,32 +85,35 @@ function Category(props) {
 
     const columns = [
         {
-            title: 'Số thứ tự',
-            width: '95px',
+            title: 'STT',
             dataIndex: 'key',
             key: 'key',
+            width: 50,
         },
         {
             title: 'Mã BST',
-            width: '85ipx',
+            width: 80,
             dataIndex: 'id',
             key: 'cate_code',
         },
         {
-            title: 'Tên bộ sưu tập',
+            title: 'Tên',
             dataIndex: 'name',
             key: 'name',
+            width: 50,
         },
 
         {
             title: 'Mô tả',
             dataIndex: 'description',
             key: 'description',
+            width: 350,
         },
         {
             title: 'Ngày tạo',
             dataIndex: 'createdAt',
             key: 'createdAt',
+            width: 110,
             sorter: (a, b) => {
                 return Date.parse(a.createdAt) - Date.parse(b.createdAt);
             },
@@ -118,14 +121,15 @@ function Category(props) {
         },
         {
             title: 'Số sản phẩm',
-            width: '120px',
             dataIndex: 'total',
             key: 'total',
+            width: 80,
         },
         {
             title: 'Trạng thái',
             key: 'status',
             dataIndex: 'status',
+            width: 120,
             render: (tags) => (
                 <span>
                     {tags.map((tag) => {
@@ -161,6 +165,7 @@ function Category(props) {
             title: '',
             key: 'action',
             dataIndex: 'id',
+            width: 50,
             render: (id) => (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItem: 'center', gap: '8px' }}>
                     <Link to={`/admin/category/edit/${id}`}>
@@ -209,7 +214,7 @@ function Category(props) {
                 className={cx('table')}
                 columns={columns}
                 pagination={{
-                    total: categoryData?.data?.data?.count ? categoryData?.data?.data?.count : 10,
+                    total: categoryData?.data?.data?.length ? categoryData?.data?.data?.length : 10,
                     defaultPageSize: 10,
                     showSizeChanger: true,
                     pageSizeOptions: ['10', '20', '30'],
