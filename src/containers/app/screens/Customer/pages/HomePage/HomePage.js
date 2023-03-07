@@ -1,5 +1,5 @@
 import accounting from 'accounting';
-import { Carousel, Col, Divider, Row } from 'antd';
+import { Carousel, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import ProductItem from '~/components/ProductItem';
 import { GET_SIZE } from '~/redux/actions/size';
 import { CATEGORY_LIST_REQUEST } from '../../../Category/redux/action';
 import { PRODUCT_GET } from '../../../Product/redux/action';
+import { ADD_PRODUCT_TO_CART_RESET } from '../../redux/action';
 import styles from './HomePage.module.sass';
 
 const cx = classNames.bind(styles);
@@ -16,11 +17,29 @@ function HomePage(props) {
     const dispatch = useDispatch();
     const categories = useSelector((state) => state.category?.categoryList);
     const products = useSelector((state) => state.product?.listProduct?.data);
+    const addProductToCategory = useSelector((state) => state.customer.addProductToCart);
+
     useEffect(() => {
         dispatch(PRODUCT_GET());
         dispatch(CATEGORY_LIST_REQUEST());
         dispatch(GET_SIZE());
     }, []);
+
+    useEffect(() => {
+        if (addProductToCategory.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Change cart item successfully!',
+            });
+        }
+        if (addProductToCategory?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something wrong, please try again!',
+            });
+        }
+        dispatch(ADD_PRODUCT_TO_CART_RESET());
+    }, [addProductToCategory?.state]);
 
     const categoryList = categories?.data?.data?.rows;
 
