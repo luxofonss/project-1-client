@@ -19,6 +19,13 @@ export function PRODUCT_ADD_FAIL(payload) {
     };
 }
 
+export function PRODUCT_ADD_RESET(payload) {
+    return {
+        type: 'PRODUCT_ADD_RESET',
+        payload: payload,
+    };
+}
+
 export function PRODUCT_GET(payload) {
     return {
         type: 'PRODUCT_GET',
@@ -57,6 +64,13 @@ export function PRODUCT_EDIT_SUCCESS(payload) {
 export function PRODUCT_EDIT_FAIL(payload) {
     return {
         type: 'PRODUCT_EDIT_FAIL',
+        payload: payload,
+    };
+}
+
+export function PRODUCT_EDIT_RESET(payload) {
+    return {
+        type: 'PRODUCT_EDIT_RESET',
         payload: payload,
     };
 }

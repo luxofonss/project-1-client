@@ -4,14 +4,23 @@ import classNames from 'classnames/bind';
 import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import { BackIcon } from '~/assets/svgs';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { CATEGORY_LIST_REQUEST } from '~/containers/app/screens/Category/redux/action';
+import {
+    CATEGORY_LIST_REQUEST,
+    CATEGORY_UPDATE,
+    CATEGORY_UPDATE_RESET,
+} from '~/containers/app/screens/Category/redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { PRODUCT_GET } from '~/containers/app/screens/Product/redux/action';
 import ProductForm from '~/components/ProductForm/ProductForm';
 import AppButton from '~/components/AppButton/AppButton';
 import Form from 'react-bootstrap/Form';
+import AppForm from '~/components/AppForm';
+import AppInput from '~/components/AppInput';
+import AppSelectInput from '~/components/AppSelectInput';
+import { isEmptyValue } from '~/helpers/check';
+import { Col, notification, Row } from 'antd';
+import AppTextArea from '~/components/AppTextArea';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
 
@@ -22,21 +31,51 @@ function CategoryEdit(props) {
     const { id } = useParams();
     const cateEdit = useSelector((state) => state.category.categoryList);
     const productList = useSelector((state) => state.product.listProduct);
-
+    const categoryUpdate = useSelector((state) => state.category.categoryUpdate);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
+    useEffect(() => {
+        if (categoryUpdate?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Update category successfully!',
+            });
+        }
+        if (categoryUpdate?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        dispatch(CATEGORY_UPDATE_RESET());
+        // dispatch(GET_ALL_USERS());
+    }, [categoryUpdate?.state]);
+
     const onSubmit = (data) => {
         console.log(data);
+        dispatch(
+            CATEGORY_UPDATE({
+                id: id,
+                name: data.name,
+                description: data.description,
+            }),
+        );
     };
 
     useEffect(() => {
         dispatch(CATEGORY_LIST_REQUEST({ id: id }));
         dispatch(PRODUCT_GET({ categoryId: id }));
     }, []);
+
+    const onFilter = (data) => {
+        if (data.id === 'all') {
+            dispatch(PRODUCT_GET({ name: data.name }));
+        } else dispatch(PRODUCT_GET(data));
+    };
 
     return (
         <Fragment>
@@ -45,94 +84,75 @@ function CategoryEdit(props) {
             </Link>
             <div className={cx('container')}>
                 {cateEdit?.requestState === 'SUCCESS' && (
-                    <form onSubmit={handleSubmit(onSubmit)} className={cx('form-wrapper')}>
-                        <Row>
-                            <Col xs={2}>
-                                <div className={cx('form-item')}>
-                                    <label className={cx('label')} htmlFor="categoryCode">
-                                        Mã danh mục
-                                    </label>
-                                    <input
-                                        className={cx('input')}
-                                        id="categoryCode"
-                                        {...register('categoryCode', { required: true })}
-                                        type="text"
+                    <div className={cx('form-wrapper')}>
+                        <AppForm onSubmit={onSubmit}>
+                            <Row gutter={32}>
+                                <Col xs={6}>
+                                    <AppInput
+                                        name="categoryCode"
+                                        label="Mã danh mục"
+                                        value={cateEdit?.data?.data.rows[0]?.id}
                                         disabled
-                                        defaultValue={cateEdit?.data?.data.rows[0]?.id}
-                                    ></input>
-                                </div>
-                            </Col>
-                            <Col xs={4}>
-                                <div className={cx('form-item')}>
-                                    <label className={cx('label')} htmlFor="name">
-                                        Tên danh mục
-                                    </label>
-                                    <input
-                                        className={cx('input')}
-                                        id="name"
-                                        {...register('name', { required: true })}
-                                        type="text"
+                                    />
+                                </Col>
+                                <Col xs={6}>
+                                    <AppInput
+                                        name="name"
+                                        label="Tên danh mục"
                                         defaultValue={cateEdit?.data?.data.rows[0]?.name}
-                                    ></input>
-                                </div>
-                            </Col>
-                            <Col xs={6}>
-                                <AppButton type="submit">Publish</AppButton>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={6}>
-                                <div className={cx('form-item')}>
-                                    <label className={cx('label')} htmlFor="description">
-                                        Mô tả
-                                    </label>
-                                    <textarea
-                                        className={cx('input', 'description')}
-                                        id="description"
-                                        {...register('description', { required: true })}
-                                        type="text"
+                                    />
+                                </Col>
+                                <Col xs={12}>
+                                    <AppButton type="submit">Publish</AppButton>
+                                </Col>
+                                <Col xs={12}>
+                                    <AppTextArea
+                                        name="description"
+                                        label="Description"
                                         defaultValue={cateEdit?.data?.data.rows[0]?.description}
-                                    ></textarea>
-                                </div>
-                            </Col>
-                        </Row>
-                    </form>
+                                    />
+                                </Col>
+                            </Row>
+                        </AppForm>
+                    </div>
                 )}
                 <Row>
                     <Col xs={24}>
                         <h5 className={cx('products-title')}>Products in category</h5>
                     </Col>
-                    <div className={cx('header')}>
-                        <Form className={styles.search}>
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className="search me-2"
-                                aria-label="Search"
-                            />
-                            <AppButton variant="outline-success">Filter</AppButton>
-                        </Form>
-                        <Form.Select className={styles.select} aria-label="Default select example">
-                            <option value="1">All category</option>
-                            <option value="2">T-Shirt</option>
-                            <option value="3">Pants</option>
-                        </Form.Select>
-                        <Form.Select className={styles.select} aria-label="Default select example">
-                            <option value="0">Last added</option>
-                            <option value="1">Cheap first</option>
-                            <option value="2">Most viewed</option>
-                        </Form.Select>
-
-                        <Link to="/admin/product/add" className="normal-link-white">
-                            <AppButton>Add</AppButton>
-                        </Link>
-                    </div>
-                    {productList?.state === 'SUCCESS' &&
-                        productList.data?.data?.map((product) => (
-                            <Col key={product.id} className={cx('item-wrapper')} xs={3}>
+                    <Col xs={24}>
+                        <div className={cx('header')}>
+                            <AppForm onSubmit={(data) => onFilter(data)}>
+                                <div className={cx('filter-form')}>
+                                    <AppInput
+                                        wrapperStyle={{ minWidth: '250px' }}
+                                        required={false}
+                                        label="Tìm theo tên"
+                                        name="name"
+                                    ></AppInput>
+                                    <div
+                                        style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}
+                                    >
+                                        <AppButton type="submit">Filter</AppButton>
+                                    </div>
+                                </div>
+                            </AppForm>
+                            <div className="bottom-right">
+                                <Link to="/admin/product/add" className="normal-link-white">
+                                    <AppButton>Add</AppButton>
+                                </Link>
+                            </div>
+                        </div>
+                    </Col>
+                    {productList?.state === 'SUCCESS' && productList.data?.data.length > 0 ? (
+                        productList.data?.data.map((product) => (
+                            <Col key={product.id} className={cx('item-wrapper')} xs={6}>
                                 <ProductForm product={product}></ProductForm>
                             </Col>
-                        ))}
+                        ))
+                    ) : (
+                        <div>No product</div>
+                    )}
                     {cateEdit?.requestState === 'ERROR' && <div>no product in this category</div>}
                 </Row>
             </div>

@@ -1,7 +1,7 @@
-import { Col, Row, Spin } from 'antd';
+import { Col, notification, Row, Spin } from 'antd';
 import classNames from 'classnames/bind';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -13,7 +13,7 @@ import AppInput from '~/components/AppInput';
 import AppSelectApi from '~/components/AppSelectApi';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppTextArea from '~/components/AppTextArea';
-import { PRODUCT_ADD } from '~/containers/app/screens/Product/redux/action';
+import { PRODUCT_ADD, PRODUCT_ADD_RESET } from '~/containers/app/screens/Product/redux/action';
 import { storage } from '~/firebase';
 import styles from './AddProduct.module.sass';
 
@@ -24,8 +24,25 @@ function AddProduct() {
     const [counter, setCounter] = React.useState(1);
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
-    const product = useSelector((state) => state.product.createProduct);
+    const productCreate = useSelector((state) => state.product.createProduct);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (productCreate?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Create new product successfully!',
+            });
+        }
+        if (productCreate?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        dispatch(PRODUCT_ADD_RESET());
+        // dispatch(GET_ALL_USERS());
+    }, [productCreate?.state]);
 
     const onSubmit = (data) => {
         const storageRef = ref(storage, `/images/${selectedImage + v4()}`);

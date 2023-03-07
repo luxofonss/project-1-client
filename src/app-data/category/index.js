@@ -1,5 +1,5 @@
 import { REQUEST_STATE } from '~/app-configs';
-import { POST } from '~/app-data/fetch';
+import { PATCH, POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
 
 export const apiCreateCategory = async (params) => {
@@ -38,7 +38,7 @@ export const apiLoadCategories = async (params) => {
 
 export const apiUpdateCategory = async (params) => {
     try {
-        const response = await GET(`/api/category/update`, params, { isFullPath: false });
+        const response = await PATCH(`/api/category/update`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

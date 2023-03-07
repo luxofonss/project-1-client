@@ -19,7 +19,7 @@ import styles from './AppLayout.module.sass';
 
 const cx = classNames.bind(styles);
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Header } = Layout;
 
 export function getNavItem(className, label, key, icon, children, type) {
     return {
@@ -73,55 +73,55 @@ function AppLayout({ children, match }) {
     return (
         <div className={cx('app-layout')}>
             {/* <Sider width={300} className={cx('slider')} trigger={null} collapsible collapsed={collapsed}> */}
-            <div className={cx('slider')}>
-                <div className={cx('logo')}>
-                    {/* <LogoAdmin /> */}
-                    <Link to="/">
-                        <div style={{ cursor: 'pointer' }} className="logo">
-                            <div className="first">LUX</div>
-                            <div className="second">SHOP</div>
-                        </div>
-                    </Link>
-                </div>
-                <menu className={cx('menu')}>
-                    {menuItems.map((item) => (
-                        // <div className={cx('menu-item')}>
-                        <Link
-                            onClick={(e) => {
-                                handleMenuClick(e);
-                            }}
-                            id={item.key}
-                            key={item.key}
-                            to={item.path}
-                            className={
-                                currentRouter.pathname.includes(item.path) ? cx('menu-item-active') : cx('menu-item')
-                            }
-                        >
-                            <div className={cx('text normal-link')}> {item.label}</div>
-                            <div className={cx('icon')}>{item.icon}</div>
-                        </Link>
-                        // </div>
-                    ))}
-                </menu>
-                <div className={cx('slider-footer')}>
-                    <div className={cx('more')}>
-                        <a href="#">I need help!</a>
-                    </div>
-                    <div className={cx('copy-right')}>Copyright of Luxofons</div>
-                </div>
-            </div>
+
             <Layout>
+                {/* <Header> */}
                 <AppHeader />
-                <Content
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
-                        position: 'relative',
-                    }}
-                >
-                    {children}
-                </Content>
+                {/* </Header> */}
+                <Layout>
+                    <Sider width={300}>
+                        <div className={cx('slider')}>
+                            <menu className={cx('menu')}>
+                                {menuItems.map((item) => (
+                                    // <div className={cx('menu-item')}>
+                                    <Link
+                                        onClick={(e) => {
+                                            handleMenuClick(e);
+                                        }}
+                                        id={item.key}
+                                        key={item.key}
+                                        to={item.path}
+                                        className={
+                                            currentRouter.pathname.includes(item.path)
+                                                ? cx('menu-item-active')
+                                                : cx('menu-item')
+                                        }
+                                    >
+                                        <div className={cx('text normal-link')}> {item.label}</div>
+                                        <div className={cx('icon')}>{item.icon}</div>
+                                    </Link>
+                                    // </div>
+                                ))}
+                            </menu>
+                            <div className={cx('slider-footer')}>
+                                <div className={cx('more')}>
+                                    <a href="#">I need help!</a>
+                                </div>
+                                <div className={cx('copy-right')}>Copyright of Luxofons</div>
+                            </div>
+                        </div>
+                    </Sider>
+                    <Content
+                        style={{
+                            margin: '24px 16px',
+                            padding: 24,
+                            minHeight: 280,
+                            position: 'relative',
+                        }}
+                    >
+                        {children}
+                    </Content>
+                </Layout>
             </Layout>
         </div>
     );

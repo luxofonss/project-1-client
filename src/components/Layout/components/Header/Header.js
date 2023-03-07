@@ -31,63 +31,74 @@ export default function (props) {
 
     return (
         <header className={cx('header')}>
-            <div className={cx('avatar')}>
-                <Dropdown
-                    // overlay={<Menu items={cartItems} onClick={onClickCart} />}
-                    overlay={
-                        <div className={cx('user')}>
-                            <Link to="/profile">My account</Link>
+            <div className={cx('logo')}>
+                {/* <LogoAdmin /> */}
+                <Link to="/">
+                    <div style={{ cursor: 'pointer' }} className="logo">
+                        <div className="first">LUX</div>
+                        <div className="second">SHOP</div>
+                    </div>
+                </Link>
+            </div>
+            <div className={cx('right')}>
+                <div className={cx('avatar')}>
+                    <Dropdown
+                        // overlay={<Menu items={cartItems} onClick={onClickCart} />}
+                        overlay={
+                            <div className={cx('user')}>
+                                <Link to="/profile">My account</Link>
 
-                            <Link to="/orders">My orders</Link>
+                                <Link to="/orders">My orders</Link>
 
-                            {userDetail?.role === '1' ? <Link to="/admin/dashboard">Admin</Link> : null}
+                                {userDetail?.role === '1' ? <Link to="/admin/dashboard">Admin</Link> : null}
 
-                            <div style={{ cursor: 'pointer' }} onClick={handleLogout} href="#">
-                                Logout
+                                <div style={{ cursor: 'pointer' }} onClick={handleLogout} href="#">
+                                    Logout
+                                </div>
+                            </div>
+                        }
+                        placement="bottom"
+                        trigger={['click']}
+                        // onOpenChange={onOpenChange}
+                    >
+                        <div className={cx('header-nav')}>
+                            <div
+                                className={cx('image')}
+                                style={
+                                    userDetail?.avatar && {
+                                        height: '100%',
+                                        objectFit: 'contain',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'center',
+                                        backgroundImage: `url("${userDetail.avatar}")`,
+                                    }
+                                }
+                            >
+                                {!userDetail?.avatar && (
+                                    <div
+                                        style={{
+                                            height: '100%',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            color: 'white',
+                                            fontWeight: 700,
+                                        }}
+                                    >
+                                        {userDetail?.lastName?.at(0).toUpperCase()}
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    }
-                    placement="bottom"
-                    trigger={['click']}
-                    // onOpenChange={onOpenChange}
-                >
-                    <div className={cx('header-nav')}>
-                        <div
-                            className={cx('image')}
-                            style={
-                                userDetail?.avatar && {
-                                    height: '100%',
-                                    objectFit: 'contain',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                    backgroundImage: `url("${userDetail.avatar}")`,
-                                }
-                            }
-                        >
-                            {!userDetail?.avatar && (
-                                <div
-                                    style={{
-                                        height: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        color: 'white',
-                                        fontWeight: 700,
-                                    }}
-                                >
-                                    {userDetail?.lastName?.at(0).toUpperCase()}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </Dropdown>
-            </div>
-            <div className={cx('welcome')}>
-                <span className={cx('welcome-1')}>Welcome back,</span>
-                <span className={cx('welcome-2')}>
-                    {userDetail ? userDetail?.lastName + ' ' + userDetail?.firstName : ''}
-                </span>
+                    </Dropdown>
+                </div>
+                <div className={cx('welcome')}>
+                    <span className={cx('welcome-1')}>Welcome back,</span>
+                    <span className={cx('welcome-2')}>
+                        {userDetail ? userDetail?.lastName + ' ' + userDetail?.firstName : ''}
+                    </span>
+                </div>
             </div>
         </header>
     );

@@ -3,9 +3,11 @@ import { REQUEST_STATE } from '~/app-configs';
 import {
     PRODUCT_ADD,
     PRODUCT_ADD_FAIL,
+    PRODUCT_ADD_RESET,
     PRODUCT_ADD_SUCCESS,
     PRODUCT_EDIT,
     PRODUCT_EDIT_FAIL,
+    PRODUCT_EDIT_RESET,
     PRODUCT_EDIT_SUCCESS,
     PRODUCT_GET,
     PRODUCT_GET_FAIL,
@@ -38,6 +40,13 @@ export default combineReducers({
                     ...state,
                     state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case PRODUCT_ADD_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:
@@ -90,6 +99,13 @@ export default combineReducers({
                     ...state,
                     state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case PRODUCT_EDIT_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

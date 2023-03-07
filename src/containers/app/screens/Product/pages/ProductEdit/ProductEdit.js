@@ -15,10 +15,11 @@ import {
     PRODUCT_GET,
     PRODUCT_DISABLE,
     PRODUCT_ENABLE,
+    PRODUCT_EDIT_RESET,
 } from '~/containers/app/screens/Product/redux/action';
 import styles from './ProductEdit.module.sass';
 import { REQUEST_STATE } from '~/app-configs';
-import { Spin } from 'antd';
+import { notification, Spin } from 'antd';
 import accounting from 'accounting';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
@@ -29,9 +30,7 @@ const cx = classNames.bind(styles);
 
 function ProductEdit() {
     const productEdit = useSelector((state) => state.product.listProduct);
-    const product = useSelector((state) => {
-        return state.product.update;
-    });
+    const productUpdate = useSelector((state) => state.product.update);
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
     const dispatch = useDispatch();
@@ -45,6 +44,23 @@ function ProductEdit() {
     useEffect(() => {
         dispatch(PRODUCT_GET({ id: id }));
     }, []);
+
+    useEffect(() => {
+        if (productUpdate?.state === REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Update product successfully!',
+            });
+        }
+        if (productUpdate?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Fail',
+                description: 'Something went wrong, please try again!',
+            });
+        }
+        dispatch(PRODUCT_EDIT_RESET());
+        // dispatch(GET_ALL_USERS());
+    }, [productUpdate?.state]);
 
     const onSubmit = (data) => {
         if (selectedImage !== null) {
@@ -78,7 +94,7 @@ function ProductEdit() {
                 deletedAt: data.status == 0 ? '' : moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
                 id: id,
             };
-
+            console.log('edit data: ', editedData2);
             dispatch(PRODUCT_EDIT(editedData2));
         }
     };
@@ -89,13 +105,9 @@ function ProductEdit() {
                 <BackIcon /> Product
             </Link>
             <div className={cx('wrapper')}>
-                <form onSubmit={handleSubmit(onSubmit)} className={cx('add-product-form')}>
+                <div className={cx('add-product-form')}>
                     {productEdit.state === 'SUCCESS' && (
-                        <AppForm
-                            onSubmit={(data) => {
-                                // console.log('data: ', data);
-                            }}
-                        >
+                        <AppForm onSubmit={onSubmit}>
                             <Row>
                                 <Col xs={4}>
                                     <AppInput
@@ -209,7 +221,7 @@ function ProductEdit() {
                             </Row>
                         </AppForm>
                     )}
-                </form>
+                </div>
             </div>
         </Fragment>
     );

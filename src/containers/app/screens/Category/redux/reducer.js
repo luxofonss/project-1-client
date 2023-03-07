@@ -17,6 +17,7 @@ import {
     CATEGORY_RESTORE_SUCCESS,
     CATEGORY_RESTORE_FAIL,
     CATEGORY_CREATE_RESET,
+    CATEGORY_UPDATE_RESET,
 } from './action';
 
 const defaultState = {
@@ -90,21 +91,28 @@ export default combineReducers({
             case CATEGORY_UPDATE().type: {
                 return {
                     ...state,
-                    requestState: REQUEST_STATE.REQUEST,
+                    state: REQUEST_STATE.REQUEST,
                 };
             }
             case CATEGORY_UPDATE_SUCCESS().type: {
                 return {
                     ...state,
-                    requestState: REQUEST_STATE.SUCCESS,
+                    state: REQUEST_STATE.SUCCESS,
                     // data: action.payload,
                 };
             }
             case CATEGORY_UPDATE_FAIL().type: {
                 return {
                     ...state,
-                    requestState: REQUEST_STATE.ERROR,
+                    state: REQUEST_STATE.ERROR,
                     errorMessageKey: action.payload,
+                };
+            }
+            case CATEGORY_UPDATE_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:
